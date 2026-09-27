@@ -3,797 +3,686 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Class-AI | پلتفرم هوشمند آموزشی و تحصیلی</title>
+  <title>Class-AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #030712;
-      --card-bg: #0f172a;
-      --card-border: #1e293b;
-      --accent: #ef4444;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --primary: #3b82f6;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --purple: #8b5cf6;
-      --cyan: #06b6d4;
-      --pink: #ec4899;
-      --emerald: #059669;
+      --bg-start: #0f172a;
+      --bg-end: #1e293b;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --card-border: #facc15;
+      --radius: 20px;
+      --interactive-border: #ef4444;
+      --interactive-shadow: rgba(239, 68, 68, 0.4);
+      --font: 'Vazirmatn', sans-serif;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
     body {
-      background: radial-gradient(circle at 50% 0%, #1e1b4b, var(--bg));
+      background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
       color: var(--text);
       min-height: 100vh;
-      padding: 16px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
     }
-
-    .container {
+    .wrap {
       width: 100%;
       max-width: 900px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
-
     @keyframes jiggle {
       0% { transform: scale(1) translate(0, 0); }
-      20% { transform: scale(1.02) translate(-2px, 2px); }
-      40% { transform: scale(1.02) translate(-2px, -2px); }
-      60% { transform: scale(1.02) translate(2px, 2px); }
-      80% { transform: scale(1.02) translate(2px, -2px); }
-      100% { transform: scale(1.02) translate(0, 0); }
+      20% { transform: scale(1.01) translate(-2px, 1px); }
+      40% { transform: scale(0.99) translate(2px, -1px); }
+      60% { transform: scale(1.01) translate(-1px, -1px); }
+      80% { transform: scale(0.99) translate(1px, 1px); }
+      100% { transform: scale(1) translate(0, 0); }
     }
-
     .interactive-row {
-      background: rgba(15, 23, 42, 0.85);
-      border: 3px solid var(--card-border);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      border: 2px solid transparent;
+      outline: none;
     }
-
     .interactive-row:hover,
-    .interactive-row:active {
-      border-color: var(--accent) !important;
-      box-shadow: 0 0 25px rgba(239, 68, 68, 0.6) !important;
-      animation: jiggle 0.25s infinite alternate ease-in-out;
+    .interactive-row:focus-within,
+    .interactive-row.active-row {
+      border-color: var(--interactive-border) !important;
+      box-shadow: 0 0 16px var(--interactive-shadow) !important;
+      animation: jiggle 0.3s ease-in-out;
     }
-
-    .header-card {
+    @media (prefers-reduced-motion: reduce) {
+      .interactive-row:hover,
+      .interactive-row:focus-within,
+      .interactive-row.active-row {
+        animation: none;
+      }
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      border: 2px solid var(--card-border);
+    }
+    .title-card {
       text-align: center;
-      background: linear-gradient(135deg, rgba(30, 27, 75, 0.9), rgba(15, 23, 42, 0.9));
-      border: 3px solid #4338ca;
+      background: linear-gradient(135deg, #fef08a 0%, #ffffff 100%);
+      border: 3px solid #eab308;
     }
-
-    .header-title {
-      font-size: 26px;
-      font-weight: 900;
-      color: #38bdf8;
-      text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
-      margin-bottom: 6px;
-    }
-
-    .header-sub {
-      font-size: 16px;
-      font-weight: 700;
-      color: #facc15;
-    }
-
-    .manager-card {
+    .title-card h1 { font-size: 2rem; font-weight: 900; color: #854d0e; }
+    .title-card p { font-size: 1.05rem; font-weight: 700; color: #a16207; margin-top: 6px; }
+    .management-card {
+      background: #f8fafc;
+      border-right: 6px solid #0284c7;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      gap: 4px;
+    }
+    .management-card strong { color: #0369a1; font-size: 1.1rem; }
+    .management-card span { color: #334155; font-weight: 600; }
+    .mic-banner {
+      display: flex;
       justify-content: center;
-      gap: 6px;
-      text-align: center;
-      border-color: #3b82f6;
+      align-items: center;
+      padding: 12px;
+      background: #f1f5f9;
+      border-radius: 16px;
+      border: 2px dashed #cbd5e1;
     }
-
-    .manager-title {
-      font-size: 20px;
-      font-weight: 900;
-      color: #60a5fa;
+    .mic-banner svg {
+      width: 42px;
+      height: 42px;
+      fill: #ef4444;
+      filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.3));
     }
-
-    .mic-center-box {
+    .io-section {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      gap: 12px;
-      background: rgba(15, 23, 42, 0.7);
+      gap: 16px;
     }
-
-    .mic-icon-wrapper {
-      width: 76px;
-      height: 76px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #ef4444 0%, #7f1d1d 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
-      border: 2px solid #fca5a5;
-    }
-
-    .mic-svg {
-      width: 40px;
-      height: 40px;
-      fill: #ffffff;
-    }
-
-    .mic-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      width: 100%;
-    }
-
-    .control-btn {
-      padding: 10px 18px;
-      border-radius: 10px;
-      border: none;
-      font-size: 14px;
+    .label {
       font-weight: 800;
-      color: #fff;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: transform 0.15s, opacity 0.15s;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      display: block;
+      color: #1e293b;
     }
-
-    .control-btn:active {
-      transform: scale(0.96);
-    }
-
-    .btn-record { background: #dc2626; }
-    .btn-speak { background: #2563eb; }
-    .btn-file { background: #059669; }
-    .btn-submit { background: #7c3aed; font-size: 16px; padding: 12px 24px; }
-
-    .results-card {
-      border-color: #06b6d4;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .results-header {
-      font-size: 22px;
-      font-weight: 900;
-      color: #22d3ee;
-      border-bottom: 2px solid rgba(34, 211, 238, 0.3);
-      padding-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .textarea-box {
+    textarea {
       width: 100%;
-      min-height: 110px;
-      background: rgba(3, 7, 18, 0.85);
-      border: 2px solid #334155;
-      border-radius: 12px;
-      color: #f8fafc;
+      height: 120px;
+      border-radius: 14px;
       padding: 14px;
-      font-size: 15px;
+      font-size: 1rem;
+      border: 2px solid #cbd5e1;
       resize: vertical;
       outline: none;
-      line-height: 1.6;
+      background: #f8fafc;
+      transition: border 0.2s;
     }
-
-    .textarea-box:focus {
-      border-color: #38bdf8;
+    textarea:focus {
+      background: #ffffff;
+      border-color: #3b82f6;
     }
-
     .output-box {
-      width: 100%;
-      min-height: 140px;
-      background: #020617;
-      border: 2px dashed #475569;
-      border-radius: 12px;
-      padding: 16px;
-      color: #e2e8f0;
-      font-size: 15px;
-      line-height: 1.8;
+      min-height: 100px;
+      max-height: 350px;
+      overflow-y: auto;
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      border: 2px solid #e2e8f0;
       white-space: pre-wrap;
       word-break: break-word;
     }
-
-    .category-section {
+    .btn-group {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      background: #f8fafc;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
     }
-
-    .category-title {
-      font-size: 16px;
-      font-weight: 900;
-      color: #f59e0b;
+    .btn-group-header {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--group-color, #1e293b);
       display: flex;
       align-items: center;
       gap: 8px;
     }
-
-    .levels-grid {
+    .btn-group-header::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--group-color, #1e293b);
+    }
+    .btn-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
       gap: 8px;
     }
-
-    .level-btn {
-      padding: 10px 8px;
+    .btn {
+      appearance: none;
+      border: none;
       border-radius: 10px;
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      font-size: 13px;
+      padding: 10px 8px;
+      font-size: 0.88rem;
       font-weight: 700;
-      color: #fff;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      transition: transform 0.15s, border-color 0.15s, filter 0.15s;
+      background: var(--group-color, #3b82f6);
+      color: #ffffff;
+      transition: filter 0.2s, transform 0.1s;
+      user-select: none;
     }
-
-    .level-btn:hover {
-      filter: brightness(1.2);
-      border-color: #fff;
-      transform: translateY(-2px);
+    .btn:active {
+      transform: scale(0.97);
     }
-
-    .bg-c1 { background: #4f46e5; }
-    .bg-c2 { background: #0891b2; }
-    .bg-c3 { background: #059669; }
-    .bg-c4 { background: #d97706; }
-    .bg-c5 { background: #dc2626; }
-    .bg-c6 { background: #7c3aed; }
-    .bg-c7 { background: #db2777; }
-    .bg-c8 { background: #2563eb; }
-    .bg-c9 { background: #0d9488; }
-    .bg-c10 { background: #ea580c; }
-    .bg-c11 { background: #65a30d; }
-    .bg-c12 { background: #475569; }
-    .bg-c13 { background: #9333ea; }
-    .bg-c14 { background: #0284c7; }
-    .bg-c15 { background: #16a34a; }
-    .bg-c16 { background: #b91c1c; }
-
-    .bold-card {
-      font-size: 17px;
-      font-weight: 800;
-      line-height: 1.8;
-      text-align: center;
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #1e293b;
     }
-
-    .benefit-card {
-      border-color: #10b981;
-      color: #a7f3d0;
+    .copy-btn {
+      background: #10b981;
+      color: white;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 8px;
+      margin-top: 6px;
+      cursor: pointer;
+      border: none;
+      align-self: flex-start;
     }
-
-    .benefit-card strong {
-      color: #34d399;
-      font-size: 20px;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .packages-card {
-      border-color: #f59e0b;
-      text-align: center;
-    }
-
-    .packages-title {
-      font-size: 20px;
-      font-weight: 900;
-      color: #fbbf24;
-      margin-bottom: 12px;
-    }
-
     .packages-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 10px;
     }
-
-    .package-chip {
-      background: rgba(245, 158, 11, 0.15);
-      border: 2px solid #f59e0b;
-      padding: 10px;
+    .package-card {
+      background: #f8fafc;
+      padding: 12px;
       border-radius: 12px;
-      font-size: 15px;
-      font-weight: 800;
-      color: #fef3c7;
-    }
-
-    .notice-card {
-      border-color: #ef4444;
-      color: #fecaca;
-    }
-
-    .notice-card span {
-      display: block;
-    }
-
-    .copy-card {
+      border: 1px solid #cbd5e1;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      font-size: 18px;
-    }
-
-    .copy-data-text {
-      font-family: monospace;
-      letter-spacing: 1px;
-      direction: ltr;
-      font-size: 20px;
-      font-weight: 900;
-      color: #38bdf8;
-    }
-
-    .copy-btn {
-      background: #1e293b;
-      color: #f8fafc;
-      border: 2px solid #64748b;
-      padding: 10px 22px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
+      justify-content: space-between;
       gap: 8px;
-      transition: all 0.2s;
+      font-weight: 700;
+      font-size: 0.9rem;
     }
-
-    .copy-btn:hover {
-      background: #3b82f6;
-      border-color: #93c5fd;
+    .package-card .amount {
+      color: #059669;
+      font-size: 1.05rem;
     }
-
-    .ip-card {
-      border-color: #a855f7;
-      color: #e9d5ff;
+    .notice {
+      font-size: 0.85rem;
+      color: #dc2626;
+      font-weight: 700;
+      line-height: 1.5;
     }
-
-    .ip-title {
-      font-size: 19px;
-      color: #c084fc;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .file-preview {
+    .hidden {
       display: none;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 13px;
-      color: #38bdf8;
     }
   </style>
 </head>
 <body>
+  <main class="wrap">
 
-<div class="container">
+    <div class="card title-card interactive-row">
+      <h1>هوش مصنوعی تمام دروس اختصاصی و عمومی معلم و استاد تدریس و حل تمرین</h1>
+      <p>پشتیبانی کامل از تمامی مقاطع تحصیلی از اول ابتدایی تا دکتری</p>
+    </div>
 
-  <!-- هدر پلتفرم -->
-  <div class="interactive-row header-card" onclick="handleCardClick('Class-AI')">
-    <div class="header-title">Class-AI | پلتفرم حل‌المسائل و تکالیف هوشمند</div>
-    <div class="header-sub">پوشش کامل ۱۶ حوزه تحصیلی و ۹ سطح آموزشی از ابتدایی تا دکتری</div>
-  </div>
+    <div class="card management-card interactive-row">
+      <strong>مدیریت سامانه: حسین لعلیان</strong>
+      <span>رتبه ۳۲ کنکور دکتری</span>
+      <span>تماس: ۰۹۰۲۳۶۲۶۸۱۴</span>
+    </div>
 
-  <!-- کادر مدیریت -->
-  <div class="interactive-row manager-card" onclick="handleCardClick('مدیریت')">
-    <div class="manager-title">طراح و مدیر پلتفرم: حسین لعلیان</div>
-    <div style="font-size: 14px; color: #93c5fd; font-weight: 700;">رتبه ۳۲ کنکور دکتری | پژوهشگر هوش مصنوعی و الگوریتم</div>
-  </div>
-
-  <!-- کادر میکروفن و ابزار صوتی -->
-  <div class="interactive-row mic-center-box" onclick="handleCardClick('میکروفن')">
-    <div class="mic-icon-wrapper">
-      <svg class="mic-svg" viewBox="0 0 24 24">
+    <div class="mic-banner interactive-row" title="ورودی صوت فعال">
+      <svg viewBox="0 0 24 24">
         <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
         <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
       </svg>
     </div>
-    <div class="mic-controls">
-      <button type="button" class="control-btn btn-record" id="btnRecord" onclick="event.stopPropagation(); toggleVoiceRecord();">
-        🎤 ضبط صدا
-      </button>
-      <button type="button" class="control-btn btn-speak" id="btnSpeak" onclick="event.stopPropagation(); speakOutput();">
-        🔊 خواندن با صدا
-      </button>
-      <input type="file" id="fileInput" accept="image/*,.pdf,.txt" style="display:none;" onchange="handleFileSelected(event)">
-      <button type="button" class="control-btn btn-file" onclick="event.stopPropagation(); document.getElementById('fileInput').click();">
-        📁 بارگذاری تصویر / فایل
-      </button>
-      <div id="filePreview" class="file-preview">
-        <span id="fileName"></span>
-        <button type="button" onclick="event.stopPropagation(); clearFile();" style="background:none;border:none;color:#ef4444;cursor:pointer;font-weight:900;">✕</button>
+
+    <div class="card io-section interactive-row">
+      <div>
+        <label class="label" for="textQ">نتایج</label>
+        <textarea id="textQ" class="interactive-row" placeholder="سؤال خود را وارد کنید..."></textarea>
+        <div id="fileInfo" style="font-size:0.85rem; color:#0284c7; margin-top:4px;"></div>
+      </div>
+      <div>
+        <label class="label">نتایج</label>
+        <div id="systemMessage" class="output-box interactive-row">نتایج در این قسمت نمایش داده می‌شود...</div>
+      </div>
+      <input type="file" id="filePick" class="hidden" accept="image/*">
+    </div>
+
+    <div id="actions" class="wrap" style="gap: 16px;"></div>
+
+    <div class="card interactive-row" style="border-right: 6px solid #10b981;">
+      <h3 style="color: #059669; margin-bottom: 8px;">مزایای خرید بسته‌های اعتباری</h3>
+      <ul style="padding-right: 20px; font-size: 0.95rem; color: #334155; line-height: 1.7;">
+        <li>دسترسی نامحدود به تدریس و حل تمرین تخصصی هوش مصنوعی در کلیه سطوح تحصیلی</li>
+        <li>اولویت در پردازش سریع و پاسخ‌دهی به مسائل پیچیده، فرمول‌ها و نمودارها</li>
+        <li>ذخیره سوابق یادگیری و بهره‌مندی از امکانات صوتی و تصویری بدون قطعی</li>
+      </ul>
+    </div>
+
+    <div class="card interactive-row">
+      <h3 style="margin-bottom: 12px; color: #1e293b;">بسته‌های اعتباری Class-AI</h3>
+      <div class="packages-grid" id="packagesGrid"></div>
+    </div>
+
+    <div class="card interactive-row" style="background: #f0fdf4; border-color: #86efac;">
+      <h3 style="color: #166534; margin-bottom: 8px;">روش پرداخت آفلاین (کارت به کارت)</h3>
+      <p style="font-size: 0.92rem; color: #15803d; line-height: 1.6;">
+        جهت فعال‌سازی یا تمدید اعتبار، مبلغ بسته مورد نظر را به شماره کارت زیر واریز کرده و تصویر فیش واریزی را به همراه ایمیل خود به آدرس زیر ارسال نمایید تا حساب شما بلافاصله شارژ شود:
+      </p>
+      <div style="margin-top: 12px; display:flex; flex-direction:column; gap:6px; font-weight:700;">
+        <div>شماره کارت: <span style="font-family: monospace; font-size:1.1rem; color:#0f172a;">6037991555549678</span>
+          <button class="copy-btn" onclick="copyText('6037991555549678')">کپی شماره کارت</button>
+        </div>
+        <div>ایمیل پشتیبانی و ارسال فیش: <span style="font-family: monospace; color:#0f172a;">Ai.Algorithms.Ballistics@gmail.com</span>
+          <button class="copy-btn" onclick="copyText('Ai.Algorithms.Ballistics@gmail.com')">کپی ایمیل</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- کادر ورودی و نتایج -->
-  <div class="interactive-row results-card" onclick="handleCardClick('نتایج')">
-    <div class="results-header">
-      <span>نتایج</span>
-      <span style="font-size: 13px; color: #94a3b8; font-weight: normal;" id="statusIndicator">آماده دریافت</span>
+    <div class="card interactive-row notice">
+      اخطار مالکیت فکری و حق نشر: کلیه حقوق مادی و معنوی، ساختار و کدهای این سامانه متعلق به حسین لعلیان می‌باشد. هرگونه کپی‌برداری، سوءاستفاده یا بازنشر بدون مجوز پیگرد قانونی دارد.
     </div>
-    <textarea id="textQ" class="textarea-box" placeholder="سوال، مسئله، تمرین یا موضوع خود را اینجا وارد کنید یا کلیدهای سطوح زیر را بزنید..."></textarea>
-    <button type="button" class="control-btn btn-submit" onclick="event.stopPropagation(); executeMainPrompt();">
-      ⚡ دریافت پاسخ تشریحی و کامل
-    </button>
-    <div id="systemMessage" class="output-box">پاسخ‌های تحلیلی، فرمول‌ها و محاسبات هوش مصنوعی در این بخش به نمایش درمی‌آیند.</div>
-  </div>
 
-  <!-- دسته‌بندی‌های ۱۶ گانه و ۹ سطح تحصیلی -->
-  <div id="categoriesContainer" style="display: flex; flex-direction: column; gap: 14px;"></div>
+  </main>
 
-  <!-- ۱. کادر مزیت خرید بسته‌ها -->
-  <div class="interactive-row bold-card benefit-card" onclick="handleCardClick('مزیت بسته‌ها')">
-    <strong>مزیت خرید بسته ها:</strong>
-    اگر مدتی از بسته خود استفاده نکنید،<br>
-    اعتبارتان نزد ما محفوظ میماند و هرگز منقضی و باطل نمیشود!
-  </div>
+  <script>
+    const GAPGPT_API_KEY = "GAPGPTMASKTOKEN5irts9p36aiX0X";
+    const API_URL = "https://api.gapgpt.com/v1/chat/completions";
+    const MODEL = "gpt-4o";
 
-  <!-- ۲. کادر لیست بسته‌های اعتباری -->
-  <div class="interactive-row packages-card" onclick="handleCardClick('بسته‌های اعتباری')">
-    <div class="packages-title">لیست بسته های اعتباری:</div>
-    <div class="packages-grid">
-      <div class="package-chip">۳ میلیون تومان</div>
-      <div class="package-chip">۵ میلیون تومان</div>
-      <div class="package-chip">۱۰ میلیون تومان</div>
-      <div class="package-chip">۲۰ میلیون تومان</div>
-      <div class="package-chip">۵۰ میلیون تومان</div>
-      <div class="package-chip">۱۰۰ میلیون تومان</div>
-      <div class="package-chip">۱۵۰ میلیون تومان</div>
-      <div class="package-chip">۲۰۰ میلیون تومان</div>
-    </div>
-  </div>
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let lastBeepTime = 0;
+    function beep() {
+      const now = Date.now();
+      if (now - lastBeepTime < 120) return;
+      lastBeepTime = now;
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(580, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+      } catch(e) {}
+    }
 
-  <!-- ۳. کادر اعلام روش خرید آفلاین -->
-  <div class="interactive-row bold-card notice-card" onclick="handleCardClick('روش پرداخت')">
-    <span>بدلیل تقلب و سوء استفاده در پرداختهای الکترونیکی ؛از پرداخت الکترونیکی معذوریم!</span>
-    <span>از اینرو تنها روش خرید؛</span>
-    <span>آفلاین و ارسال رسید به ایمیل است !</span>
-  </div>
-
-  <!-- ۴. کادر ایمیل -->
-  <div class="interactive-row bold-card copy-card" style="border-color: #38bdf8;" onclick="handleCardClick('ایمیل')">
-    <div class="copy-data-text">Ai.Algorithms.Ballistics@gmail.com</div>
-    <button type="button" class="copy-btn" onclick="event.stopPropagation(); copyEmail();">
-      📋 کپی کردن ایمیل
-    </button>
-  </div>
-
-  <!-- ۵. کادر شماره کارت -->
-  <div class="interactive-row bold-card copy-card" style="border-color: #38bdf8;" onclick="handleCardClick('شماره کارت')">
-    <div style="font-size: 16px; color: #94a3b8;">شماره کارت:</div>
-    <div class="copy-data-text">6037991555549678</div>
-    <button type="button" class="copy-btn" onclick="event.stopPropagation(); copyCard();">
-      💳 کپی کردن شماره کارت
-    </button>
-  </div>
-
-  <!-- ۶. کادر اخطار مالکیت فکری -->
-  <div class="interactive-row bold-card ip-card" onclick="handleCardClick('مالکیت فکری')">
-    <span class="ip-title">از مالکیت فکری!</span>
-    تمامی حقوق این پلتفرم متعلق به حسین لعلیان میباشد؛<br>
-    لذا هرگونه کپی برداری پیگرد قانونی دارد!
-  </div>
-
-</div>
-
-<script>
-  // صدای بوق تعاملی Web Audio
-  let audioCtx = null;
-  function playBeep() {
-    try {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    document.addEventListener('pointerover', (e) => {
+      const row = e.target.closest('.interactive-row');
+      if (row) {
+        beep();
+        row.classList.add('active-row');
       }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
+    });
+
+    document.addEventListener('pointerout', (e) => {
+      const row = e.target.closest('.interactive-row');
+      if (row) row.classList.remove('active-row');
+    });
+
+    document.addEventListener('pointerdown', (e) => {
+      const row = e.target.closest('.interactive-row');
+      if (row) {
+        beep();
+        row.classList.add('active-row');
       }
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.08);
-    } catch(e) {}
-  }
-
-  // تنظیم بوق برای تمامی ردیف‌های تعاملی
-  document.querySelectorAll('.interactive-row').forEach(row => {
-    row.addEventListener('mouseenter', () => playBeep());
-    row.addEventListener('touchstart', () => playBeep(), {passive: true});
-  });
-
-  function handleCardClick(label) {
-    playBeep();
-  }
-
-  // توابع کپی
-  function copyEmail() {
-    playBeep();
-    navigator.clipboard.writeText('Ai.Algorithms.Ballistics@gmail.com').then(() => {
-      alert('ایمیل با موفقیت کپی شد:\nAi.Algorithms.Ballistics@gmail.com');
-    }).catch(() => {
-      prompt('لطفاً ایمیل را دستی کپی کنید:', 'Ai.Algorithms.Ballistics@gmail.com');
-    });
-  }
-
-  function copyCard() {
-    playBeep();
-    navigator.clipboard.writeText('6037991555549678').then(() => {
-      alert('شماره کارت با موفقیت کپی شد:\n6037991555549678');
-    }).catch(() => {
-      prompt('لطفاً شماره کارت را دستی کپی کنید:', '6037991555549678');
-    });
-  }
-
-  // داده‌های دسته‌بندی ۱۶ گانه و ۹ سطح تحصیلی
-  const categories = [
-    { name: "۱. ریاضیات و هندسه و جبر", color: "bg-c1" },
-    { name: "۲. فیزیک و مکانیک و نجوم", color: "bg-c2" },
-    { name: "۳. شیمی و علوم تجربی و بیوشیمی", color: "bg-c3" },
-    { name: "۴. زیست‌شناسی و پزشکی و علوم پایه", color: "bg-c4" },
-    { name: "۵. کامپیوتر و برنامه‌نویسی و هوش مصنوعی", color: "bg-c5" },
-    { name: "۶. فنی و مهندسی برق و عمران و مکانیک", color: "bg-c6" },
-    { name: "۷. ادبیات و زبان فارسی و عربی", color: "bg-c7" },
-    { name: "۸. زبان انگلیسی و زبان‌های خارجه", color: "bg-c8" },
-    { name: "۹. تاریخ، جغرافیا و علوم اجتماعی", color: "bg-c9" },
-    { name: "۱۰. فلسفه، منطق، دین و زندگی و الهیات", color: "bg-c10" },
-    { name: "۱۱. اقتصاد، مدیریت و حسابداری", color: "bg-c11" },
-    { name: "۱۲. حقوق، علوم قضایی و علوم سیاسی", color: "bg-c12" },
-    { name: "۱۳. هنر، معماری و طراحی", color: "bg-c13" },
-    { name: "۱۴. روانشناسی و علوم تربیتی", color: "bg-c14" },
-    { name: "۱۵. آزمون، نمونه سوال و تکالیف تلفیقی", color: "bg-c15" },
-    { name: "۱۶. پژوهش، تحلیل و نگارش پایان‌نامه", color: "bg-c16" }
-  ];
-
-  const levels = [
-    "ابتدایی",
-    "متوسطه اول",
-    "متوسطه دوم",
-    "تیزهوشان",
-    "المپیادی",
-    "کنکوری",
-    "لیسانس",
-    "فوق‌لیسانس",
-    "دکتری"
-  ];
-
-  // رندر دکمه‌های سطوح
-  const catContainer = document.getElementById('categoriesContainer');
-  categories.forEach(cat => {
-    const section = document.createElement('div');
-    section.className = 'interactive-row category-section';
-    section.addEventListener('mouseenter', () => playBeep());
-    section.addEventListener('touchstart', () => playBeep(), {passive: true});
-
-    const header = document.createElement('div');
-    header.className = 'category-title';
-    header.innerText = cat.name;
-    section.appendChild(header);
-
-    const grid = document.createElement('div');
-    grid.className = 'levels-grid';
-
-    levels.forEach(lvl => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = `level-btn ${cat.color}`;
-      btn.innerText = lvl;
-      btn.onclick = (e) => {
-        e.stopPropagation();
-        playBeep();
-        actionLevel(cat.name, lvl);
-      };
-      grid.appendChild(btn);
     });
 
-    section.appendChild(grid);
-    catContainer.appendChild(section);
-  });
+    document.addEventListener('pointerup', (e) => {
+      const row = e.target.closest('.interactive-row');
+      if (row) row.classList.remove('active-row');
+    });
 
-  function actionLevel(catName, levelName) {
-    const textQ = document.getElementById('textQ');
-    const prefix = `[دسته‌بندی: ${catName} | سطح: ${levelName}]\n`;
-    if (!textQ.value.startsWith(prefix)) {
-      textQ.value = prefix + textQ.value;
+    const levels = [
+      "اول تا ششم ابتدایی",
+      "هفتم تا نهم متوسطه اول",
+      "دهم تا دوازدهم متوسطه دوم",
+      "کنکور سراسری",
+      "کاردانی",
+      "کارشناسی",
+      "کارشناسی ارشد",
+      "کنکور دکتری",
+      "دکتری"
+    ];
+
+    const levelGroups = [
+      {
+        title: "پاسخ به سوال",
+        color: "#2563eb",
+        getLabel: (lvl) => `پاسخ به سوال (${lvl})`,
+        handler: (lvl) => handleUnifiedAnswer(`پاسخ به سوال سطح ${lvl}: `)
+      },
+      {
+        title: "پاسخ به سوال چهارگزینه‌ای",
+        color: "#0891b2",
+        getLabel: (lvl) => `چهارگزینه‌ای (${lvl})`,
+        handler: (lvl) => handleUnifiedAnswer(`پاسخ تشریحی و گزینه صحیح سوال چهارگزینه‌ای سطح ${lvl}: `)
+      },
+      {
+        title: "تدریس و توضیح کامل",
+        color: "#0d9488",
+        getLabel: (lvl) => `تدریس (${lvl})`,
+        handler: (lvl) => quickActionLevel("تدریس و توضیح کامل مبحث", lvl)
+      },
+      {
+        title: "حل تمرین و مساله خط به خط",
+        color: "#16a34a",
+        getLabel: (lvl) => `حل تمرین (${lvl})`,
+        handler: (lvl) => quickActionLevel("حل تمرین و مساله خط به خط با فرمول و توضیحات", lvl)
+      },
+      {
+        title: "تکلیف خانگی با پاسخ تشریحی",
+        color: "#65a30d",
+        getLabel: (lvl) => `تکلیف (${lvl})`,
+        handler: (lvl) => quickActionLevel("حل تکلیف خانگی با پاسخ تشریحی کامل", lvl)
+      },
+      {
+        title: "طرح سوال امتحانی",
+        color: "#d97706",
+        single: true,
+        buttonText: "طرح سوال امتحانی استاندارد",
+        handler: () => quickActionLevel("طرح سوال امتحانی استاندارد همراه با پاسخنامه", "تمام مقاطع")
+      },
+      {
+        title: "سوال دارای جدول، فرمول یا نمودار",
+        color: "#ea580c",
+        single: true,
+        buttonText: "تحلیل سوال جدول، فرمول یا نمودار",
+        handler: () => handleUnifiedAnswer("تحلیل دقیق و پاسخ به سوال دارای جدول، فرمول یا نمودار: ")
+      },
+      {
+        title: "تحلیل و تشریح فرمول‌ها",
+        color: "#dc2626",
+        getLabel: (lvl) => `فرمول‌ها (${lvl})`,
+        handler: (lvl) => quickActionLevel("تحلیل و تشریح فرمول‌ها و اثبات‌ها", lvl)
+      },
+      {
+        title: "تحلیل و رسم نمودار",
+        color: "#9333ea",
+        getLabel: (lvl) => `نمودار (${lvl})`,
+        handler: (lvl) => quickActionLevel("تحلیل، تفسیر و تشریح رسم نمودار", lvl)
+      },
+      {
+        title: "بررسی جدول‌ها و داده‌ها",
+        color: "#c026d3",
+        getLabel: (lvl) => `جدول و داده (${lvl})`,
+        handler: (lvl) => quickActionLevel("بررسی و تحلیل جدول‌ها و داده‌های آماری و علمی", lvl)
+      },
+      {
+        title: "مشاوره تحصیلی و برنامه‌ریزی",
+        color: "#db2777",
+        getLabel: (lvl) => `مشاوره (${lvl})`,
+        handler: (lvl) => quickActionLevel("مشاوره تحصیلی، روش مطالعه و برنامه‌ریزی درسی", lvl)
+      },
+      {
+        title: "ترجمه و نگارش متون تخصصی",
+        color: "#475569",
+        getLabel: (lvl) => `ترجمه/نگارش (${lvl})`,
+        handler: (lvl) => quickActionLevel("ترجمه، بازنویسی و نگارش علمی متون تخصصی", lvl)
+      },
+      {
+        title: "تصحیح و خطایابی متن و پاسخ",
+        color: "#e11d48",
+        getLabel: (lvl) => `خطایابی (${lvl})`,
+        handler: (lvl) => quickActionLevel("تصحیح، رفع اشکال و خطایابی دقیق متن و پاسخ", lvl)
+      },
+      {
+        title: "جمع‌بندی و خلاصه درس",
+        color: "#4f46e5",
+        getLabel: (lvl) => `خلاصه درس (${lvl})`,
+        handler: (lvl) => quickActionLevel("جمع‌بندی نکات کلیدی و خلاصه درس کامل", lvl)
+      },
+      {
+        title: "طراحی آزمون تستی و تشریحی",
+        color: "#0284c7",
+        getLabel: (lvl) => `طراحی آزمون (${lvl})`,
+        handler: (lvl) => quickActionLevel("طراحی آزمون استاندارد تستی و تشریحی با بارم‌بندی و کلید", lvl)
+      },
+      {
+        title: "رفع اشکال آنلاین و پاسخ به سوالات",
+        color: "#059669",
+        getLabel: (lvl) => `رفع اشکال (${lvl})`,
+        handler: (lvl) => quickActionLevel("رفع اشکال فوری و گام‌به‌گام پیرامون سوالات مطرح شده", lvl)
+      }
+    ];
+
+    const actionsContainer = document.getElementById("actions");
+
+    levelGroups.forEach(grp => {
+      const groupEl = document.createElement("div");
+      groupEl.className = "btn-group interactive-row";
+      groupEl.style.setProperty("--group-color", grp.color);
+
+      const header = document.createElement("div");
+      header.className = "btn-group-header";
+      header.textContent = grp.title;
+      groupEl.appendChild(header);
+
+      const grid = document.createElement("div");
+      grid.className = "btn-grid";
+
+      if (grp.single) {
+        grid.appendChild(makeButton(grp.buttonText, grp.handler, grp.color));
+      } else {
+        levels.forEach(lvl => {
+          grid.appendChild(makeButton(grp.getLabel(lvl), () => grp.handler(lvl), grp.color));
+        });
+      }
+
+      groupEl.appendChild(grid);
+      actionsContainer.appendChild(groupEl);
+    });
+
+    const toolsGroup = document.createElement("div");
+    toolsGroup.className = "btn-group interactive-row";
+    toolsGroup.style.setProperty("--group-color", "#334155");
+    toolsGroup.innerHTML = `<div class="btn-group-header">ابزارهای سریع و پاسخ صوتی</div>`;
+    const toolsGrid = document.createElement("div");
+    toolsGrid.className = "btn-grid";
+
+    toolsGrid.appendChild(makeButton("کپی پاسخ", () => action("copy"), "#334155"));
+    toolsGrid.appendChild(makeButton("انتخاب عکس از گالری", () => action("pick"), "#334155"));
+    toolsGrid.appendChild(makeButton("پاک کردن سوال و عکس", () => action("clear"), "#dc2626"));
+    toolsGrid.appendChild(makeButton("پاسخ با صدای من", () => action("voice"), "#0284c7"));
+    toolsGrid.appendChild(makeButton("ذخیره پاسخ صوتی", () => action("save_voice"), "#059669"));
+
+    toolsGroup.appendChild(toolsGrid);
+    actionsContainer.appendChild(toolsGroup);
+
+    function makeButton(text, handler, color) {
+      const btn = document.createElement("button");
+      btn.className = "btn interactive-row";
+      btn.style.setProperty("--group-color", color);
+      btn.textContent = text;
+      btn.addEventListener("click", () => {
+        beep();
+        handler();
+      });
+      return btn;
     }
-    executeMainPrompt(`لطفاً این پرسش یا تمرین را برای دسته‌بندی "${catName}" و در سطح علمی "${levelName}" با نهایت دقت، محاسبات گام‌به‌گام و شیوه رسمی توضیح دهید.`);
-  }
 
-  // فایل پیوست
-  let currentFileBase64 = null;
-  function handleFileSelected(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      currentFileBase64 = e.target.result;
-      document.getElementById('fileName').innerText = '📎 ' + file.name;
-      document.getElementById('filePreview').style.display = 'inline-flex';
-    };
-    reader.readAsDataURL(file);
-  }
+    const packageAmounts = [
+      "۱۰۰,۰۰۰ تومان",
+      "۲۰۰,۰۰۰ تومان",
+      "۳۰۰,۰۰۰ تومان",
+      "۵۰۰,۰۰۰ تومان",
+      "۱,۰۰۰,۰۰۰ تومان",
+      "۲,۰۰۰,۰۰۰ تومان",
+      "۵,۰۰۰,۰۰۰ تومان",
+      "۱۰,۰۰۰,۰۰۰ تومان"
+    ];
+    const packagesGrid = document.getElementById("packagesGrid");
+    packageAmounts.forEach((amt, idx) => {
+      const p = document.createElement("div");
+      p.className = "package-card interactive-row";
+      p.innerHTML = `<div>بسته اعتباری ${idx + 1}</div><div class="amount">${amt}</div><button class="btn btn-secondary interactive-row" style="font-size:0.75rem; padding:4px;" onclick="copyText('واریز جهت بسته ${amt}')">انتخاب بسته</button>`;
+      packagesGrid.appendChild(p);
+    });
 
-  function clearFile() {
-    currentFileBase64 = null;
-    document.getElementById('fileInput').value = '';
-    document.getElementById('filePreview').style.display = 'none';
-  }
+    let currentImageData = null;
+    const filePick = document.getElementById("filePick");
+    const fileInfo = document.getElementById("fileInfo");
+    const textQ = document.getElementById("textQ");
+    const systemMessage = document.getElementById("systemMessage");
 
-  // پردازش هوش مصنوعی با GapGPT API
-  async function executeMainPrompt(customInstruction = '') {
-    const textQ = document.getElementById('textQ');
-    const sysMsg = document.getElementById('systemMessage');
-    const status = document.getElementById('statusIndicator');
+    filePick.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        fileInfo.textContent = `عکس انتخاب شد: ${file.name}`;
+        const reader = new FileReader();
+        reader.onload = (re) => {
+          currentImageData = re.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
 
-    const promptText = textQ.value.trim();
-    if (!promptText && !currentFileBase64) {
-      alert('لطفاً سوال، تمرین یا فایلی را برای بررسی مشخص کنید.');
-      return;
-    }
-
-    playBeep();
-    status.innerText = 'در حال تحلیل و نگارش پاسخ...';
-    sysMsg.innerText = '⏳ هوش مصنوعی در حال پردازش سوال شما با دقیق‌ترین متدهای علمی است. لطفاً چند لحظه شکیبا باشید...';
-
-    const systemPrompt = `تو هوش مصنوعی پیشرفته آموزشی Class-AI هستی. وظیفه تو پاسخ به تکالیف، سوالات، مسائل المپیادی، کنکور و پروژه‌های دانشگاهی است.
-قوانین:
-۱. پاسخ باید کاملاً دقیق، علمی، گام‌به‌گام و ساختاریافته به زبان فارسی باشد.
-۲. از آوردن علائم نامفهوم یا کدهای زائد خودداری کن. فرمول‌ها را منظم و خوانا بنویس.
-۳. در صورتی که سطح و رشته مشخص شده باشد، بیان خود را کاملاً منطبق بر همان سطح تنظیم کن.`;
-
-    let userContent = [];
-    if (customInstruction) {
-      userContent.push({ type: "text", text: customInstruction + "\n\nمتن سوال یا تکلیف:\n" + promptText });
-    } else {
-      userContent.push({ type: "text", text: promptText });
-    }
-
-    if (currentFileBase64) {
-      userContent.push({
-        type: "image_url",
-        image_url: { url: currentFileBase64 }
+    function copyText(str) {
+      navigator.clipboard.writeText(str).then(() => {
+        alert("کپی شد: " + str);
+      }).catch(() => {
+        alert("خطا در کپی متن.");
       });
     }
 
-    try {
-      const response = await fetch('https://api.gapgpt.app/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer GAPGPTMASKTOKEN9pgt0eddbkX0X'
-        },
-        body: JSON.stringify({
-          model: 'gpt-4o',
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: userContent }
-          ],
-          temperature: 0.3
-        })
-      });
+    function quickActionLevel(instruction, lvl) {
+      const currentVal = textQ.value.trim();
+      const prompt = `[${instruction} - مقطع: ${lvl}]\n` + currentVal;
+      textQ.value = prompt;
+      doAI(prompt);
+    }
 
-      if (!response.ok) {
-        throw new Error(`خطای سرور: ${response.status}`);
+    function handleUnifiedAnswer(prefix = "") {
+      const currentVal = textQ.value.trim();
+      if (!currentVal && !currentImageData) {
+        alert("لطفاً ابتدا سوال خود را بنویسید یا عکسی انتخاب کنید.");
+        return;
+      }
+      const prompt = prefix + currentVal;
+      doAI(prompt);
+    }
+
+    async function doAI(userPrompt) {
+      const promptToSend = userPrompt || textQ.value.trim();
+      if (!promptToSend && !currentImageData) {
+        alert("لطفاً متنی بنویسید یا عکسی انتخاب کنید.");
+        return;
       }
 
-      const data = await response.json();
-      const answer = data.choices && data.choices[0] && data.choices[0].message
-        ? data.choices[0].message.content
-        : 'پاسخی از مدل دریافت نشد.';
+      systemMessage.textContent = "در حال پردازش و برقراری ارتباط با هوش مصنوعی Class-AI...";
 
-      sysMsg.innerText = answer;
-      status.innerText = 'پاسخ آماده است';
-      playBeep();
-    } catch (err) {
-      sysMsg.innerText = '⚠️ خطا در برقراری ارتباط: ' + err.message + '\nلطفاً از اتصال اینترنت یا پروکسی خود اطمینان حاصل نمایید.';
-      status.innerText = 'خطا در پردازش';
+      try {
+        const messages = [
+          {
+            role: "system",
+            content: "شما هوش مصنوعی پیشرفته و همه‌جانبه Class-AI هستید؛ معلم و استاد راهنما و مشاور در تمامی دروس و تمامی مقاطع تحصیلی ایران از اول ابتدایی تا دکتری. شما به دقیق‌ترین شکل، گام‌به‌گام و علمی پاسخ می‌دهید."
+          }
+        ];
+
+        if (currentImageData) {
+          messages.push({
+            role: "user",
+            content: [
+              { type: "text", text: promptToSend || "لطفاً این تصویر و سوال داخل آن را تحلیل و پاسخ کامل دهید." },
+              { type: "image_url", image_url: { url: currentImageData } }
+            ]
+          });
+        } else {
+          messages.push({
+            role: "user",
+            content: promptToSend
+          });
+        }
+
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${GAPGPT_API_KEY}`
+          },
+          body: JSON.stringify({
+            model: MODEL,
+            messages: messages,
+            temperature: 0.5
+          })
+        });
+
+        if (!res.ok) {
+          throw new Error(`خطای سرور: ${res.status}`);
+        }
+
+        const data = await res.json();
+        const reply = data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : "پاسخی دریافت نشد.";
+        systemMessage.textContent = reply;
+      } catch (err) {
+        systemMessage.textContent = "خطا در ارتباط: " + err.message + "\nلطفاً اتصال اینترنت خود را بررسی نمایید.";
+      }
     }
-  }
 
-  // ورودی و خروجی صوتی
-  let recognition = null;
-  let isRecording = false;
-
-  function toggleVoiceRecord() {
-    playBeep();
-    const btn = document.getElementById('btnRecord');
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert('مرورگر شما از قابلیت تبدیل صوت به متن پشتیبانی نمی‌کند.');
-      return;
+    function action(type) {
+      if (type === "copy") {
+        copyText(systemMessage.textContent);
+      } else if (type === "pick") {
+        filePick.click();
+      } else if (type === "clear") {
+        textQ.value = "";
+        filePick.value = "";
+        currentImageData = null;
+        fileInfo.textContent = "";
+        systemMessage.textContent = "نتایج در این قسمت نمایش داده می‌شود...";
+      } else if (type === "voice") {
+        const text = systemMessage.textContent;
+        if (!text || text.startsWith("نتایج در این قسمت")) {
+          alert("متن پاسخی برای خواندن وجود ندارد.");
+          return;
+        }
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const ut = new SpeechSynthesisUtterance(text);
+          ut.lang = 'fa-IR';
+          window.speechSynthesis.speak(ut);
+        } else {
+          alert("مرورگر شما از قابلیت خواندن صوتی پشتیبانی نمی‌کند.");
+        }
+      } else if (type === "save_voice") {
+        const text = systemMessage.textContent;
+        if (!text || text.startsWith("نتایج در این قسمت")) {
+          alert("متن پاسخی برای ذخیره صوتی وجود ندارد.");
+          return;
+        }
+        action("voice");
+        alert("پخش صوت آغاز شد. برای ذخیره دائمی فایل صوتی، لطفاً از افزونه‌های ضبط صدا یا نسخه تحت وب سازگار استفاده نمایید.");
+      }
     }
-
-    if (isRecording) {
-      if (recognition) recognition.stop();
-      isRecording = false;
-      btn.innerText = '🎤 ضبط صدا';
-      btn.style.background = '#dc2626';
-      return;
-    }
-
-    recognition = new SpeechRecognition();
-    recognition.lang = 'fa-IR';
-    recognition.interimResults = false;
-
-    recognition.onstart = function() {
-      isRecording = true;
-      btn.innerText = '⏹ در حال گوش دادن...';
-      btn.style.background = '#059669';
-    };
-
-    recognition.onresult = function(event) {
-      const transcript = event.results[0][0].transcript;
-      const textQ = document.getElementById('textQ');
-      textQ.value = (textQ.value ? textQ.value + ' ' : '') + transcript;
-    };
-
-    recognition.onerror = function() {
-      isRecording = false;
-      btn.innerText = '🎤 ضبط صدا';
-      btn.style.background = '#dc2626';
-    };
-
-    recognition.onend = function() {
-      isRecording = false;
-      btn.innerText = '🎤 ضبط صدا';
-      btn.style.background = '#dc2626';
-    };
-
-    recognition.start();
-  }
-
-  function speakOutput() {
-    playBeep();
-    const sysMsg = document.getElementById('systemMessage').innerText;
-    if (!sysMsg || sysMsg.startsWith('پاسخ‌های تحلیلی') || sysMsg.startsWith('⏳')) {
-      alert('ابتدا پاسخی دریافت کنید تا خوانده شود.');
-      return;
-    }
-    if (!('speechSynthesis' in window)) {
-      alert('مرورگر شما از پخش صدا پشتیبانی نمی‌کند.');
-      return;
-    }
-    window.speechSynthesis.cancel();
-    const cleanText = sysMsg.replace(/[*#_`]/g, '');
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'fa-IR';
-    utterance.rate = 0.95;
-    window.speechSynthesis.speak(utterance);
-  }
-</script>
-
+  </script>
 </body>
 </html>
