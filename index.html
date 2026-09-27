@@ -3,915 +3,537 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Teacher-AI | پلتفرم آموزشی هوشمند</title>
-  <meta name="description" content="Teacher-AI پلتفرم آموزشی هوشمند برای تحلیل سوال، پاسخ‌دهی، تکلیف، امتحان، جدول، فرمول، نمودار، ترجمه، تدریس و مشاوره." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <title>Class-AI | سامانه هوشمند کلاس، تدریس و آزمون</title>
+  
+  <!-- فونت و کتابخانه‌های رندر فرمول و متن -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+
   <style>
-    :root{
-      --bg1:#0f1020;
-      --bg2:#171a33;
-      --card:#14172b;
-      --card2:#1c2040;
-      --text:#f4f7ff;
-      --muted:#c7d0ff;
-      --line:rgba(255,255,255,.12);
-      --red:#ff3b4d;
-      --yellow:#ffcc33;
-      --green:#21d07a;
-      --blue:#3ea6ff;
-      --purple:#9c6bff;
-      --pink:#ff5cc8;
-      --orange:#ff8a3d;
-      --shadow:0 10px 30px rgba(0,0,0,.25);
-      --radius:20px;
+    :root {
+      --bg-dark: #0a0f1d;
+      --card-bg: rgba(16, 24, 48, 0.95);
+      --red-glow: #ff003c;
+      --cyan: #00f0ff;
+      --green: #00ff66;
+      --yellow: #ffb703;
+      --purple: #9d4edd;
+      --orange: #ff7b00;
+      --blue: #2196f3;
+      --pink: #ff007f;
+      --teal: #00b4d8;
     }
 
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      font-family:"Vazirmatn", sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(156,107,255,.18), transparent 25%),
-        radial-gradient(circle at top left, rgba(62,166,255,.16), transparent 28%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
-      color:var(--text);
-      min-height:100vh;
-      line-height:1.85;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Tahoma, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .container{
-      width:min(1400px, 94%);
-      margin:20px auto 60px;
+    body {
+      background: radial-gradient(circle at top, #141e30, #0a0f1d);
+      color: #f1f5f9;
+      padding: 15px;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    .hero{
-      text-align:center;
-      margin-bottom:20px;
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    .hero h1{
-      margin:0;
-      font-size:clamp(2rem,5vw,3.2rem);
-      font-weight:900;
-      color:#fff;
-      text-shadow:0 4px 18px rgba(0,0,0,.35);
+    /* انیمیشن لرزش و حاشیه قرمز */
+    @keyframes shakeGlow {
+      0% { transform: translate(0, 0) scale(1.02); border-color: var(--red-glow); box-shadow: 0 0 20px var(--red-glow); }
+      20% { transform: translate(-3px, 2px) scale(1.02); }
+      40% { transform: translate(3px, -2px) scale(1.02); }
+      60% { transform: translate(-3px, -2px) scale(1.02); }
+      80% { transform: translate(3px, 2px) scale(1.02); }
+      100% { transform: translate(0, 0) scale(1.02); border-color: var(--red-glow); box-shadow: 0 0 25px var(--red-glow); }
     }
 
-    .hero p{
-      margin:10px auto 0;
-      max-width:1000px;
-      color:var(--muted);
-      font-size:1.02rem;
-      font-weight:500;
+    .interactive-card, .interactive-btn {
+      transition: all 0.25s ease;
+      cursor: pointer;
+      position: relative;
     }
 
-    .top-cards{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:16px;
-      margin:22px 0 18px;
+    .interactive-card:hover, .interactive-card:active {
+      animation: shakeGlow 0.35s infinite alternate ease-in-out;
+      border-color: var(--red-glow) !important;
+      z-index: 5;
     }
 
-    .feature-card{
-      position:relative;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border:2px solid rgba(255,255,255,.08);
-      border-radius:24px;
-      padding:18px 18px 16px;
-      box-shadow:var(--shadow);
-      backdrop-filter:blur(8px);
-      transition:.25s ease;
-      overflow:hidden;
+    .interactive-btn:hover, .interactive-btn:active {
+      animation: shakeGlow 0.25s infinite alternate ease-in-out;
+      border-color: var(--red-glow) !important;
+      transform: scale(1.04);
+      z-index: 5;
     }
 
-    .feature-card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent);
-      transform:translateX(-120%);
-      transition:.6s ease;
-      pointer-events:none;
+    /* استایل کادرها */
+    .card {
+      background: var(--card-bg);
+      border: 2px solid #233554;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
     }
 
-    .feature-card:hover::before,
-    .feature-card:focus-within::before{
-      transform:translateX(120%);
+    .card-banner {
+      background: linear-gradient(135deg, rgba(255, 0, 60, 0.2), rgba(0, 240, 255, 0.2));
+      border: 2px solid var(--cyan);
+      text-align: center;
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: #ffffff;
+      line-height: 1.8;
     }
 
-    .feature-card:hover,
-    .feature-card:focus-within{
-      border-color:var(--red);
-      transform:translateY(-4px);
-      animation:jiggle .35s linear;
-      box-shadow:0 0 0 2px rgba(255,59,77,.15), 0 16px 36px rgba(0,0,0,.35);
+    .card-title-box {
+      border: 2px solid var(--purple);
+      text-align: center;
     }
 
-    .feature-card h3{
-      margin:0 0 10px;
-      font-size:1.2rem;
-      font-weight:900;
-      color:#fff;
+    .card-title-box h1 {
+      color: var(--cyan);
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      text-shadow: 0 0 15px rgba(0,240,255,0.6);
     }
 
-    .feature-card p{
-      margin:0;
-      color:#eef2ff;
-      font-size:.98rem;
-      font-weight:500;
-      white-space:pre-line;
+    .card-title-box p {
+      margin: 6px 0;
+      color: #e2e8f0;
+      font-size: 1rem;
+      font-weight: 600;
     }
 
-    .panel{
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:18px;
-      box-shadow:var(--shadow);
-      margin-top:18px;
+    .card-services {
+      border: 2px solid var(--green);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+      text-align: center;
+      font-weight: bold;
+      color: #d1fae5;
     }
 
-    .section-title{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin:0 0 12px;
-      font-size:1.2rem;
-      font-weight:900;
-      color:#fff;
+    .card-management {
+      border: 2px solid var(--yellow);
+      background: linear-gradient(135deg, rgba(255, 183, 3, 0.1), rgba(16, 24, 48, 0.95));
+      text-align: center;
+      line-height: 1.9;
     }
 
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:34px;
-      height:34px;
-      border-radius:999px;
-      padding:0 12px;
-      background:linear-gradient(135deg, var(--purple), var(--blue));
-      color:#fff;
-      font-weight:900;
-      box-shadow:var(--shadow);
+    .card-management h3 {
+      color: var(--yellow);
+      font-size: 1.3rem;
+      margin-bottom: 6px;
     }
 
-    .intro-text{
-      color:#eef2ff;
-      font-size:1rem;
-      font-weight:500;
-      margin:0;
+    /* کادر ورودی و عملکرد */
+    .input-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .controls-wrap{
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:18px;
-      margin-top:18px;
+    .input-label {
+      font-weight: bold;
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    label.main-label,
-    .result-title{
-      display:block;
-      margin-bottom:10px;
-      font-size:1.06rem;
-      font-weight:900;
-      color:#fff;
+    textarea {
+      width: 100%;
+      height: 140px;
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 10px;
+      color: #fff;
+      padding: 14px;
+      font-size: 1.05rem;
+      resize: vertical;
+      outline: none;
+      transition: border 0.3s;
     }
 
-    textarea{
-      width:100%;
-      min-height:210px;
-      border:none;
-      outline:none;
-      resize:vertical;
-      border-radius:18px;
-      padding:16px;
-      font:inherit;
-      color:#fff;
-      background:rgba(255,255,255,.08);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+    textarea:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 10px rgba(0,240,255,0.3);
     }
 
-    textarea::placeholder{
-      color:#d7ddffb3;
+    .voice-media-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .upload-box{
-      margin-top:14px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
+    /* گروه‌بندی دکمه‌ها با رنگ اختصاصی */
+    .btn-group-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
-    .preview{
-      margin-top:12px;
-      display:none;
-      border-radius:18px;
-      overflow:hidden;
-      border:2px solid rgba(255,255,255,.1);
-      background:#0b0d1e;
+    .btn-group-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding-bottom: 4px;
+      border-bottom: 2px dashed rgba(255,255,255,0.15);
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .preview img{
-      width:100%;
-      max-height:280px;
-      object-fit:contain;
-      display:block;
-      background:#0b0d1e;
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 8px;
     }
 
-    .results{
-      min-height:420px;
-      background:rgba(255,255,255,.08);
-      border-radius:18px;
-      padding:16px;
-      white-space:pre-wrap;
-      overflow:auto;
-      color:#fff;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+    button {
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      font-weight: bold;
+      color: #ffffff;
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
 
-    .placeholder{
-      color:#d7ddffcc;
+    /* پالت‌های رنگی اختصاصی هر دسته */
+    .btn-cyan    { background: #0077b6; border-color: #0096c7; }
+    .btn-purple  { background: #6a0dad; border-color: #8a2be2; }
+    .btn-red     { background: #b91c1c; border-color: #ef4444; }
+    .btn-green   { background: #15803d; border-color: #22c55e; }
+    .btn-orange  { background: #c2410c; border-color: #ea580c; }
+    .btn-pink    { background: #a21caf; border-color: #d946ef; }
+    .btn-yellow  { background: #a16207; border-color: #eab308; }
+    .btn-blue    { background: #1d4ed8; border-color: #3b82f6; }
+    .btn-teal    { background: #0f766e; border-color: #14b8a6; }
+    .btn-emerald { background: #047857; border-color: #10b981; }
+
+    /* کادر نتایج */
+    .result-box {
+      border: 2px solid var(--cyan);
+      background: #090e17;
+      min-height: 180px;
+      max-height: 600px;
+      overflow-y: auto;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #f8fafc;
     }
 
-    .buttons-section{
-      margin-top:20px;
+    .result-box pre {
+      background: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
     }
 
-    .button-group{
-      margin-bottom:16px;
-      padding:14px;
-      border-radius:20px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
+    /* کادرهای پایانی و تعرفه‌ها */
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
     }
 
-    .group-title{
-      margin:0 0 10px;
-      font-size:1rem;
-      font-weight:900;
-      color:#fff;
+    .package-item {
+      background: rgba(255, 183, 3, 0.15);
+      border: 1px solid var(--yellow);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      color: #ffd166;
     }
 
-    .btn-grid{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
+    .copy-btn {
+      background: #334155;
+      border: 1px solid #64748b;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-right: 10px;
+      cursor: pointer;
     }
 
-    button,
-    .fake-button,
-    .file-label{
-      border:none;
-      outline:none;
-      cursor:pointer;
-      border-radius:14px;
-      padding:11px 15px;
-      font:inherit;
-      font-weight:900;
-      color:#fff;
-      transition:.2s ease;
-      box-shadow:0 8px 20px rgba(0,0,0,.8px;
-      justify-content:center;
-      min-height:46px;
-      user-select:none:8px;
-      justify-content:center;
-      min-height:46px;
-      user-select:none;
-    }
-
-    button:hover,
-    button:focus-visible,
-    .file-label:hover,
-    .file-label:focus-visible{
-      border-color:var(--red);
-      transform:translateY(-2px);
-      animation:jiggle .35s linear;
-      box-shadow:0 0 0 2px rgba(255,59,77,.18), 0 12px 24px rgba(0,0,0,.25);
-    }
-
-    button:disabled{
-      opacity:.6;
-      cursor:not-allowed;
-      transform:none !important;
-      animation:none !important;
-    }
-
-    .btn-red{background:linear-gradient(135deg,#ff4b5f,#d61d55)}
-    .btn-blue{background:linear-gradient(135deg,#3ea6ff,#1f6dff)}
-    .btn-green{background:linear-gradient(135deg,#26d07c,#0da85f)}
-    .btn-purple{background:linear-gradient(135deg,#9c6bff,#6d37ff)}
-    .btn-orange{background:linear-gradient(135deg,#ff9a3d,#ff5f2e)}
-    .btn-pink{background:linear-gradient(135deg,#ff62c7,#ff2c93)}
-    .btn-yellow{background:linear-gradient(135deg,#ffd84a,#ffb300); color:#1d1600}
-    .btn-dark{background:linear-gradient(135deg,#2b315c,#1a1f3b)}
-
-    .toolbar{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .payments{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-      margin-top:20px;
-    }
-
-    .package-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .package{
-      padding:12px;
-      border-radius:16px;
-      text-align:center;
-      font-weight:900;
-      background:linear-gradient(135deg, rgba(62,166,255,.2), rgba(156,107,255,.2));
-      border:1px solid rgba(255,255,255,.12);
-    }
-
-    .pay-box p{
-      margin:.4rem 0;
-      color:#eef2ff;
-      font-weight:600;
-    }
-
-    .inline-copy{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:10px;
-      align-items:center;
-    }
-
-    .footer-note{
-      margin-top:18px;
-      color:#ffdede;
-      font-weight:800;
-      background:rgba(255,59,77,.08);
-      border:1px solid rgba(255,59,77,.2);
-      padding:14px;
-      border-radius:16px;
-    }
-
-    .mic-icon{
-      width:18px;
-      height:18px;
-      display:inline-block;
-      vertical-align:middle;
-      fill:currentColor;
-    }
-
-    input[type="file"]{
-      display:none;
-    }
-
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom:18px;
-      transform:translateX(-50%);
-      background:#11162d;
-      color:#fff;
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:14px;
-      padding:12px 16px;
-      box-shadow:var(--shadow);
-      z-index:9999;
-      opacity:0;
-      pointer-events:none;
-      transition:.25s ease;
-      max-width:min(90vw,700px);
-      text-align:center;
-    }
-
-    .toast.show{
-      opacity:1;
-    }
-
-    @keyframes jiggle{
-      0%{transform:translateY(-2px) rotate(0)}
-      20%{transform:translateY(-2px) rotate(-1.5deg)}
-      40%{transform:translateY(-2px) rotate(1.5deg)}
-      60%{transform:translateY(-2px) rotate(-1deg)}
-      80%{transform:translateY(-2px) rotate(1deg)}
-      100%{transform:translateY(-2px) rotate(0)}
-    }
-
-    @media (max-width:1100px){
-      .top-cards{grid-template-columns:1fr}
-      .controls-wrap{grid-template-columns:1fr}
-      .payments{grid-template-columns:1fr}
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      *{
-        animation:none !important;
-        transition:none !important;
-        scroll-behavior:auto !important;
-      }
+    .copy-btn:hover {
+      background: var(--green);
+      color: #000;
+      border-color: var(--green);
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <section class="hero">
-      <h1>Teacher-AI</h1>
-      <p>
-        پلتفرم آموزشی هوشمند Teacher-AI برای کمک به آموزش مجازی و عادی، تحلیل سوال، پاسخ‌دهی، بررسی تکلیف،
-        آزمون، نمودار، جدول، فرمول، ترجمه، تدریس، مشاوره و پیشرفت تحصیلی طراحی شده است.
-      </p>
-    </section>
 
-    <section class="top-cards">
-      <article class="feature-card hover-beep" tabindex="0">
-        <h3>Teacher-AI</h3>
-        <p>پلتفرم آموزشی هوشمند Teacher-AI
-قابل استفاده در آموزش مجازی
-قابل استفاده در آموزش عادی
-کمک به پیشرفت تحصیلی و آموزشی</p>
-      </article>
+<div class="container">
 
-      <article class="feature-card hover-beep" tabindex="0">
-        <h3>کاربرد در امتحان و تکلیف</h3>
-        <p>قابل استفاده برای تکلیف کتبی
-قابل استفاده برای تکلیف شفاهی
-قابل استفاده برای امتحان کتبی
-قابل استفاده برای امتحان شفاهی</p>
-      </article>
-
-      <article class="feature-card hover-beep" tabindex="0">
-        <h3>مدیریت مجموعه</h3>
-        <p>حسین لعلیان
-رتبه ۳۲ کنکور دکتری
-تحصیل در دانشکده‌های شیلات، شیمی، زبان، مدیریت، مهندسی آی تی و مهندسی صنایع
-صحت موضوع را از وزارت علوم جویا شوید!</p>
-      </article>
-    </section>
-
-    <section class="panel">
-      <h2 class="section-title"><span class="badge">AI</span> معرفی پلتفرم</h2>
-      <p class="intro-text">
-        Teacher-AI یک پلتفرم آموزشی هوشمند و کاربردی است که برای استفاده در کلاس، خانه، آموزش مجازی،
-        آموزش عادی، تکلیف‌های کلاسی، سوالات امتحانی، تحلیل پاسخ، تحلیل تله‌های سوال، تحلیل جدول، فرمول،
-        نمودار و پاسخ‌دهی دقیق و آموزشی طراحی شده است.
-      </p>
-    </section>
-
-    <section class="controls-wrap">
-      <div class="panel">
-        <label for="userInput" class="main-label">نوشتن سوال امتحانی، تکلیف کلاسی و کپی پیست مطلب امتحانی، تکلیف کلاسی</label>
-        <textarea id="userInput" placeholder="سوال، تکلیف، متن امتحانی یا هر محتوایی را اینجا بنویسید یا Paste کنید..."></textarea>
-
-        <div class="upload-box">
-          <label class="file-label btn-blue hover-beep" for="imageInput">انتخاب عکس از گالری</label>
-          <input type="file" id="imageInput" accept="image/*" aria-label="انتخاب عکس از گالری" />
-          <button type="button" id="clearImageBtn" class="btn-dark hover-beep">حذف عکس</button>
-        </div>
-
-        <div id="imagePreview" class="preview">
-          <img id="previewImg" alt="پیش‌نمایش تصویر انتخاب‌شده" />
-        </div>
-
-        <div class="toolbar">
-          <button type="button" id="copyBtn" class="btn-green hover-beep">کپی کردن پاسخ</button>
-          <button type="button" id="clearBtn" class="btn-red hover-beep">سطل اشغال (پاک کردن سوال/پاسخ قبلی)</button>
-          <button type="button" id="speakBtn" class="btn-purple hover-beep">
-            <svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm5-3a1 1 0 1 1 2 0 7 7 0 0 1-6 6.92V21h3a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2h3v-2.08A7 7 0 0 1 5 12a1 1 0 1 1 2 0 5 5 0 0 0 10 0z"/>
-            </svg>
-            پاسخ با صدای من
-          </button>
-          <button type="button" id="saveVoiceBtn" class="btn-pink hover-beep">ذخیره پاسخ صوتی</button>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="result-title">نتایج</div>
-        <div id="results" class="results"><span class="placeholder">پاسخ‌ها و تحلیل‌ها اینsection class=" می‌شوند.</span></div>
-      </div>
-    </section>
-
-    <section class="panel buttons-section">
-      <h2 class="section-title"><span class="badge">9</span> دکمه‌های آموزشی و تحلیلی</h2>
-      <div id="dynamicButtons"></div>
-
-      <div class="button-group">
-        <h3 class="group-title">ابزارهای تکمیلی</h3>
-        <div class="btn-grid" id="extraButtons"></div>
-      </div>
-    </section>
-
-    <section class="payments">
-      <div class="panel">
-        <h2 class="section-title"><span class="badge">₮</span> بسته‌های اعتباری</h2>
-        <p class="intro-text">اعتبار خریداری‌شده منقضی نمی‌شود.</p>
-        <div class="package-grid">
-          <div class="package">۳ میلیون تومان</div>
-          <div class="package">۵ میلیون تومان</div>
-          <div class="package">۱۰ میلیون تومان</div>
-          <div class="package">۲۰ میلیون تومان</div>
-          <div class="package">۵۰ میلیون تومان</div>
-          <div class="package">۱۰۰ میلیون تومان</div>
-          <div class="package">۱۵۰ میلیون تومان</div>
-          <div class="package">۲۰۰ میلیون تومان</div>
-          <div class="package">۲۵۰ میلیون تومان</div>
-        </div>
-      </div>
-
-      <div class="panel pay-box">
-        <h2 class="section-title"><span class="badge">💳</span> پرداخت آفلاین و ارسال رسید</h2>
-        <p>برای شارژ حساب، پرداخت به‌صورت آفلاین انجام شود و رسید ارسال گردد.</p>
-        <p><strong>ایمیل:</strong> Ai.Algorithms.Ballistics@gmail.com</p>
-        <div class="inline-copy">
-          <button type="button" class="btn-blue hover-beep copy-text" data-copy="Ai.Algorithms.Ballistics@gmail.com">کپی ایمیل</button>
-        </div>
-        <p><strong>شماره کارت:</strong> 6037991555549678</p>
-        <div class="inline-copy">
-          <button type="button" class="btn-green hover-beep copy-text" data-copy="6037991555549678">کپی شماره کارت</button>
-        </div>
-
-        <div class="footer-note">
-          مالکیت فکری این پلتفرم متعلق به حسین لعلیان است.
-        </div>
-      </div>
-    </section>
+  <!-- کادر بنر پیشرفت علمی فرزندان ایران -->
+  <div class="card card-banner interactive-card" onmouseenter="playBeep()" ontouchstart="playBeep()">
+    🌟 این پلتفرم هم در شرایط عادی و هم در شرایط مجازی به پیشرفت علمی فرزندان ایران زمین کمک میکند! 🌟
   </div>
 
-  <div id="toast" class="toast" aria-live="polite"></div>
+  <!-- کادر اول: عنوان سامانه -->
+  <div class="card card-title-box interactive-card" onmouseenter="playBeep()" ontouchstart="playBeep()">
+    <h1>Class-AI</h1>
+    <p>🔹 پلتفرم انجام دهنده تکلیف و امتحان توی خونه مجازی توسط هوش مصنوعی</p>
+    <p>🔹 پلتفرم کلاس درس مدرسه و دانشگاه و موسسه کنکوری مجازی توی خونه توسط هوش مصنوعی</p>
+    <p>🔹 پلتفرم موسسه کنکور مجازی توسط هوش مصنوعی</p>
+    <p>🔹 پلتفرم دانشگاه مجازی توسط هوش مصنوعی</p>
+  </div>
 
-  <script>
-    const API_URL = "https://api.gapgpt.com/v1/chat/completions";
-    const API_KEY = "sk-YEWAsiCZb4mIRZXFphpQ3GOB0tT6njq7LlOCCS5gOsdCInhO"; // کلید خودت را اینجا قرار بده
+  <!-- کادر دوم: خدمات کتبی و شفاهی -->
+  <div class="card card-services interactive-card" onmouseenter="playBeep()" ontouchstart="playBeep()">
+    <div>📝 پلتفرم تکلیف کتبی مجازی توسط هوش مصنوعی</div>
+    <div>🗣️ پلتفرم تکلیف شفاهی مجازی توسط هوش مصنوعی</div>
+    <div>📑 پلتفرم امتحان کتبی مجازی توسط هوش مصنوعی</div>
+    <div>🎙️ پلتفرم امتحان شفاهی مجازی توسط هوش مصنوعی</div>
+  </div>
 
-    const levels = [
-      "دانش آموز ابتدایی",
-      "دانش آموز متوسطه اول",
-      "دانش آموز متوسطه دوم",
-      "تیزهوشان",
-      "المپیادی",
-      "کنکوری",
-      "لیسانس",
-      "فوق لیسانس",
-      "دکتری"
-    ];
+  <!-- کادر سوم: اطلاعات مدیریت -->
+  <div class="card card-management interactive-card" onmouseenter="playBeep()" ontouchstart="playBeep()">
+    <h3>🎓 مدیریت: حسین لعلیان (رتبه ۳۲ کنکور دکتری)</h3>
+    <p>مفتخر به تحصیل در ۶ دانشکده: <strong>شیلات، شیمی، زبان، مدیریت، مهندسی آی‌تی و مهندسی صنایع</strong></p>
+    <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 4px;">صحت موضوع را از وزارت علوم جویا شوید!</p>
+  </div>
 
-    const groupedActions = [
-      { title: "پاسخ سوال", prefix: "به این سوال در سطح %LEVEL% پاسخ کامل، آموزشی، دقیق و مرحله‌به‌مرحله بده:", color: "btn-blue" },
-      { title: "آنالیز سوال", prefix: "این سوال را در سطح %LEVEL% به‌صورت آموزشی و دقیق تحلیل کن:", color: "btn-purple" },
-      { title: "آنالیز تله درون سوال", prefix: "تله‌ها و دام‌های مفهومی این سوال را در سطح %LEVEL% تحلیل کن:", color: "btn-red" },
-      { title: "آنالیز پاسخ", prefix: "پاسخ این سوال را در سطح %LEVEL% تحلیل و ارزیابی کن:", color: "btn-green" },
-      { title: "آنالیز سوال درون عکس", prefix: "سوال موجود در این تصویر را در سطح %LEVEL% تحلیل کن:", color: "btn-orange", requiresImage: true },
-      { title: "آنالیز عکس", prefix: "این تصویر را در سطح %LEVEL% با نگاه آموزشی و درسی تحلیل کن:", color: "btn-pink", requiresImage: true },
-      { title: "چهار جوابی کردن", prefix: "این سوال را در سطح %LEVEL% به یک سوال چهارگزینه‌ای استاندارد تبدیل کن:", color: "btn-yellow" },
-      { title: "آنالیز سوال چهار جوابی", prefix: "این سوال چهارگزینه‌ای را در سطح %LEVEL% تحلیل کن:", color: "btn-blue" },
-      { title: "پاسخ به سوال چهار جوابی", prefix: "به این سوال چهارگزینه‌ای در سطح %LEVEL% پاسخ بده و گزینه درست را مشخص کن:", color: "btn-green" },
-      { title: "آنالیز پاسخ سوال چهار جوابی", prefix: "پاسخ سوال چهارگزینه‌ای را در سطح %LEVEL% تحلیل کن و علت درستی/نادرستی گزینه‌ها را بگو:", color: "btn-purple" },
-      { title: "آنالیز تله درون سوال چهار جوابی", prefix: "تله‌های درون این سوال چهارگزینه‌ای را در سطح %LEVEL% تحلیل کن:", color: "btn-red" },
-      { title: "آنالیز سوال امتحانی، کنکوری، تکلیف کلاسی پرسیده شده در خونه", prefix: "این سوال امتحانی، کنکوری یا تکلیف کلاسی را در سطح %LEVEL% تحلیل کن:", color: "btn-orange" },
-      { title: "آنالیز سوالات دارای جدول-فرمول-نمودار", prefix: "این سوال دارای جدول، فرمول یا نمودار را در سطح %LEVEL% تحلیل کن:", color: "btn-pink" },
-      { title: "آنالیز تله سوالات دارای جدول-فرمول-نمودار", prefix: "تله‌های این سوال دارای جدول، فرمول یا نمودار را در سطح %LEVEL% تحلیل کن:", color: "btn-dark" }
-    ];
+  <!-- بخش ورودی سوال و چندرسانه‌ای -->
+  <div class="card input-section">
+    <div class="input-label">
+      <i class="fa-solid fa-pen-to-square"></i>
+      مکان : نوشتن سوال امتحانی، تکلیف کلاسی و کپی پیست مطلب امتحانی، تکلیف کلاسی
+    </div>
+    
+    <textarea id="questionInput" placeholder="سوال، تمرین، مبحث درسی یا فرمول و تست مورد نظر خود را اینجا بنویسید یا الصاق کنید..."></textarea>
 
-    const extraActions = [
-      { title: "پرسیدن سوال امتحانی، کنکوری، تکلیف کلاسی در خونه", prefix: "به این سوال امتحانی، کنکوری یا تکلیف خانگی پاسخ آموزشی و دقیق بده:", color: "btn-blue" },
-      { title: "سوال دارای جدول-فرمول-نمودار", prefix: "به این سوال دارای جدول، فرمول یا نمودار پاسخ کامل و آموزشی بده:", color: "btn-purple" },
-      { title: "تدریس", prefix: "این مبحث را کامل و روان تدریس کن:", color: "btn-green" },
-      { title: "حل تمرین", prefix: "این تمرین را کامل، مرحله‌به‌مرحله و آموزشی حل کن:", color: "btn-orange" },
-      { title: "تکلیف خانگی", prefix: "برای این تکلیف خانگی پاسخ دقیق و مناسب آماده کن:", color: "btn-pink" },
-      { title: "طرح سوال امتحانی", prefix: "از این مبحث چند سوال امتحانی استاندارد طراحی کن:", color: "btn-yellow" },
-      { title: "نمودار", prefix: "اگر لازم است برای این موضوع نمودار مناسب توضیحی ارائه کن:", color: "btn-blue" },
-      { title: "جدول", prefix: "اگر لازم است پاسخ را در قالب جدول منظم ارائه کن:", color: "btn-green" },
-      { title: "فرمول", prefix: "فرمول‌ها و روابط لازم این موضوع را استخراج و توضیح بده:", color: "btn-purple" },
-      { title: "مشاوره", prefix: "برای این موضوع مشاوره آموزشی و روش مطالعه ارائه کن:", color: "btn-orange" },
-      { title: "ترجمه", prefix: "این متن را دقیق و روان ترجمه کن:", color: "btn-pink" },
-      { title: "تصحیح", prefix: "این متن یا پاسخ را از نظر علمی، نگارشی و مفهومی تصحیح کن:", color: "btn-red" },
-      { title: "خلاصه", prefix: "از این مطلب یک خلاصه دقیق و کاربردی تهیه کن:", color: "btn-dark" }
-    ];
+    <div class="voice-media-bar">
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <!-- عکس میکروفن و کنترل صوت -->
+        <button class="interactive-btn btn-green" id="voiceRecordBtn" onclick="toggleVoiceRecording()">
+          <i class="fa-solid fa-microphone fa-lg"></i> <span id="voiceStatusText">پاسخ با صدای من</span>
+        </button>
+        <button class="interactive-btn btn-teal" onclick="saveAudioResponse()">
+          <i class="fa-solid fa-floppy-disk"></i> ذخیره پاسخ صوتی
+        </button>
+        <button class="interactive-btn btn-purple" onclick="document.getElementById('imageUpload').click()">
+          <i class="fa-solid fa-image"></i> انتخاب عکس از گالری
+        </button>
+        <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="handleImageSelected(event)" />
+      </div>
 
-    const userInput = document.getElementById("userInput");
-    const imageInput = document.getElementById("imageInput");
-    const imagePreview = document.getElementById("imagePreview");
-    const previewImg = document.getElementById("previewImg");
-    const results = document.getElementById("results");
-    const dynamicButtons = document.getElementById("dynamicButtons");
-    const extraButtons = document.getElementById("extraButtons");
-    const copyBtn = document.getElementById("copyBtn");
-    const clearBtn = document.getElementById("clearBtn");
-    const clearImageBtn = document.getElementById("clearImageBtn");
-    const speakBtn = document.getElementById("speakBtn");
-    const saveVoiceBtn = document.getElementById("saveVoiceBtn");
-    const toast = document.getElementById("toast");
+      <div style="display: flex; gap: 8px;">
+        <button class="interactive-btn btn-yellow" onclick="copyResults()">
+          <i class="fa-solid fa-copy"></i> کپی کردن پاسخ
+        </button>
+        <button class="interactive-btn btn-red" onclick="clearAll()">
+          <i class="fa-solid fa-trash-can"></i> سطل آشغال (پاک کردن)
+        </button>
+      </div>
+    </div>
+    <div id="imagePreviewContainer" style="display:none; margin-top: 8px;">
+      <img id="imagePreview" src="" alt="پیش‌نمایش تصویر" style="max-height: 140px; border-radius: 8px; border: 2px solid var(--purple);" />
+    </div>
+  </div>
 
-    let selectedImageDataUrl = "";
-    let currentUtterance = null;
-    let activeButton = null;
-    let audioCtx = null;
-    let lastBeep = 0;
+  <!-- کادر نتایج -->
+  <div class="card">
+    <div style="font-weight: bold; color: var(--cyan); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+      <span><i class="fa-solid fa-square-poll-vertical"></i> نتایج</span>
+      <span id="loadingIndicator" style="display:none; color: var(--yellow); font-size: 0.9rem;">
+        <i class="fa-solid fa-spinner fa-spin"></i> در حال پردازش توسط هوش مصنوعی...
+      </span>
+    </div>
+    <div id="outputContent" class="result-box interactive-card" onmouseenter="playBeep()" ontouchstart="playBeep()">
+      نتیجه تحلیل، حل تمرین یا آزمون اینجا نمایش داده می‌شود...
+    </div>
+  </div>
 
-    function showToast(message){
-      toast.textContent = message;
-      toast.classList.add("show");
-      clearTimeout(showToast._timer);
-      showToast._timer = setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2600);
-    }
+  <!-- مجموعه دکمه‌های ابزارها و مقاطع تحصیلی -->
+  <div class="btn-group-container">
 
-    function setResult(text, isHtml = false){
-      if(isHtml){
-        results.innerHTML = text;
-      }else{
-        results.textContent = text;
-      }
-    }
+    <!-- ۱. پاسخ سوال -->
+    <div class="btn-group-title" style="color: var(--cyan);"><i class="fa-solid fa-reply"></i> پاسخ سوال در کلیه مقاطع:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-cyan" onclick="executeAI('پاسخ سوال', 'ابتدایی')">پاسخ سوال در سطح دانش آموز ابتدایی</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('پاسخ سوال', 'متوسطه اول')">پاسخ سوال در سطح دانش آموز متوسطه اول</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('پاسخ سوال', 'متوسطه دوم')">پاسخ سوال در سطح دانش آموز متوسطه دوم</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('پاسخ سوال', 'تیزهوشان')">پاسخ سوال در سطح تیزهوشان</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('پاسخ سوال', 'المپیادی')">پاسخ سوال در سطح المپیادی</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('پاسخ سوال', 'کنکوری')">پاسخ سوال در سطح کنکوری</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('پاسخ سوال', 'لیسانس')">پاسخ سوال در سطح لیسانس</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('پاسخ سوال', 'فوق لیسانس')">پاسخ سوال در سطح فوق لیسانس</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('پاسخ سوال', 'دکتری')">پاسخ سوال در سطح دکتری</button>
+    </div>
 
-    function escapeHtml(str){
-      return str
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;");
-    }
+    <!-- ۲. آنالیز سوال -->
+    <div class="btn-group-title" style="color: var(--purple);"><i class="fa-solid fa-magnifying-glass"></i> آنالیز سوال در کلیه سطوح:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-purple" onclick="executeAI('آنالیز سوال', 'ابتدایی')">آنالیز سوال در سطح دانش آموز ابتدایی</button>
+      <button class="interactive-btn btn-purple" onclick="executeAI('آنالیز سوال', 'متوسطه اول')">آنالیز سوال در سطح دانش آموز متوسطه اول</button>
+      <button class="interactive-btn btn-purple" onclick="executeAI('آنالیز سوال', 'متوسطه دوم')">آنالیز سوال در سطح دانش آموز متوسطه دوم</button>
+      <button class="interactive-btn btn-purple" onclick="executeAI('آنالیز سوال', 'تیزهوشان')">آنالیز کردن سوال در سطح تیزهوشان</button>
+      <button class="interactive-btn btn-purple" onclick="executeAI('آنالیز سوال', 'المپیادی')">آنالیز سوال در سطح المپیادی</button>
+      <button class="interactive-btn btn-purple" onclick="executeAI('آنالیز سوال', 'کنکوری')">آنالیز سوال در سطح کنکوری</button>
+      <button class="interactive-btn btn-purple" onclick="executeAI('آنالیز سوال', 'لیسانس')">آنالیز سوال در سطح لیسانس</button>
+      <button class="interactive-btn btn-purple" onclick="executeAI('آنالیز سوال', 'فوق لیسانس')">آنالیز سوال در سطح فوق لیسانس</button>
+      <button class="interactive-btn btn-purple" onclick="executeAI('آنالیز سوال', 'دکتری')">آنالیز سوال در سطح دکتری</button>
+    </div>
 
-    function safeMarkdownToHtml(text){
-      let html = escapeHtml(text);
-      html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-      html = html.replace(/\*(.*?)\*/g, "<em>$1</em>");
-      html = html.replace(/`(.*?)`/g, "<code>$1</code>");
-      html = html.replace(/\n/g, "<br>");
-      return html;
-    }
+    <!-- ۳. آنالیز تله درون سوال -->
+    <div class="btn-group-title" style="color: var(--red-glow);"><i class="fa-solid fa-triangle-exclamation"></i> آنالیز تله درون سوال:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-red" onclick="executeAI('آنالیز تله درون سوال', 'ابتدایی')">آنالیز تله درون سوال در سطح ابتدایی</button>
+      <button class="interactive-btn btn-red" onclick="executeAI('آنالیز تله درون سوال', 'متوسطه اول')">آنالیز تله درون سوال در سطح متوسطه اول</button>
+      <button class="interactive-btn btn-red" onclick="executeAI('آنالیز تله درون سوال', 'متوسطه دوم')">آنالیز تله درون سوال در سطح متوسطه دوم</button>
+      <button class="interactive-btn btn-red" onclick="executeAI('آنالیز تله درون سوال', 'تیزهوشان')">آنالیز تله درون سوال در سطح تیزهوشان</button>
+      <button class="interactive-btn btn-red" onclick="executeAI('آنالیز تله درون سوال', 'المپیادی')">آنالیز تله درون سوال در سطح المپیادی</button>
+      <button class="interactive-btn btn-red" onclick="executeAI('آنالیز تله درون سوال', 'کنکوری')">آنالیز تله درون سوال در سطح کنکوری</button>
+      <button class="interactive-btn btn-red" onclick="executeAI('آنالیز تله درون سوال', 'لیسانس')">آنالیز تله درون سوال در سطح لیسانس</button>
+      <button class="interactive-btn btn-red" onclick="executeAI('آنالیز تله درون سوال', 'فوق لیسانس')">آنالیز تله درون سوال در سطح فوق لیسانس</button>
+      <button class="interactive-btn btn-red" onclick="executeAI('آنالیز تله درون سوال', 'دکتری')">آنالیز تله درون سوال در سطح دکتری</button>
+    </div>
 
-    function ensureAudio(){
-      if(!audioCtx){
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-    }
+    <!-- ۴. آنالیز پاسخ -->
+    <div class="btn-group-title" style="color: var(--green);"><i class="fa-solid fa-check-double"></i> آنالیز پاسخ:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-green" onclick="executeAI('آنالیز پاسخ', 'ابتدایی')">آنالیز پاسخ در سطح ابتدایی</button>
+      <button class="interactive-btn btn-green" onclick="executeAI('آنالیز پاسخ', 'متوسطه اول')">آنالیز پاسخ در سطح متوسطه اول</button>
+      <button class="interactive-btn btn-green" onclick="executeAI('آنالیز پاسخ', 'متوسطه دوم')">آنالیز پاسخ در سطح متوسطه دوم</button>
+      <button class="interactive-btn btn-green" onclick="executeAI('آنالیز پاسخ', 'تیزهوشان')">آنالیز پاسخ در سطح تیزهوشان</button>
+      <button class="interactive-btn btn-green" onclick="executeAI('آنالیز پاسخ', 'المپیادی')">آنالیز پاسخ در سطح المپیادی</button>
+      <button class="interactive-btn btn-green" onclick="executeAI('آنالیز پاسخ', 'کنکوری')">آنالیز پاسخ در سطح کنکوری</button>
+      <button class="interactive-btn btn-green" onclick="executeAI('آنالیز پاسخ', 'لیسانس')">آنالیز پاسخ در سطح لیسانس</button>
+      <button class="interactive-btn btn-green" onclick="executeAI('آنالیز پاسخ', 'فوق لیسانس')">آنالیز پاسخ در سطح فوق لیسانس</button>
+      <button class="interactive-btn btn-green" onclick="executeAI('آنالیز پاسخ', 'دکتری')">آنالیز پاسخ در سطح دکتری</button>
+    </div>
 
-    function beep(freq = 730, duration = 0.05, volume = 0.02){
-      const now = Date.now();
-      if(now - lastBeep < 55) return;
-      lastBeep = now;
-      try{
-        ensureAudio();
-        const oscillator = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        oscillator.type = "sine";
-        oscillator.frequency.value = freq;
-        gain.gain.value = volume;
-        oscillator.connect(gain);
-        gain.connect(audioCtx.destination);
-        oscillator.start();
-        oscillator.stop(audioCtx.currentTime + duration);
-      }catch(e){}
-    }
+    <!-- ۵. تحلیل سوال درون عکس و تحلیل عکس -->
+    <div class="btn-group-title" style="color: var(--orange);"><i class="fa-solid fa-camera"></i> پردازش و تحلیل سوال درون عکس و تصویر:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-orange" onclick="executeAI('آنالیز سوال درون عکس', 'ابتدایی')">آنالیز سوال درون عکس ابتدایی</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('آنالیز سوال درون عکس', 'متوسطه اول')">آنالیز سوال درون عکس متوسطه اول</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('آنالیز سوال درون عکس', 'متوسطه دوم')">آنالیز سوال درون عکس متوسطه دوم</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('آنالیز سوال درون عکس', 'تیزهوشان')">آنالیز سوال درون عکس تیزهوشان</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('آنالیز سوال درون عکس', 'المپیادی')">آنالیز سوال درون عکس المپیادی</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('آنالیز سوال درون عکس', 'کنکوری')">آنالیز سوال درون عکس کنکوری</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('آنالیز سوال درون عکس', 'لیسانس')">آنالیز سوال درون عکس لیسانس</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('آنالیز سوال درون عکس', 'فوق لیسانس')">آنالیز سوال درون عکس فوق لیسانس</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('آنالیز سوال درون عکس', 'دکتری')">آنالیز سوال درون عکس دکتری</button>
+    </div>
 
-    document.querySelectorAll(".hover-beep").forEach(el => {
-      el.addEventListener("mouseenter", () => beep(820, 0.03, 0.015));
-      el.addEventListener("click", () => beep(650, 0.04, 0.02));
-      el.addEventListener("focus", () => beep(780, 0.03, 0.015));
-    });
+    <!-- ۶. چهار جوابی کردن و سوالات تستی -->
+    <div class="btn-group-title" style="color: var(--pink);"><i class="fa-solid fa-list-check"></i> چهار جوابی کردن و تست در کلیه سطوح:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-pink" onclick="executeAI('چهار جوابی کردن', 'ابتدایی')">چهار جوابی کردن ابتدایی</button>
+      <button class="interactive-btn btn-pink" onclick="executeAI('چهار جوابی کردن', 'متوسطه اول')">چهار جوابی کردن متوسطه اول</button>
+      <button class="interactive-btn btn-pink" onclick="executeAI('چهار جوابی کردن', 'متوسطه دوم')">چهار جوابی کردن متوسطه دوم</button>
+      <button class="interactive-btn btn-pink" onclick="executeAI('چهار جوابی کردن', 'تیزهوشان')">چهار جوابی کردن تیزهوشان</button>
+      <button class="interactive-btn btn-pink" onclick="executeAI('چهار جوابی کردن', 'المپیادی')">چهار جوابی کردن المپیادی</button>
+      <button class="interactive-btn btn-pink" onclick="executeAI('چهار جوابی کردن', 'کنکوری')">چهار جوابی کردن کنکوری</button>
+      <button class="interactive-btn btn-pink" onclick="executeAI('چهار جوابی کردن', 'لیسانس')">چهار جوابی کردن لیسانس</button>
+      <button class="interactive-btn btn-pink" onclick="executeAI('چهار جوابی کردن', 'فوق لیسانس')">چهار جوابی کردن فوق لیسانس</button>
+      <button class="interactive-btn btn-pink" onclick="executeAI('چهار جوابی کردن', 'دکتری')">چهار جوابی کردن دکتری</button>
+    </div>
 
-    imageInput.addEventListener("change", () => {
-      const file = imageInput.files && imageInput.files[0];
-      if(!file){
-        selectedImageDataUrl = "";
-        imagePreview.style.display = "none";
-        previewImg.removeAttribute("src");
-        return;
-      }
+    <!-- ۷. آنالیز و پاسخ سوال چهار جوابی -->
+    <div class="btn-group-title" style="color: var(--yellow);"><i class="fa-solid fa-circle-question"></i> پاسخ و آنالیز تست‌های چهارگزینه‌ای و تله‌ها:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-yellow" onclick="executeAI('پاسخ به سوال چهار جوابی', 'ابتدایی')">پاسخ به سوال چهار جوابی ابتدایی</button>
+      <button class="interactive-btn btn-yellow" onclick="executeAI('پاسخ به سوال چهار جوابی', 'متوسطه اول')">پاسخ به سوال چهار جوابی متوسطه اول</button>
+      <button class="interactive-btn btn-yellow" onclick="executeAI('پاسخ به سوال چهار جوابی', 'متوسطه دوم')">پاسخ به سوال چهار جوابی متوسطه دوم</button>
+      <button class="interactive-btn btn-yellow" onclick="executeAI('پاسخ به سوال چهار جوابی', 'کنکوری')">پاسخ به سوال چهار جوابی کنکوری</button>
+      <button class="interactive-btn btn-yellow" onclick="executeAI('پاسخ به سوال چهار جوابی', 'دانشگاهی')">پاسخ به سوال چهار جوابی دانشگاهی</button>
+      <button class="interactive-btn btn-yellow" onclick="executeAI('آنالیز تله سوال چهار جوابی', 'کنکوری')">آنالیز تله سوال چهار جوابی کنکوری</button>
+    </div>
 
-      const reader = new FileReader();
-      reader.onload = e => {
-        selectedImageDataUrl = e.target.result;
-        previewImg.src = selectedImageDataUrl;
-        imagePreview.style.display = "block";
-        showToast("عکس انتخاب شد.");
-      };
-      reader.readAsDataURL(file);
-    });
+    <!-- ۸. سوالات امتحانی، کنکوری و تکلیف در منزل -->
+    <div class="btn-group-title" style="color: var(--teal);"><i class="fa-solid fa-house-laptop"></i> طرح و تحلیل سوال امتحانی، کنکوری و تکلیف در خانه:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-teal" onclick="executeAI('طرح و پرسیدن سوال امتحانی و تکلیف در خانه', 'عمومی')">پرسیدن سوال امتحانی، کنکوری، تکلیف در خانه</button>
+      <button class="interactive-btn btn-teal" onclick="executeAI('آنالیز سوال امتحانی و تکلیف', 'ابتدایی')">آنالیز سوال امتحانی/تکلیف ابتدایی</button>
+      <button class="interactive-btn btn-teal" onclick="executeAI('آنالیز سوال امتحانی و تکلیف', 'متوسطه اول')">آنالیز سوال امتحانی/تکلیف متوسطه اول</button>
+      <button class="interactive-btn btn-teal" onclick="executeAI('آنالیز سوال امتحانی و تکلیف', 'متوسطه دوم')">آنالیز سوال امتحانی/تکلیف متوسطه دوم</button>
+      <button class="interactive-btn btn-teal" onclick="executeAI('آنالیز سوال امتحانی و تکلیف', 'کنکوری')">آنالیز سوال امتحانی/تکلیف کنکوری</button>
+      <button class="interactive-btn btn-teal" onclick="executeAI('آنالیز سوال امتحانی و تکلیف', 'دانشگاه')">آنالیز سوال امتحانی/تکلیف لیسانس تا دکتری</button>
+    </div>
 
-    clearImageBtn.addEventListener("click", () => {
-      imageInput.value = "";
-      selectedImageDataUrl = "";
-      previewImg.removeAttribute("src");
-      imagePreview.style.display = "none";
-      showToast("عکس حذف شد.");
-    });
+    <!-- ۹. سوالات دارای جدول، فرمول و نمودار -->
+    <div class="btn-group-title" style="color: var(--blue);"><i class="fa-solid fa-chart-line"></i> سوالات دارای جدول، فرمول، رسم و تحلیل نمودار:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-blue" onclick="executeAI('حل سوال دارای جدول-فرمول-نمودار', 'عمومی')">سوال دارای جدول-فرمول-نمودار</button>
+      <button class="interactive-btn btn-blue" onclick="executeAI('تحلیل و تشریح فرمول‌ها و اثبات‌ها', 'مدرسه و دانشگاه')">تحلیل و تشریح فرمول‌ها و اثبات‌ها</button>
+      <button class="interactive-btn btn-blue" onclick="executeAI('آنالیز سوال جدول و نمودار', 'ابتدایی')">آنالیز جدول-فرمول-نمودار ابتدایی</button>
+      <button class="interactive-btn btn-blue" onclick="executeAI('آنالیز سوال جدول و نمودار', 'متوسطه')">آنالیز جدول-فرمول-نمودار متوسطه</button>
+      <button class="interactive-btn btn-blue" onclick="executeAI('آنالیز سوال جدول و نمودار', 'کنکوری')">آنالیز جدول-فرمول-نمودار کنکوری</button>
+      <button class="interactive-btn btn-blue" onclick="executeAI('آنالیز سوال جدول و نمودار', 'دانشگاهی')">آنالیز جدول-فرمول-نمودار دانشگاهی</button>
+      <button class="interactive-btn btn-blue" onclick="executeAI('آنالیز تله سوالات دارای جدول-فرمول-نمودار', 'کنکور و دانشگاه')">آنالیز تله سوالات جدول/فرمول/نمودار</button>
+    </div>
 
-    copyBtn.addEventListener("click", async () => {
-      const text = results.innerText.trim();
-      if(!text || text === "پاسخ‌ها و تحلیل‌ها اینجا نمایش داده می‌شوند."){
-        showToast("متنی برای کپی وجود ندارد.");
-        return;
-      }
-      try{
-        await navigator.clipboard.writeText(text);
-        showToast("پاسخ کپی شد.");
-      }catch(e){
-        const tmp = document.createElement("textarea");
-        tmp.value = text;
-        document.body.appendChild(tmp);
-        tmp.select();
-        document.execCommand("copy");
-        tmp.remove();
-        showToast("پاسخ کپی شد.");
-      }
-    });
+    <!-- ۱۰. تدریس کامل دروس کلیه مقاطع مدرسه و دانشگاه -->
+    <div class="btn-group-title" style="color: var(--emerald);"><i class="fa-solid fa-chalkboard-user"></i> تدریس کامل کلیه دروس مدرسه و دانشگاه:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'اول ابتدایی')">تدریس کامل دروس اول ابتدایی</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'دوم ابتدایی')">تدریس کامل دروس دوم ابتدایی</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'سوم ابتدایی')">تدریس کامل دروس سوم ابتدایی</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'چهارم ابتدایی')">تدریس کامل دروس چهارم ابتدایی</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'پنجم ابتدایی')">تدریس کامل دروس پنجم ابتدایی</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'ششم ابتدایی')">تدریس کامل دروس ششم ابتدایی</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'هفتم متوسطه اول')">تدریس کامل دروس هفتم</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'هشتم متوسطه اول')">تدریس کامل دروس هشتم</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'نهم متوسطه اول')">تدریس کامل دروس نهم</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'دهم متوسطه دوم')">تدریس کامل دروس دهم</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'یازدهم متوسطه دوم')">تدریس کامل دروس یازدهم</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس', 'دوازدهم متوسطه دوم')">تدریس کامل دروس دوازدهم</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس دانشگاهی', 'کارشناسی کلیه رشته‌ها')">تدریس کامل کارشناسی (تمام رشته‌ها)</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس دانشگاهی', 'کارشناسی ارشد کلیه رشته‌ها')">تدریس کامل ارشد (تمام رشته‌ها)</button>
+      <button class="interactive-btn btn-emerald" onclick="executeAI('تدریس کامل دروس دانشگاهی', 'دکتری تخصصی کلیه رشته‌ها')">تدریس کامل دکتری (تمام رشته‌ها)</button>
+    </div>
 
-    document.querySelectorAll(".copy-text").forEach(btn => {
-      btn.addEventListener("click", async () => {
-        const value = btn.dataset.copy || "";
-        try{
-          await navigator.clipboard.writeText(value);
-          showToast("کپی شد.");
-        }catch(e){
-          showToast("کپی انجام نشد.");
-        }
-      });
-    });
+    <!-- ۱۱. تدریس و نکات کنکوری کلیه مقاطع -->
+    <div class="btn-group-title" style="color: var(--orange);"><i class="fa-solid fa-graduation-cap"></i> تدریس و پکیج جامع کنکوری دروس:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-orange" onclick="executeAI('تدریس کنکوری دروس', 'ابتدایی و تیزهوشان ششم')">تدریس کنکوری تیزهوشان ششم</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('تدریس کنکوری دروس', 'متوسطه اول و تیزهوشان نهم')">تدریس کنکوری تیزهوشان نهم</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('تدریس کنکوری دروس', 'کنکور سراسری تجربی')">تدریس کنکوری تجربی</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('تدریس کنکوری دروس', 'کنکور سراسری ریاضی')">تدریس کنکوری ریاضی</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('تدریس کنکوری دروس', 'کنکور سراسری انسانی')">تدریس کنکوری انسانی</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('تدریس کنکوری دروس', 'کنکور هنر و زبان')">تدریس کنکوری هنر و زبان</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('تدریس کنکوری دروس', 'کنکور کارشناسی ارشد')">تدریس کنکوری کارشناسی ارشد</button>
+      <button class="interactive-btn btn-orange" onclick="executeAI('تدریس کنکوری دروس', 'کنکور دکتری تخصصی')">تدریس کنکوری دکتری تخصصی</button>
+    </div>
 
-    clearBtn.addEventListener("click", () => {
-      userInput.value = "";
-      imageInput.value = "";
-      selectedImageDataUrl = "";
-      previewImg.removeAttribute("src");
-      imagePreview.style.display = "none";
-      results.innerHTML = '<span class="placeholder">پاسخ‌ها و تحلیل‌ها اینجا نمایش داده می‌شوند.</span>';
-      window.speechSynthesis.cancel();
-      showToast("ورودی و خروجی پاک شد.");
-    });
-
-    speakBtn.addEventListener("click", () => {
-      const text = results.innerText.trim();
-      if(!text || text === "پاسخ‌ها و تحلیل‌ها اینجا نمایش داده می‌شوند."){
-        showToast("متنی برای خواندن وجود ندارد.");
-        return;
-      }
-      window.speechSynthesis.cancel();
-      currentUtterance = new SpeechSynthesisUtterance(text);
-      currentUtterance.lang = "fa-IR";
-      currentUtterance.rate = 0.95;
-      currentUtterance.pitch = 1;
-      window.speechSynthesis.speak(currentUtterance);
-      showToast("پاسخ در حال پخش صوتی است.");
-    });
-
-    saveVoiceBtn.addEventListener("click", () => {
-      const text = results.innerText.trim();
-      if(!text || text === "پاسخ‌ها و تحلیل‌ها اینجا نمایش داده می‌شوند."){
-        showToast("ابتدا پاسخ تولید شود.");
-        return;
-      }
-      window.speechSynthesis.cancel();
-      currentUtterance = new SpeechSynthesisUtterance(text);
-      currentUtterance.lang = "fa-IR";
-      currentUtterance.rate = 0.95;
-      window.speechSynthesis.speak(currentUtterance);
-      showToast("ذخیره مستقیم فایل صوتی در اکثر مرورگرها پشتیبانی نمی‌شود؛ فقط پخش انجام شد.");
-    });
-
-    function createButton(label, colorClass, onClick){
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = `${colorClass} hover-beep`;
-      btn.textContent = label;
-      btn.addEventListener("mouseenter", () => beep(820, 0.03, 0.015));
-      btn.addEventListener("focus", () => beep(780, 0.03, 0.015));
-      btn.addEventListener("click", async () => {
-        beep(650, 0.04, 0.02);
-        await onClick(btn);
-      });
-      return btn;
-    }
-
-    groupedActions.forEach(action => {
-      const box = document.createElement("div");
-      box.className = "button-group";
-
-      const title = document.createElement("h3");
-      title.className = "group-title";
-      title.textContent = action.title;
-      box.appendChild(title);
-
-      const grid = document.createElement("div");
-      grid.className = "btn-grid";
-
-      levels.forEach(level => {
-        const label = `${action.title} ${level}`;
-        const btn = createButton(label, action.color, () => {
-          const prefix = action.prefix.replace("%LEVEL%", level);
-          return submitToAPI(prefix, action.requiresImage === true);
-        });
-        grid.appendChild(btn);
-      });
-
-      box.appendChild(grid);
-      dynamicButtons.appendChild(box);
-    });
-
-    extraActions.forEach(action => {
-      const btn = createButton(action.title, action.color, () => submitToAPI(action.prefix, false));
-      extraButtons.appendChild(btn);
-    });
-
-    async function submitToAPI(prefixText, requiresImage = false){
-      const userText = userInput.value.trim();
-
-      if(!userText && !(requiresImage && selectedImageDataUrl)){
-        showToast("لطفاً متن سوال یا عکس را وارد کنید.");
-        return;
-      }
-
-      if(requiresImage && !selectedImageDataUrl){
-        showToast("برای این گزینه باید عکس انتخاب شود.");
-        return;
-      }
-
-      if(activeButton){
-        return;
-      }
-
-      const buttons = document.querySelectorAll("button");
-      buttons.forEach(b => b.disabled = true);
-
-      try{
-        activeButton = true;
-        setResult("در حال دریافت پاسخ ...");
-
-        const content = [];
-        if(prefixText){
-          content.push({
-            type: "text",
-            text: `${prefixText}\n\nمتن کاربر:\n${userText || "کاربر فقط عکس فرستاده است."}`
-          });
-        } else if(userText){
-          content.push({ type: "text", text: userText });
-        }
-
-        if(selectedImageDataUrl){
-          content.push({
-            type: "image_url",
-            image_url: { url: selectedImageDataUrl }
-          });
-        }
-
-        const headers = {
-          "Content-Type": "application/json"
-        };
-
-        if(API_KEY && API_KEY.trim()){
-          headers["Authorization"] = `Bearer ${API_KEY.trim()}`;
-        }
-
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers,
-          body: JSON.stringify({
-            model: "gpt-4o",
-            messages: [
-              {
-                role: "system",
-                content: "شما یک معلم و تحلیل‌گر آموزشی حرفه‌ای هستید. پاسخ‌ها باید فارسی، دقیق، آموزشی، مرحله‌به‌مرحله، منظم و متناسب با سطح درخواست باشند."
-              },
-              {
-                role: "user",
-                content
-              }
-            ],
-            temperature: 0.4
-          })
-        });
-
-        const data = await response.json().catch(() => ({}));
-
-        const answer =
-          data?.choices?.[0]?.message?.content ||
-          data?.error?.message ||
-          "";
-
-        if(answer){
-          setResult(safeMarkdownToHtml(answer), true);
-        }else{
-          setResult(" ");
-        }
-      }catch(error){
-        setResult(" ");
-      }finally{
-        activeButton = null;
-        document.querySelectorAll("button").forEach(b => b.disabled = false);
-      }
-    }
-  </script>
-</body>
-</html>
+    <!-- ۱۲. ابزارهای آموزشی تکمیلی -->
+    <div class="btn-group-title" style="color: var(--cyan);"><i class="fa-solid fa-toolbox"></i> جعبه ابزار تخصصی معلم و استاد هوش مصنوعی:</div>
+    <div class="btn-grid">
+      <button class="interactive-btn btn-cyan" onclick="executeAI('حل تمرین و مساله خط به خط', 'تخصصی')">حل تمرین و مساله خط به خط</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('تکلیف خانگی با پاسخ تشریحی', 'تخصصی')">تکلیف خانگی با پاسخ تشریحی</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('مشاوره تحصیلی و برنامه‌ریزی', 'عمومی')">مشاوره تحصیلی و برنامه‌ریزی</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('ترجمه و نگارش متون تخصصی', 'عمومی')">ترجمه و نگارش متون تخصصی</button>
+      <button class="interactive-btn btn-cyan" onclick="executeAI('تصحیح و خطایابی متن
