@@ -1,363 +1,799 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Class-AI | پلتفرم آموزش و آزمون مجازی</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;900&display=swap');
-:root{--ink:#000;--card:rgba(255,255,255,0.97)}
-*{box-sizing:border-box;font-family:Vazirmatn,sans-serif;color:var(--ink)!important}
-body{
-  margin:0;padding:16px 10px 50px;min-height:100vh;overflow-x:hidden;
-  background:radial-gradient(circle at 10% 10%,#ffffff8c 0 120px,transparent 121px),
-             radial-gradient(circle at 90% 20%,#ffffff73 0 170px,transparent 171px),
-             linear-gradient(135deg,#a8edea,#fed6e3 45%,#d4fc79);
-  user-select:none;
-}
-.wrap{max-width:980px;margin:auto;position:relative;z-index:1}
-.card{
-  background:var(--card);border:3px solid #fc0;border-radius:22px;padding:18px;margin:14px 0;
-  box-shadow:0 12px 28px #0002;backdrop-filter:blur(8px);
-}
-.interactive-row{
-  transition:box-shadow .16s ease,border-color .16s ease,transform .16s ease;
-  position:relative;cursor:pointer;
-}
-.interactive-row.active-row,.interactive-row:hover{
-  border-color:#ff0033!important;
-  box-shadow:0 0 0 3px #ff0033,0 0 25px #ff0033aa,0 0 45px #ff77a9,0 8px 18px #0004!important;
-  animation:jiggle .35s ease-in-out infinite alternate;
-  z-index:10;
-}
-@keyframes jiggle{
-  0%{transform:scale(1.018) rotate(0)}
-  25%{transform:scale(1.018) rotate(-1deg) translateY(-2px)}
-  50%{transform:scale(1.018) rotate(1deg) translateY(2px)}
-  75%{transform:scale(1.018) rotate(-.7deg)}
-  100%{transform:scale(1.018)}
-}
-@keyframes pulseTitle{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.025)}
-}
-.pulse-title{animation:pulseTitle 2.2s infinite ease-in-out}
-.title-box{
-  text-align:center;font-weight:900;padding:16px 14px;border-radius:18px;
-  border:3px solid #111;box-shadow:0 6px #111;
-  background:linear-gradient(45deg,#ff6b6b,#4ecdc4,#ffe66d);
-  line-height:1.9;
-}
-.title-box .t-brand{font-size:32px;display:block;letter-spacing:1px;font-weight:900}
-.title-box .t-line{font-size:16px;display:block;margin-top:4px;font-weight:800}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class-AI | پلتفرم هوشمند آموزشی و تحصیلی</title>
+  <style>
+    :root {
+      --bg: #030712;
+      --card-bg: #0f172a;
+      --card-border: #1e293b;
+      --accent: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --pink: #ec4899;
+      --emerald: #059669;
+    }
 
-.box-item{
-  margin-top:14px;padding:16px;border-radius:16px;background:#fff3bf;
-  border:3px solid #f59f00;font-weight:800;line-height:2;text-align:center;font-size:15px;
-}
-.brain-box{
-  height:210px;margin-top:14px;border-radius:20px;
-  background:radial-gradient(circle,#1b1f3b,#07091c);
-  border:4px solid #5b8cff;display:flex;align-items:center;justify-content:center;
-  position:relative;animation:pulseTitle 2.4s infinite ease-in-out;
-}
-.brain-box svg{width:130px;height:130px;filter:drop-shadow(0 0 25px #b06eff)}
-.mic-icon{display:inline-block;vertical-align:middle;width:26px;height:26px;margin-right:6px}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.text-area{
-  width:100%;min-height:130px;border-radius:18px;border:3px solid #111;
-  padding:14px;font-size:15px;font-weight:700;margin-top:14px;resize:vertical;box-shadow:0 6px #111;
-  background:#fff;
-}
-#systemMessage{
-  margin-top:12px;background:#ffffff;border:3px solid #111;border-radius:14px;
-  padding:16px;min-height:55px;line-height:1.9;font-weight:700;box-shadow:0 4px #111;
-}
+    body {
+      background: radial-gradient(circle at 50% 0%, #1e1b4b, var(--bg));
+      color: var(--text);
+      min-height: 100vh;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.btn-group-title{
-  margin:16px 0 8px;font-size:16px;font-weight:900;text-align:right;padding:6px 12px;
-  background:#f1f3f5;border-right:6px solid #111;border-radius:6px;
-}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-bottom:8px}
-.btn{
-  border:3px solid #111;border-radius:16px;padding:12px 10px;font-size:13.5px;
-  font-weight:900;cursor:pointer;box-shadow:0 5px #111;background:#fff;
-  display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.4;
-}
+    .container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
-/* رنگ‌بندی‌های اختصاصی و پررنگ هر گروه */
-.c-g1{background:#2ed573}  /* پاسخ سوال */
-.c-g2{background:#70a1ff}  /* آنالیز سوال */
-.c-g3{background:#ffa502}  /* آنالیز تله سوال */
-.c-g4{background:#9b59b6}  /* آنالیز پاسخ */
-.c-copy{background:#feca57}/* کپی */
-.c-media{background:#48dbfb}/* عکس گالری */
-.c-g5{background:#ff6b81}  /* سوال درون عکس */
-.c-g6{background:#a29bfe}  /* آنالیز عکس */
-.c-del{background:#ff4757}  /* سطل آشغال */
-.c-g7{background:#55efc4}  /* چهار جوابی کردن */
-.c-g8{background:#81ecec}  /* آنالیز سوال ۴ جوابی */
-.c-g9{background:#2bcbba}  /* پاسخ به سوال ۴ جوابی */
-.c-g10{background:#d6a2e8} /* آنالیز پاسخ ۴ جوابی */
-.c-g11{background:#fdcb6e} /* آنالیز تله ۴ جوابی */
-.c-g12{background:#fd79a8} /* سوال امتحانی */
-.c-g13{background:#e056fd} /* آنالیز سوال امتحانی پرسیده شده */
-.c-voice{background:#ff9ff3}/* صدا */
-.c-g14{background:#00d2d3} /* سوال فرمول نمودار */
-.c-g15{background:#10ac84} /* آنالیز سوال جدول فرمول */
-.c-g16{background:#ff9f43} /* تله جدول فرمول */
+    @keyframes jiggle {
+      0% { transform: scale(1) translate(0, 0); }
+      20% { transform: scale(1.02) translate(-2px, 2px); }
+      40% { transform: scale(1.02) translate(-2px, -2px); }
+      60% { transform: scale(1.02) translate(2px, 2px); }
+      80% { transform: scale(1.02) translate(2px, -2px); }
+      100% { transform: scale(1.02) translate(0, 0); }
+    }
 
-.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:12px}
-.pack{
-  border:3px solid #111;border-radius:16px;padding:12px;font-size:15px;
-  font-weight:900;text-align:center;background:#fff;box-shadow:0 5px #111;
-}
-.warn-box{background:#fff3bf;border:3px solid #e03131;color:#b02a37!important}
-</style>
+    .interactive-row {
+      background: rgba(15, 23, 42, 0.85);
+      border: 3px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .interactive-row:hover,
+    .interactive-row:active {
+      border-color: var(--accent) !important;
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.6) !important;
+      animation: jiggle 0.25s infinite alternate ease-in-out;
+    }
+
+    .header-card {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.9), rgba(15, 23, 42, 0.9));
+      border: 3px solid #4338ca;
+    }
+
+    .header-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: #38bdf8;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+      margin-bottom: 6px;
+    }
+
+    .header-sub {
+      font-size: 16px;
+      font-weight: 700;
+      color: #facc15;
+    }
+
+    .manager-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-align: center;
+      border-color: #3b82f6;
+    }
+
+    .manager-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: #60a5fa;
+    }
+
+    .mic-center-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      gap: 12px;
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .mic-icon-wrapper {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ef4444 0%, #7f1d1d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+      border: 2px solid #fca5a5;
+    }
+
+    .mic-svg {
+      width: 40px;
+      height: 40px;
+      fill: #ffffff;
+    }
+
+    .mic-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .control-btn {
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: none;
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+
+    .control-btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn-record { background: #dc2626; }
+    .btn-speak { background: #2563eb; }
+    .btn-file { background: #059669; }
+    .btn-submit { background: #7c3aed; font-size: 16px; padding: 12px 24px; }
+
+    .results-card {
+      border-color: #06b6d4;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .results-header {
+      font-size: 22px;
+      font-weight: 900;
+      color: #22d3ee;
+      border-bottom: 2px solid rgba(34, 211, 238, 0.3);
+      padding-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .textarea-box {
+      width: 100%;
+      min-height: 110px;
+      background: rgba(3, 7, 18, 0.85);
+      border: 2px solid #334155;
+      border-radius: 12px;
+      color: #f8fafc;
+      padding: 14px;
+      font-size: 15px;
+      resize: vertical;
+      outline: none;
+      line-height: 1.6;
+    }
+
+    .textarea-box:focus {
+      border-color: #38bdf8;
+    }
+
+    .output-box {
+      width: 100%;
+      min-height: 140px;
+      background: #020617;
+      border: 2px dashed #475569;
+      border-radius: 12px;
+      padding: 16px;
+      color: #e2e8f0;
+      font-size: 15px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .category-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .category-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #f59e0b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+    }
+
+    .level-btn {
+      padding: 10px 8px;
+      border-radius: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.15s, border-color 0.15s, filter 0.15s;
+    }
+
+    .level-btn:hover {
+      filter: brightness(1.2);
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .bg-c1 { background: #4f46e5; }
+    .bg-c2 { background: #0891b2; }
+    .bg-c3 { background: #059669; }
+    .bg-c4 { background: #d97706; }
+    .bg-c5 { background: #dc2626; }
+    .bg-c6 { background: #7c3aed; }
+    .bg-c7 { background: #db2777; }
+    .bg-c8 { background: #2563eb; }
+    .bg-c9 { background: #0d9488; }
+    .bg-c10 { background: #ea580c; }
+    .bg-c11 { background: #65a30d; }
+    .bg-c12 { background: #475569; }
+    .bg-c13 { background: #9333ea; }
+    .bg-c14 { background: #0284c7; }
+    .bg-c15 { background: #16a34a; }
+    .bg-c16 { background: #b91c1c; }
+
+    .bold-card {
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .benefit-card {
+      border-color: #10b981;
+      color: #a7f3d0;
+    }
+
+    .benefit-card strong {
+      color: #34d399;
+      font-size: 20px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .packages-card {
+      border-color: #f59e0b;
+      text-align: center;
+    }
+
+    .packages-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: #fbbf24;
+      margin-bottom: 12px;
+    }
+
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+    }
+
+    .package-chip {
+      background: rgba(245, 158, 11, 0.15);
+      border: 2px solid #f59e0b;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      color: #fef3c7;
+    }
+
+    .notice-card {
+      border-color: #ef4444;
+      color: #fecaca;
+    }
+
+    .notice-card span {
+      display: block;
+    }
+
+    .copy-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+    }
+
+    .copy-data-text {
+      font-family: monospace;
+      letter-spacing: 1px;
+      direction: ltr;
+      font-size: 20px;
+      font-weight: 900;
+      color: #38bdf8;
+    }
+
+    .copy-btn {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 2px solid #64748b;
+      padding: 10px 22px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: #3b82f6;
+      border-color: #93c5fd;
+    }
+
+    .ip-card {
+      border-color: #a855f7;
+      color: #e9d5ff;
+    }
+
+    .ip-title {
+      font-size: 19px;
+      color: #c084fc;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .file-preview {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #38bdf8;
+    }
+  </style>
 </head>
 <body>
-<div class="wrap">
-<section class="card">
 
-  <!-- کادر اول (عنوان) -->
-  <div class="title-box pulse-title interactive-row">
-    <span class="t-brand">Class-AI</span>
-    <span class="t-line">پلتفرم انجام دهنده تکلیف و امتحان توی خونه مجازی توسط هوش مصنوعی</span>
-    <span class="t-line">پلتفرم کلاس درس مدرسه و دانشگاه و موسسه کنکوری مجازی توی خونه توسط هوش مصنوعی</span>
-    <span class="t-line">پلتفرم موسسه کنکور مجازی توسط هوش مصنوعی</span>
-    <span class="t-line">پلتفرم دانشگاه مجازی توسط هوش مصنوعی</span>
+<div class="container">
+
+  <!-- هدر پلتفرم -->
+  <div class="interactive-row header-card" onclick="handleCardClick('Class-AI')">
+    <div class="header-title">Class-AI | پلتفرم حل‌المسائل و تکالیف هوشمند</div>
+    <div class="header-sub">پوشش کامل ۱۶ حوزه تحصیلی و ۹ سطح آموزشی از ابتدایی تا دکتری</div>
   </div>
 
-  <!-- کادر دوم -->
-  <div class="box-item interactive-row">
-    پلتفرم تکلیف کتبی مجازی توسط هوش مصنوعی<br>
-    پلتفرم تکلیف شفاهی مجازی توسط هوش مصنوعی<br>
-    پلتفرم امتحان کتبی مجازی توسط هوش مصنوعی<br>
-    پلتفرم امتحان شفاهی مجازی توسط هوش مصنوعی
+  <!-- کادر مدیریت -->
+  <div class="interactive-row manager-card" onclick="handleCardClick('مدیریت')">
+    <div class="manager-title">طراح و مدیر پلتفرم: حسین لعلیان</div>
+    <div style="font-size: 14px; color: #93c5fd; font-weight: 700;">رتبه ۳۲ کنکور دکتری | پژوهشگر هوش مصنوعی و الگوریتم</div>
   </div>
 
-  <!-- کادر سوم -->
-  <div class="box-item interactive-row">
-    مدیریت:<br>
-    حسین لعلیان (رتبه ۳۲ کنکور دکتری)<br>
-    و همچنین مفتخر بتحصیل در 6 دانشکده: شیلات، شیمی، زبان، مدیریت، مهندسی آی تی و مهندسی صنایع<br>
-    صحت موضوع را از وزارت علوم جویا شوید!
-  </div>
-
-  <!-- کادر چهارم (مغز هوش مصنوعی بدون نوشته) -->
-  <div class="brain-box interactive-row">
-    <svg viewBox="0 0 64 64" fill="none">
-      <path d="M24 16C24 11 28 8 32 8C36 8 40 11 40 16C45 16 49 19 50 24C53 25 56 28 56 33C56 38 52 42 48 43C48 48 44 52 39 53C37 55 35 56 32 56C29 56 27 55 25 53C20 52 16 48 16 43C12 42 8 38 8 33C8 28 11 25 14 24C15 19 19 16 24 16Z" stroke="#a180ff" stroke-width="3" fill="#301934" />
-      <path d="M32 10V54M22 22C27 24 29 30 28 36M42 22C37 24 35 30 36 36M18 34C22 36 24 42 22 47M46 34C42 36 40 42 42 47" stroke="#00f2fe" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="28" cy="24" r="2.5" fill="#ffe66d"/>
-      <circle cx="36" cy="24" r="2.5" fill="#ffe66d"/>
-      <circle cx="24" cy="38" r="2.5" fill="#ffe66d"/>
-      <circle cx="40" cy="38" r="2.5" fill="#ffe66d"/>
-    </svg>
-  </div>
-
-  <!-- کادر پنجم -->
-  <div class="box-item interactive-row">
-    وضعیت آماده پرسش!<br>
-    وضعیت آماده پاسخ!<br>
-    ورودی و خروجی صوتی فعال!
-    <div style="margin-top:6px">
-      <svg class="mic-icon" viewBox="0 0 24 24" fill="#d90429">
+  <!-- کادر میکروفن و ابزار صوتی -->
+  <div class="interactive-row mic-center-box" onclick="handleCardClick('میکروفن')">
+    <div class="mic-icon-wrapper">
+      <svg class="mic-svg" viewBox="0 0 24 24">
         <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
         <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
       </svg>
     </div>
-  </div>
-
-  <!-- کادر ششم -->
-  <div class="box-item interactive-row">
-    سوال خود را بنویسید یا با هوش مصنوعی صحبت کنید و یا از گالری انتخاب کنید و سپس دکمه پاسخ را بزنید!
-  </div>
-
-  <!-- کادر هفتم (محل سوال) -->
-  <div class="box-item interactive-row" style="text-align:right">
-    مکان :<br>
-    نوشتن سوال امتحانی،تکلیف کلاسی و کپی پیست مطلب امتحانی،تکلیف کلاسی
-    <textarea class="text-area interactive-row" id="textQ" placeholder="سوال امتحانی یا تکلیف خود را بنویسید یا پیست کنید..."></textarea>
-    <div id="fileInfoBar" style="display:none;align-items:center;justify-content:space-between;margin-top:8px;padding:8px 12px;background:#e7f5ff;border:2px solid #339af0;border-radius:12px;font-size:13px;font-weight:800">
-      <span id="fileInfoText"></span>
-      <button onclick="clearSelectedFile()" style="background:#ff4757;color:#fff!important;border:none;border-radius:8px;padding:5px 12px;cursor:pointer;font-weight:900">حذف عکس ✖</button>
+    <div class="mic-controls">
+      <button type="button" class="control-btn btn-record" id="btnRecord" onclick="event.stopPropagation(); toggleVoiceRecord();">
+        🎤 ضبط صدا
+      </button>
+      <button type="button" class="control-btn btn-speak" id="btnSpeak" onclick="event.stopPropagation(); speakOutput();">
+        🔊 خواندن با صدا
+      </button>
+      <input type="file" id="fileInput" accept="image/*,.pdf,.txt" style="display:none;" onchange="handleFileSelected(event)">
+      <button type="button" class="control-btn btn-file" onclick="event.stopPropagation(); document.getElementById('fileInput').click();">
+        📁 بارگذاری تصویر / فایل
+      </button>
+      <div id="filePreview" class="file-preview">
+        <span id="fileName"></span>
+        <button type="button" onclick="event.stopPropagation(); clearFile();" style="background:none;border:none;color:#ef4444;cursor:pointer;font-weight:900;">✕</button>
+      </div>
     </div>
   </div>
 
-  <!-- خروجی سیستم -->
-  <div id="systemMessage" class="interactive-row">🌀 آماده دریافت سوال...</div>
-
-  <!-- دکمه‌های دسته‌بندی‌شده طبق سطوح تحصیلی با رنگ اختصاصی هر بخش -->
-  
-  <div class="btn-group-title">🟩 پاسخ سوال در سطوح تحصیلی</div>
-  <div class="grid">
-    <button class="btn c-g1 interactive-row" onclick="actionLevel('پاسخ سوال', 'دانش آموز ابتدایی')">پاسخ سوال در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g1 interactive-row" onclick="actionLevel('پاسخ سوال', 'دانش آموز متوسطه اول')">پاسخ سوال در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g1 interactive-row" onclick="actionLevel('پاسخ سوال', 'دانش آموز متوسطه دوم')">پاسخ سوال در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g1 interactive-row" onclick="actionLevel('پاسخ سوال', 'تیزهوشان')">پاسخ سوال در سطح تیزهوشان</button>
-    <button class="btn c-g1 interactive-row" onclick="actionLevel('پاسخ سوال', 'المپیادی')">پاسخ سوال در سطح المپیادی</button>
-    <button class="btn c-g1 interactive-row" onclick="actionLevel('پاسخ سوال', 'کنکوری')">پاسخ سوال در سطح کنکوری</button>
-    <button class="btn c-g1 interactive-row" onclick="actionLevel('پاسخ سوال', 'لیسانس')">پاسخ سوال در سطح لیسانس</button>
-    <button class="btn c-g1 interactive-row" onclick="actionLevel('پاسخ سوال', 'فوق لیسانس')">پاسخ سوال در سطح فوق لیسانس</button>
-    <button class="btn c-g1 interactive-row" onclick="actionLevel('پاسخ سوال', 'دکتری')">پاسخ سوال در سطح دکتری</button>
+  <!-- کادر ورودی و نتایج -->
+  <div class="interactive-row results-card" onclick="handleCardClick('نتایج')">
+    <div class="results-header">
+      <span>نتایج</span>
+      <span style="font-size: 13px; color: #94a3b8; font-weight: normal;" id="statusIndicator">آماده دریافت</span>
+    </div>
+    <textarea id="textQ" class="textarea-box" placeholder="سوال، مسئله، تمرین یا موضوع خود را اینجا وارد کنید یا کلیدهای سطوح زیر را بزنید..."></textarea>
+    <button type="button" class="control-btn btn-submit" onclick="event.stopPropagation(); executeMainPrompt();">
+      ⚡ دریافت پاسخ تشریحی و کامل
+    </button>
+    <div id="systemMessage" class="output-box">پاسخ‌های تحلیلی، فرمول‌ها و محاسبات هوش مصنوعی در این بخش به نمایش درمی‌آیند.</div>
   </div>
 
-  <div class="btn-group-title">🟦 آنالیز سوال در سطوح تحصیلی</div>
-  <div class="grid">
-    <button class="btn c-g2 interactive-row" onclick="actionLevel('آنالیز سوال', 'دانش آموز ابتدایی')">آنالیز سوال در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g2 interactive-row" onclick="actionLevel('آنالیز سوال', 'دانش آموز متوسطه اول')">آنالیز سوال در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g2 interactive-row" onclick="actionLevel('آنالیز سوال', 'دانش آموز متوسطه دوم')">آنالیز سوال در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g2 interactive-row" onclick="actionLevel('آنالیز کردن سوال', 'تیزهوشان')">آنالیز کردن سوال در سطح تیزهوشان</button>
-    <button class="btn c-g2 interactive-row" onclick="actionLevel('آنالیز سوال', 'المپیادی')">آنالیز سوال در سطح المپیادی</button>
-    <button class="btn c-g2 interactive-row" onclick="actionLevel('آنالیز سوال', 'کنکوری')">آنالیز سوال در سطح کنکوری</button>
-    <button class="btn c-g2 interactive-row" onclick="actionLevel('آنالیز سوال', 'لیسانس')">آنالیز سوال در سطح لیسانس</button>
-    <button class="btn c-g2 interactive-row" onclick="actionLevel('آنالیز سوال', 'فوق لیسانس')">آنالیز سوال در سطح فوق لیسانس</button>
-    <button class="btn c-g2 interactive-row" onclick="actionLevel('آنالیز سوال', 'دکتری')">آنالیز سوال در سطح دکتری</button>
+  <!-- دسته‌بندی‌های ۱۶ گانه و ۹ سطح تحصیلی -->
+  <div id="categoriesContainer" style="display: flex; flex-direction: column; gap: 14px;"></div>
+
+  <!-- ۱. کادر مزیت خرید بسته‌ها -->
+  <div class="interactive-row bold-card benefit-card" onclick="handleCardClick('مزیت بسته‌ها')">
+    <strong>مزیت خرید بسته ها:</strong>
+    اگر مدتی از بسته خود استفاده نکنید،<br>
+    اعتبارتان نزد ما محفوظ میماند و هرگز منقضی و باطل نمیشود!
   </div>
 
-  <div class="btn-group-title">🟧 آنالیز تله درون سوال در سطوح تحصیلی</div>
-  <div class="grid">
-    <button class="btn c-g3 interactive-row" onclick="actionLevel('آنالیز تله درون سوال', 'دانش آموز ابتدایی')">آنالیز تله درون سوال در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g3 interactive-row" onclick="actionLevel('آنالیز تله درون سوال', 'دانش آموز متوسطه اول')">آنالیز تله درون سوال در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g3 interactive-row" onclick="actionLevel('آنالیز تله درون سوال', 'دانش آموز متوسطه دوم')">آنالیز تله درون سوال در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g3 interactive-row" onclick="actionLevel('آنالیز تله درون سوال', 'تیزهوشان')">آنالیز تله درون سوال در سطح تیزهوشان</button>
-    <button class="btn c-g3 interactive-row" onclick="actionLevel('آنالیز تله درون سوال', 'المپیادی')">آنالیز تله درون سوال در سطح المپیادی</button>
-    <button class="btn c-g3 interactive-row" onclick="actionLevel('آنالیز تله درون سوال', 'کنکوری')">آنالیز تله درون سوال در سطح کنکوری</button>
-    <button class="btn c-g3 interactive-row" onclick="actionLevel('آنالیز تله درون سوال', 'لیسانس')">آنالیز تله درون سوال در سطح لیسانس</button>
-    <button class="btn c-g3 interactive-row" onclick="actionLevel('آنالیز تله درون سوال', 'فوق لیسانس')">آنالیز تله درون سوال در سطح فوق لیسانس</button>
-    <button class="btn c-g3 interactive-row" onclick="actionLevel('آنالیز تله درون سوال', 'دکتری')">آنالیز تله درون سوال در سطح دکتری</button>
+  <!-- ۲. کادر لیست بسته‌های اعتباری -->
+  <div class="interactive-row packages-card" onclick="handleCardClick('بسته‌های اعتباری')">
+    <div class="packages-title">لیست بسته های اعتباری:</div>
+    <div class="packages-grid">
+      <div class="package-chip">۳ میلیون تومان</div>
+      <div class="package-chip">۵ میلیون تومان</div>
+      <div class="package-chip">۱۰ میلیون تومان</div>
+      <div class="package-chip">۲۰ میلیون تومان</div>
+      <div class="package-chip">۵۰ میلیون تومان</div>
+      <div class="package-chip">۱۰۰ میلیون تومان</div>
+      <div class="package-chip">۱۵۰ میلیون تومان</div>
+      <div class="package-chip">۲۰۰ میلیون تومان</div>
+    </div>
   </div>
 
-  <div class="btn-group-title">🟪 آنالیز پاسخ در سطوح تحصیلی</div>
-  <div class="grid">
-    <button class="btn c-g4 interactive-row" onclick="actionLevel('آنالیز پاسخ', 'دانش آموز ابتدایی')">آنالیز پاسخ در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g4 interactive-row" onclick="actionLevel('آنالیز پاسخ', 'دانش آموز متوسطه اول')">آنالیز پاسخ در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g4 interactive-row" onclick="actionLevel('آنالیز پاسخ', 'دانش آموز متوسطه دوم')">آنالیز پاسخ در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g4 interactive-row" onclick="actionLevel('آنالیز پاسخ', 'تیزهوشان')">آنالیز پاسخ در سطح تیزهوشان</button>
-    <button class="btn c-g4 interactive-row" onclick="actionLevel('آنالیز پاسخ', 'المپیادی')">آنالیز پاسخ در سطح المپیادی</button>
-    <button class="btn c-g4 interactive-row" onclick="actionLevel('آنالیز پاسخ', 'کنکوری')">آنالیز پاسخ در سطح کنکوری</button>
-    <button class="btn c-g4 interactive-row" onclick="actionLevel('آنالیز پاسخ', 'لیسانس')">آنالیز پاسخ در سطح لیسانس</button>
-    <button class="btn c-g4 interactive-row" onclick="actionLevel('آنالیز پاسخ', 'فوق لیسانس')">آنالیز پاسخ در سطح فوق لیسانس</button>
-    <button class="btn c-g4 interactive-row" onclick="actionLevel('آنالیز پاسخ', 'دکتری')">آنالیز پاسخ در سطح دکتری</button>
+  <!-- ۳. کادر اعلام روش خرید آفلاین -->
+  <div class="interactive-row bold-card notice-card" onclick="handleCardClick('روش پرداخت')">
+    <span>بدلیل تقلب و سوء استفاده در پرداختهای الکترونیکی ؛از پرداخت الکترونیکی معذوریم!</span>
+    <span>از اینرو تنها روش خرید؛</span>
+    <span>آفلاین و ارسال رسید به ایمیل است !</span>
   </div>
 
-  <div class="grid" style="margin-top:14px">
-    <button class="btn c-copy interactive-row" onclick="copyAnswerText()">📋 کپی کردن پاسخ</button>
-    <button class="btn c-media interactive-row" onclick="document.getElementById('filePick').click()">🖼️ انتخاب عکس از گالری</button>
-    <input type="file" id="filePick" accept="image/*" hidden onchange="filePicked(this)">
-    <button class="btn c-del interactive-row" onclick="clearAll()">🗑️ سطل اشغال(پاک کردن سوال/پاسخ قبلی)</button>
+  <!-- ۴. کادر ایمیل -->
+  <div class="interactive-row bold-card copy-card" style="border-color: #38bdf8;" onclick="handleCardClick('ایمیل')">
+    <div class="copy-data-text">Ai.Algorithms.Ballistics@gmail.com</div>
+    <button type="button" class="copy-btn" onclick="event.stopPropagation(); copyEmail();">
+      📋 کپی کردن ایمیل
+    </button>
   </div>
 
-  <div class="btn-group-title">🟪 آنالیز سوال درون عکس در سطوح تحصیلی</div>
-  <div class="grid">
-    <button class="btn c-g5 interactive-row" onclick="actionLevel('آنالیز سوال درون عکس', 'دانش آموز ابتدایی')">آنالیز سوال درون عکس در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g5 interactive-row" onclick="actionLevel('آنالیز سوال درون عکس', 'دانش آموز متوسطه اول')">آنالیز سوال درون عکس در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g5 interactive-row" onclick="actionLevel('آنالیز سوال درون عکس', 'دانش آموز متوسطه دوم')">آنالیز سوال درون عکس در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g5 interactive-row" onclick="actionLevel('آنالیز سوال درون عکس', 'تیزهوشان')">آنالیز سوال درون عکس در سطح تیزهوشان</button>
-    <button class="btn c-g5 interactive-row" onclick="actionLevel('آنالیز سوال درون عکس', 'المپیادی')">آنالیز سوال درون عکس در سطح المپیادی</button>
-    <button class="btn c-g5 interactive-row" onclick="actionLevel('آنالیز سوال درون عکس', 'کنکوری')">آنالیز سوال درون عکس در سطح کنکوری</button>
-    <button class="btn c-g5 interactive-row" onclick="actionLevel('آنالیز سوال درون عکس', 'لیسانس')">آنالیز سوال درون عکس در سطح لیسانس</button>
-    <button class="btn c-g5 interactive-row" onclick="actionLevel('آنالیز سوال درون عکس', 'فوق لیسانس')">آنالیز سوال درون عکس در سطح فوق لیسانس</button>
-    <button class="btn c-g5 interactive-row" onclick="actionLevel('آنالیز سوال درون عکس', 'دکتری')">آنالیز سوال درون عکس در سطح دکتری</button>
+  <!-- ۵. کادر شماره کارت -->
+  <div class="interactive-row bold-card copy-card" style="border-color: #38bdf8;" onclick="handleCardClick('شماره کارت')">
+    <div style="font-size: 16px; color: #94a3b8;">شماره کارت:</div>
+    <div class="copy-data-text">6037991555549678</div>
+    <button type="button" class="copy-btn" onclick="event.stopPropagation(); copyCard();">
+      💳 کپی کردن شماره کارت
+    </button>
   </div>
 
-  <div class="btn-group-title">🟦 آنالیز عکس در سطوح تحصیلی</div>
-  <div class="grid">
-    <button class="btn c-g6 interactive-row" onclick="actionLevel('آنالیز عکس', 'دانش آموز ابتدایی')">آنالیز عکس در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g6 interactive-row" onclick="actionLevel('آنالیز عکس', 'دانش آموز متوسطه اول')">آنالیز عکس در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g6 interactive-row" onclick="actionLevel('آنالیز عکس', 'دانش آموز متوسطه دوم')">آنالیز عکس در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g6 interactive-row" onclick="actionLevel('آنالیز عکس', 'تیزهوشان')">آنالیز عکس در سطح تیزهوشان</button>
-    <button class="btn c-g6 interactive-row" onclick="actionLevel('آنالیز عکس', 'المپیادی')">آنالیز عکس در سطح المپیادی</button>
-    <button class="btn c-g6 interactive-row" onclick="actionLevel('آنالیز عکس', 'کنکوری')">آنالیز عکس در سطح کنکوری</button>
-    <button class="btn c-g6 interactive-row" onclick="actionLevel('آنالیز عکس', 'لیسانس')">آنالیز عکس در سطح لیسانس</button>
-    <button class="btn c-g6 interactive-row" onclick="actionLevel('آنالیز عکس', 'فوق لیسانس')">آنالیز عکس در سطح فوق لیسانس</button>
-    <button class="btn c-g6 interactive-row" onclick="actionLevel('آنالیز عکس', 'دکتری')">آنالیز عکس در سطح دکتری</button>
+  <!-- ۶. کادر اخطار مالکیت فکری -->
+  <div class="interactive-row bold-card ip-card" onclick="handleCardClick('مالکیت فکری')">
+    <span class="ip-title">از مالکیت فکری!</span>
+    تمامی حقوق این پلتفرم متعلق به حسین لعلیان میباشد؛<br>
+    لذا هرگونه کپی برداری پیگرد قانونی دارد!
   </div>
 
-  <div class="btn-group-title">🟩 چهار جوابی کردن در سطوح تحصیلی</div>
-  <div class="grid">
-    <button class="btn c-g7 interactive-row" onclick="actionLevel('چهار جوابی کردن', 'دانش آموز ابتدایی')">چهار جوابی کردن در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g7 interactive-row" onclick="actionLevel('چهار جوابی کردن', 'دانش آموز متوسطه اول')">چهار جوابی کردن در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g7 interactive-row" onclick="actionLevel('چهار جوابی کردن', 'دانش آموز متوسطه دوم')">چهار جوابی کردن در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g7 interactive-row" onclick="actionLevel('چهار جوابی کردن', 'تیزهوشان')">چهار جوابی کردن در سطح تیزهوشان</button>
-    <button class="btn c-g7 interactive-row" onclick="actionLevel('چهار جوابی کردن', 'المپیادی')">چهار جوابی کردن در سطح المپیادی</button>
-    <button class="btn c-g7 interactive-row" onclick="actionLevel('چهار جوابی کردن', 'کنکوری')">چهار جوابی کردن در سطح کنکوری</button>
-    <button class="btn c-g7 interactive-row" onclick="actionLevel('چهار جوابی کردن', 'لیسانس')">چهار جوابی کردن در سطح لیسانس</button>
-    <button class="btn c-g7 interactive-row" onclick="actionLevel('چهار جوابی کردن', 'فوق لیسانس')">چهار جوابی کردن در سطح فوق لیسانس</button>
-    <button class="btn c-g7 interactive-row" onclick="actionLevel('چهار جوابی کردن', 'دکتری')">چهار جوابی کردن در سطح دکتری</button>
-  </div>
+</div>
 
-  <div class="btn-group-title">🟦 آنالیز سوال چهار جوابی در سطوح تحصیلی</div>
-  <div class="grid">
-    <button class="btn c-g8 interactive-row" onclick="actionLevel('آنالیز سوال چهار جوابی', 'دانش آموز ابتدایی')">آنالیز سوال چهار جوابی در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g8 interactive-row" onclick="actionLevel('آنالیز سوال چهار جوابی', 'دانش آموز متوسطه اول')">آنالیز سوال چهار جوابی در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g8 interactive-row" onclick="actionLevel('آنالیز سوال چهار جوابی', 'دانش آموز متوسطه دوم')">آنالیز سوال چهار جوابی در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g8 interactive-row" onclick="actionLevel('آنالیز سوال چهار جوابی', 'تیزهوشان')">آنالیز سوال چهار جوابی در سطح تیزهوشان</button>
-    <button class="btn c-g8 interactive-row" onclick="actionLevel('آنالیز سوال چهار جوابی', 'المپیادی')">آنالیز سوال چهار جوابی در سطح المپیادی</button>
-    <button class="btn c-g8 interactive-row" onclick="actionLevel('آنالیز سوال چهار جوابی', 'کنکوری')">آنالیز سوال چهار جوابی در سطح کنکوری</button>
-    <button class="btn c-g8 interactive-row" onclick="actionLevel('آنالیز سوال چهار جوابی', 'لیسانس')">آنالیز سوال چهار جوابی در سطح لیسانس</button>
-    <button class="btn c-g8 interactive-row" onclick="actionLevel('آنالیز سوال چهار جوابی', 'فوق لیسانس')">آنالیز سوال چهار جوابی در سطح فوق لیسانس</button>
-    <button class="btn c-g8 interactive-row" onclick="actionLevel('آنالیز سوال چهار جوابی', 'دکتری')">آنالیز سوال چهار جوابی در سطح دکتری</button>
-  </div>
+<script>
+  // صدای بوق تعاملی Web Audio
+  let audioCtx = null;
+  function playBeep() {
+    try {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.08);
+    } catch(e) {}
+  }
 
-  <div class="btn-group-title">🟩 پاسخ به سوال چهار جوابی در سطوح تحصیلی</div>
-  <div class="grid">
-    <button class="btn c-g9 interactive-row" onclick="actionLevel('پاسخ به سوال چهار جوابی', 'دانش آموز ابتدایی')">پاسخ به سوال چهار جوابی در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g9 interactive-row" onclick="actionLevel('پاسخ به سوال چهار جوابی', 'دانش آموز متوسطه اول')">پاسخ به سوال چهار جوابی در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g9 interactive-row" onclick="actionLevel('پاسخ به سوال چهار جوابی', 'دانش آموز متوسطه دوم')">پاسخ به سوال چهار جوابی در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g9 interactive-row" onclick="actionLevel('پاسخ به سوال چهار جوابی', 'تیزهوشان')">پاسخ به سوال چهار جوابی در سطح تیزهوشان</button>
-    <button class="btn c-g9 interactive-row" onclick="actionLevel('پاسخ به سوال چهار جوابی', 'المپیادی')">پاسخ به سوال چهار جوابی در سطح المپیادی</button>
-    <button class="btn c-g9 interactive-row" onclick="actionLevel('پاسخ به سوال چهار جوابی', 'کنکوری')">پاسخ به سوال چهار جوابی در سطح کنکوری</button>
-    <button class="btn c-g9 interactive-row" onclick="actionLevel('پاسخ به سوال چهار جوابی', 'لیسانس')">پاسخ به سوال چهار جوابی در سطح لیسانس</button>
-    <button class="btn c-g9 interactive-row" onclick="actionLevel('پاسخ به سوال چهار جوابی', 'فوق لیسانس')">پاسخ به سوال چهار جوابی در سطح فوق لیسانس</button>
-    <button class="btn c-g9 interactive-row" onclick="actionLevel('پاسخ به سوال چهار جوابی', 'دکتری')">پاسخ به سوال چهار جوابی در سطح دکتری</button>
-  </div>
+  // تنظیم بوق برای تمامی ردیف‌های تعاملی
+  document.querySelectorAll('.interactive-row').forEach(row => {
+    row.addEventListener('mouseenter', () => playBeep());
+    row.addEventListener('touchstart', () => playBeep(), {passive: true});
+  });
 
-  <div class="btn-group-title">🟪 آنالیز پاسخ سوال چهار جوابی در سطوح تحصیلی</div>
-  <div class="grid">
-    <button class="btn c-g10 interactive-row" onclick="actionLevel('آنالیز پاسخ سوال چهار جوابی', 'دانش آموز ابتدایی')">آنالیز پاسخ سوال چهار جوابی در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g10 interactive-row" onclick="actionLevel('آنالیز پاسخ چهار جوابی', 'دانش آموز متوسطه اول')">آنالیز پاسخ چهار جوابی در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g10 interactive-row" onclick="actionLevel('آنالیز پاسخ چهار جوابی', 'دانش آموز متوسطه دوم')">آنالیز پاسخ چهار جوابی در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g10 interactive-row" onclick="actionLevel('آنالیز پاسخ چهار جوابی', 'تیزهوشان')">آنالیز پاسخ چهار جوابی در سطح تیزهوشان</button>
-    <button class="btn c-g10 interactive-row" onclick="actionLevel('آنالیز پاسخ چهار جوابی', 'المپیادی')">آنالیز پاسخ چهار جوابی در سطح المپیادی</button>
-    <button class="btn c-g10 interactive-row" onclick="actionLevel('آنالیز پاسخ چهار جوابی', 'کنکوری')">آنالیز پاسخ چهار جوابی در سطح کنکوری</button>
-    <button class="btn c-g10 interactive-row" onclick="actionLevel('آنالیز پاسخ چهار جوابی', 'لیسانس')">آنالیز پاسخ چهار جوابی در سطح لیسانس</button>
-    <button class="btn c-g10 interactive-row" onclick="actionLevel('آنالیز پاسخ چهار جوابی', 'فوق لیسانس')">آنالیز پاسخ چهار جوابی در سطح فوق لیسانس</button>
-    <button class="btn c-g10 interactive-row" onclick="actionLevel('آنالیز پاسخ چهار جوابی', 'دکتری')">آنالیز پاسخ چهار جوابی در سطح دکتری</button>
-  </div>
+  function handleCardClick(label) {
+    playBeep();
+  }
 
-  <div class="btn-group-title">🟧 آنالیز تله درون سوال چهار جوابی در سطوح تحصیلی</div>
-  <div class="grid">
-    <button class="btn c-g11 interactive-row" onclick="actionLevel('آنالیز تله درون سوال چهار جوابی', 'دانش آموز ابتدایی')">آنالیز تله درون سوال چهار جوابی در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g11 interactive-row" onclick="actionLevel('آنالیز تله درون سوال چهار جوابی', 'دانش آموز متوسطه اول')">آنالیز تله درون سوال چهار جوابی در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g11 interactive-row" onclick="actionLevel('آنالیز تله درون سوال چهار جوابی', 'دانش آموز متوسطه دوم')">آنالیز تله درون سوال چهار جوابی در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g11 interactive-row" onclick="actionLevel('آنالیز تله درون سوال چهار جوابی', 'تیزهوشان')">آنالیز تله درون سوال چهار جوابی در سطح تیزهوشان</button>
-    <button class="btn c-g11 interactive-row" onclick="actionLevel('آنالیز تله درون سوال چهار جوابی', 'المپیادی')">آنالیز تله درون سوال چهار جوابی در سطح المپیادی</button>
-    <button class="btn c-g11 interactive-row" onclick="actionLevel('آنالیز تله درون سوال چهار جوابی', 'کنکوری')">آنالیز تله درون سوال چهار جوابی در سطح کنکوری</button>
-    <button class="btn c-g11 interactive-row" onclick="actionLevel('آنالیز تله درون سوال چهار جوابی', 'لیسانس')">آنالیز تله درون سوال چهار جوابی در سطح لیسانس</button>
-    <button class="btn c-g11 interactive-row" onclick="actionLevel('آنالیز تله درون سوال چهار جوابی', 'فوق لیسانس')">آنالیز تله درون سوال چهار جوابی در سطح فوق لیسانس</button>
-    <button class="btn c-g11 interactive-row" onclick="actionLevel('آنالیز تله درون سوال چهار جوابی', 'دکتری')">آنالیز تله درون سوال چهار جوابی در سطح دکتری</button>
-  </div>
+  // توابع کپی
+  function copyEmail() {
+    playBeep();
+    navigator.clipboard.writeText('Ai.Algorithms.Ballistics@gmail.com').then(() => {
+      alert('ایمیل با موفقیت کپی شد:\nAi.Algorithms.Ballistics@gmail.com');
+    }).catch(() => {
+      prompt('لطفاً ایمیل را دستی کپی کنید:', 'Ai.Algorithms.Ballistics@gmail.com');
+    });
+  }
 
-  <div class="grid" style="margin-top:14px">
-    <button class="btn c-g12 interactive-row" onclick="quickAction('پرسیدن سوال امتحانی، کنکوری،تکلیف کلاسی در خونه:')">🎓 پرسیدن سوال امتحانی، کنکوری،تکلیف کلاسی در خونه</button>
-  </div>
+  function copyCard() {
+    playBeep();
+    navigator.clipboard.writeText('6037991555549678').then(() => {
+      alert('شماره کارت با موفقیت کپی شد:\n6037991555549678');
+    }).catch(() => {
+      prompt('لطفاً شماره کارت را دستی کپی کنید:', '6037991555549678');
+    });
+  }
 
-  <div class="btn-group-title">🟪 آنالیز سوال امتحانی پرسیده شده در خانه</div>
-  <div class="grid">
-    <button class="btn c-g13 interactive-row" onclick="actionLevel('آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه', 'دانش آموز ابتدایی')">آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه در سطح دانش آموز ابتدایی</button>
-    <button class="btn c-g13 interactive-row" onclick="actionLevel('آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه', 'دانش آموز متوسطه اول')">آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه در سطح دانش آموز متوسطه اول</button>
-    <button class="btn c-g13 interactive-row" onclick="actionLevel('آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه', 'دانش آموز متوسطه دوم')">آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه در سطح دانش آموز متوسطه دوم</button>
-    <button class="btn c-g13 interactive-row" onclick="actionLevel('آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه', 'تیزهوشان')">آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه در سطح تیزهوشان</button>
-    <button class="btn c-g13 interactive-row" onclick="actionLevel('آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه', 'المپیادی')">آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه در سطح المپیادی</button>
-    <button class="btn c-g13 interactive-row" onclick="actionLevel('آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه', 'کنکوری')">آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه در سطح کنکوری</button>
-    <button class="btn c-g13 interactive-row" onclick="actionLevel('آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه', 'لیسانس')">آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه در سطح لیسانس</button>
-    <button class="btn c-g13 interactive-row" onclick="actionLevel('آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه', 'فوق لیسانس')">آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه در سطح فوق لیسانس</button>
-    <button class="btn c-g13 interactive-row" onclick="actionLevel('آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه', 'دکتری')">آنالیز سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده در خونه در سطح دکتری</button>
-  </div>
+  // داده‌های دسته‌بندی ۱۶ گانه و ۹ سطح تحصیلی
+  const categories = [
+    { name: "۱. ریاضیات و هندسه و جبر", color: "bg-c1" },
+    { name: "۲. فیزیک و مکانیک و نجوم", color: "bg-c2" },
+    { name: "۳. شیمی و علوم تجربی و بیوشیمی", color: "bg-c3" },
+    { name: "۴. زیست‌شناسی و پزشکی و علوم پایه", color: "bg-c4" },
+    { name: "۵. کامپیوتر و برنامه‌نویسی و هوش مصنوعی", color: "bg-c5" },
+    { name: "۶. فنی و مهندسی برق و عمران و مکانیک", color: "bg-c6" },
+    { name: "۷. ادبیات و زبان فارسی و عربی", color: "bg-c7" },
+    { name: "۸. زبان انگلیسی و زبان‌های خارجه", color: "bg-c8" },
+    { name: "۹. تاریخ، جغرافیا و علوم اجتماعی", color: "bg-c9" },
+    { name: "۱۰. فلسفه، منطق، دین و زندگی و الهیات", color: "bg-c10" },
+    { name: "۱۱. اقتصاد، مدیریت و حسابداری", color: "bg-c11" },
+    { name: "۱۲. حقوق، علوم قضایی و علوم سیاسی", color: "bg-c12" },
+    { name: "۱۳. هنر، معماری و طراحی", color: "bg-c13" },
+    { name: "۱۴. روانشناسی و علوم تربیتی", color: "bg-c14" },
+    { name: "۱۵. آزمون، نمونه سوال و تکالیف تلفیقی", color: "bg-c15" },
+    { name: "۱۶. پژوهش، تحلیل و نگارش پایان‌نامه", color: "bg-c16" }
+  ];
 
-  <div class="grid" style="margin-top:14px">
-    <button class="btn c-voice interactive-row" onclick="askByVoice()">🎙️ پاسخ با صدای من</button>
-    <button class="btn c-voice interactive-row" onclick="saveVoiceNote()">💾 ذخیره پاسخ صوتی</button>
-    <button class="bt
+  const levels = [
+    "ابتدایی",
+    "متوسطه اول",
+    "متوسطه دوم",
+    "تیزهوشان",
+    "المپیادی",
+    "کنکوری",
+    "لیسانس",
+    "فوق‌لیسانس",
+    "دکتری"
+  ];
+
+  // رندر دکمه‌های سطوح
+  const catContainer = document.getElementById('categoriesContainer');
+  categories.forEach(cat => {
+    const section = document.createElement('div');
+    section.className = 'interactive-row category-section';
+    section.addEventListener('mouseenter', () => playBeep());
+    section.addEventListener('touchstart', () => playBeep(), {passive: true});
+
+    const header = document.createElement('div');
+    header.className = 'category-title';
+    header.innerText = cat.name;
+    section.appendChild(header);
+
+    const grid = document.createElement('div');
+    grid.className = 'levels-grid';
+
+    levels.forEach(lvl => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `level-btn ${cat.color}`;
+      btn.innerText = lvl;
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        playBeep();
+        actionLevel(cat.name, lvl);
+      };
+      grid.appendChild(btn);
+    });
+
+    section.appendChild(grid);
+    catContainer.appendChild(section);
+  });
+
+  function actionLevel(catName, levelName) {
+    const textQ = document.getElementById('textQ');
+    const prefix = `[دسته‌بندی: ${catName} | سطح: ${levelName}]\n`;
+    if (!textQ.value.startsWith(prefix)) {
+      textQ.value = prefix + textQ.value;
+    }
+    executeMainPrompt(`لطفاً این پرسش یا تمرین را برای دسته‌بندی "${catName}" و در سطح علمی "${levelName}" با نهایت دقت، محاسبات گام‌به‌گام و شیوه رسمی توضیح دهید.`);
+  }
+
+  // فایل پیوست
+  let currentFileBase64 = null;
+  function handleFileSelected(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      currentFileBase64 = e.target.result;
+      document.getElementById('fileName').innerText = '📎 ' + file.name;
+      document.getElementById('filePreview').style.display = 'inline-flex';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearFile() {
+    currentFileBase64 = null;
+    document.getElementById('fileInput').value = '';
+    document.getElementById('filePreview').style.display = 'none';
+  }
+
+  // پردازش هوش مصنوعی با GapGPT API
+  async function executeMainPrompt(customInstruction = '') {
+    const textQ = document.getElementById('textQ');
+    const sysMsg = document.getElementById('systemMessage');
+    const status = document.getElementById('statusIndicator');
+
+    const promptText = textQ.value.trim();
+    if (!promptText && !currentFileBase64) {
+      alert('لطفاً سوال، تمرین یا فایلی را برای بررسی مشخص کنید.');
+      return;
+    }
+
+    playBeep();
+    status.innerText = 'در حال تحلیل و نگارش پاسخ...';
+    sysMsg.innerText = '⏳ هوش مصنوعی در حال پردازش سوال شما با دقیق‌ترین متدهای علمی است. لطفاً چند لحظه شکیبا باشید...';
+
+    const systemPrompt = `تو هوش مصنوعی پیشرفته آموزشی Class-AI هستی. وظیفه تو پاسخ به تکالیف، سوالات، مسائل المپیادی، کنکور و پروژه‌های دانشگاهی است.
+قوانین:
+۱. پاسخ باید کاملاً دقیق، علمی، گام‌به‌گام و ساختاریافته به زبان فارسی باشد.
+۲. از آوردن علائم نامفهوم یا کدهای زائد خودداری کن. فرمول‌ها را منظم و خوانا بنویس.
+۳. در صورتی که سطح و رشته مشخص شده باشد، بیان خود را کاملاً منطبق بر همان سطح تنظیم کن.`;
+
+    let userContent = [];
+    if (customInstruction) {
+      userContent.push({ type: "text", text: customInstruction + "\n\nمتن سوال یا تکلیف:\n" + promptText });
+    } else {
+      userContent.push({ type: "text", text: promptText });
+    }
+
+    if (currentFileBase64) {
+      userContent.push({
+        type: "image_url",
+        image_url: { url: currentFileBase64 }
+      });
+    }
+
+    try {
+      const response = await fetch('https://api.gapgpt.app/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer GAPGPTMASKTOKEN9pgt0eddbkX0X'
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userContent }
+          ],
+          temperature: 0.3
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`خطای سرور: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const answer = data.choices && data.choices[0] && data.choices[0].message
+        ? data.choices[0].message.content
+        : 'پاسخی از مدل دریافت نشد.';
+
+      sysMsg.innerText = answer;
+      status.innerText = 'پاسخ آماده است';
+      playBeep();
+    } catch (err) {
+      sysMsg.innerText = '⚠️ خطا در برقراری ارتباط: ' + err.message + '\nلطفاً از اتصال اینترنت یا پروکسی خود اطمینان حاصل نمایید.';
+      status.innerText = 'خطا در پردازش';
+    }
+  }
+
+  // ورودی و خروجی صوتی
+  let recognition = null;
+  let isRecording = false;
+
+  function toggleVoiceRecord() {
+    playBeep();
+    const btn = document.getElementById('btnRecord');
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('مرورگر شما از قابلیت تبدیل صوت به متن پشتیبانی نمی‌کند.');
+      return;
+    }
+
+    if (isRecording) {
+      if (recognition) recognition.stop();
+      isRecording = false;
+      btn.innerText = '🎤 ضبط صدا';
+      btn.style.background = '#dc2626';
+      return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = 'fa-IR';
+    recognition.interimResults = false;
+
+    recognition.onstart = function() {
+      isRecording = true;
+      btn.innerText = '⏹ در حال گوش دادن...';
+      btn.style.background = '#059669';
+    };
+
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      const textQ = document.getElementById('textQ');
+      textQ.value = (textQ.value ? textQ.value + ' ' : '') + transcript;
+    };
+
+    recognition.onerror = function() {
+      isRecording = false;
+      btn.innerText = '🎤 ضبط صدا';
+      btn.style.background = '#dc2626';
+    };
+
+    recognition.onend = function() {
+      isRecording = false;
+      btn.innerText = '🎤 ضبط صدا';
+      btn.style.background = '#dc2626';
+    };
+
+    recognition.start();
+  }
+
+  function speakOutput() {
+    playBeep();
+    const sysMsg = document.getElementById('systemMessage').innerText;
+    if (!sysMsg || sysMsg.startsWith('پاسخ‌های تحلیلی') || sysMsg.startsWith('⏳')) {
+      alert('ابتدا پاسخی دریافت کنید تا خوانده شود.');
+      return;
+    }
+    if (!('speechSynthesis' in window)) {
+      alert('مرورگر شما از پخش صدا پشتیبانی نمی‌کند.');
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const cleanText = sysMsg.replace(/[*#_`]/g, '');
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'fa-IR';
+    utterance.rate = 0.95;
+    window.speechSynthesis.speak(utterance);
+  }
+</script>
+
+</body>
+</html>
