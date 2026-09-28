@@ -1,30 +1,365 @@
-<!doctype html>
-<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10152b"><title>Class-AI</title>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Class-AI | پلتفرم هوشمند آموزشی و آزمون</title>
 <style>
-:root{--bg:#0c1020;--panel:#171d35;--ink:#f5f7ff;--muted:#bbc5df;--line:#394362;--a:#38d9c2;--b:#ffbd4a;--c:#bc8cff;--d:#ff6b8a;--e:#6bb7ff;--f:#9be15d}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#20294b 0,#0c1020 55%);color:var(--ink);font-family:Tahoma,"Segoe UI",sans-serif;line-height:1.8}button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{width:min(1180px,94%);margin:auto}.banner{margin:18px auto;padding:15px 18px;text-align:center;border:1px solid #ffd166;border-radius:18px;background:linear-gradient(100deg,#8c2d62,#9e5a13,#176d72);font-weight:900;font-size:clamp(1rem,2vw,1.35rem);animation:pulse 2.4s infinite}.hero{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:16px 0 24px}.card,.panel,.group{background:linear-gradient(145deg,#1b2340,#14192d);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 12px 35px #0005}.card h1{font-size:2rem;color:var(--a);margin:0 0 8px}.card h2{font-size:1.13rem;margin:0 0 10px;color:#fff}.benefit-card{background:linear-gradient(120deg,#6d287f,#175d83 55%,#147c70);border:2px solid #59e0cb;padding:clamp(22px,4vw,38px);text-align:center;transition:border-color .15s,box-shadow .15s}.benefit-copy{display:grid;gap:7px;font-size:clamp(1.08rem,2.6vw,1.55rem);line-height:1.9;font-weight:900}.benefit-copy strong{font-size:1.18em;color:#ffe08a}.benefit-card:hover,.benefit-card.is-active{border-color:#ff384f;animation:wobble .38s ease-in-out;box-shadow:0 0 0 3px #ff384f55,0 14px 34px #0008}.card p{margin:5px 0;color:#e1e7f7}.glow{font-weight:800}.section-title{margin:28px 0 12px;font-size:1.45rem;color:#fff}.panel{margin:14px 0}.question{width:100%;background:#0d1328;color:var(--ink);border:1px solid #4a5779;border-radius:11px;padding:11px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.question{min-height:120px;resize:vertical}.action{background:#252e4c;color:white;border:1px solid #637096;border-radius:10px;padding:9px 13px;font-weight:800}.action:hover{background:#37466c}.answer-action{background:linear-gradient(100deg,#147c70,#176d9e);border-color:#59e0cb;font-size:1rem;padding:10px 16px}.level-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}.group{padding:15px;border-top:4px solid var(--color);transition:.16s}.group h3{font-size:1rem;margin:0 0 10px;color:var(--color)}.buttons{display:flex;gap:7px;flex-wrap:wrap}.task{border:1px solid color-mix(in srgb,var(--color),white 12%);background:color-mix(in srgb,var(--color),#111827 78%);color:#fff;border-radius:10px;padding:8px 10px;font-weight:800;font-size:.88rem;transition:transform .15s,border-color .15s;min-height:42px}.task:hover,.task:focus-visible,.card:hover,.panel:hover,.group:hover,.bottom-card:hover{border-color:#ff384f;animation:wobble .38s ease-in-out;box-shadow:0 0 0 2px #ff384f44,0 12px 30px #0006}.task:active{transform:scale(.96)}.c1{--color:#39dbc4}.c2{--color:#ffbd4a}.c3{--color:#bd8cff}.c4{--color:#ff6d91}.c5{--color:#63b7ff}.c6{--color:#9ce15c}.c7{--color:#ff8d4d}.c8{--color:#4ed6e8}.c9{--color:#f28adb}.c10{--color:#c9df5a}.c11{--color:#f17661}.c12{--color:#a28cff}.c13{--color:#44d69d}.c14{--color:#f4a9bd}.c15{--color:#58b8dc}.c16{--color:#dfa447}.c17{--color:#8fc88a}.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px}.tool{width:100%;text-align:right}.preview{display:flex;align-items:center;gap:12px;margin:12px 0}.preview img{width:100px;height:85px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}.mic{font-size:0;display:inline-flex;align-items:center;gap:8px}.mic:after{content:'ورودی صوتی';font-size:.95rem}.mic svg{width:22px;height:22px;fill:currentColor}.results{min-height:120px;white-space:normal;background:#0d1328;border:1px solid #394362;border-radius:12px;padding:17px;overflow-wrap:anywhere}.results:empty:before{content:'پاسخ هوش مصنوعی در این بخش نمایش داده می‌شود.';color:#91a0c3}.results h1,.results h2,.results h3{line-height:1.5}.results pre{direction:ltr;text-align:left;overflow:auto;background:#080d1b;padding:12px;border-radius:8px}.results code{font-family:ui-monospace,monospace;color:#a9eaff}.results blockquote{border-right:3px solid var(--a);margin:8px 0;padding-right:12px;color:#cbd5e1}.error{color:#ff9292}.status{color:var(--muted);font-size:.9rem;min-height:1.5em}.bottom{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:20px 0}.bottom-card{background:linear-gradient(150deg,#28213d,#18223a);border:1px solid #66517f;border-radius:17px;padding:18px;font-weight:800;transition:.15s}.bottom-card h3{margin:0 0 8px;color:#ffd479}.bottom-card p{margin:5px 0}.price-list{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.price{background:#282e49;border-radius:8px;padding:5px;text-align:center}.copy{margin-top:8px;background:#12695f;color:white;border:0;border-radius:9px;padding:9px 12px;font-weight:900}.copy:hover{background:#168b7c}footer{text-align:center;color:#ff9ba8;font-weight:900;padding:14px 0 30px}@keyframes wobble{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-3px) rotate(-.5deg)}75%{transform:translateX(3px) rotate(.5deg)}}@keyframes pulse{50%{filter:brightness(1.3);transform:scale(1.008)}}@media(max-width:800px){.hero{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;scroll-behavior:auto!important}}
-</style></head><body><main class="wrap">
-<div class="banner glow">این پلتفرم هم در شرایط عادی و هم در شرایط مجازی به پیشرفت علمی فرزندان ایران زمین کمک می‌کند</div>
-<section class="hero"><article class="card glow"><h1>Class-AI</h1><p>پلتفرم انجام دهنده تکلیف و امتحان توی خونه مجازی توسط هوش مصنوعی</p><p>پلتفرم کلاس درس مدرسه و دانشگاه و موسسه کنکوری مجازی توی خونه توسط هوش مصنوعی</p><p>پلتفرم موسسه کنکور مجازی توسط هوش مصنوعی</p><p>پلتفرم دانشگاه مجازی توسط هوش مصنوعی</p></article><article class="card glow"><h2>یادگیری و ارزیابی مجازی</h2><p>پلتفرم تکلیف کتبی مجازی توسط هوش مصنوعی</p><p>پلتفرم تکلیف شفاهی مجازی توسط هوش مصنوعی</p><p>پلتفرم امتحان کتبی مجازی توسط هوش مصنوعی</p><p>پلتفرم امتحان شفاهی مجازی توسط هوش مصنوعی</p></article><article class="card glow"><h2>مدیریت: حسین لعلیان (رتبه ۳۲ کنکور دکتری)</h2><p>و همچنین مفتخر به تحصیل در ۶ دانشکده: شیلات، شیمی، زبان، مدیریت، مهندسی آی‌تی و مهندسی صنایع</p><p>صحت موضوع را از وزارت علوم جویا شوید!</p></article></section>
-<section class="panel benefit-card" aria-label="مزیت خرید بسته ها"><div class="benefit-copy"><strong>مزیت خرید بسته ها:</strong><span>اگر مدتی از بسته خود استفاده نکنید،</span><span>اعتبارتان نزد ما محفوظ میماند و هرگز منقضی و باطل نمیشود!</span></div></section>
-<section class="panel"><h2 class="section-title">ورودی پرسش</h2><textarea id="question" class="question" placeholder="سوال یا متن خود را اینجا بنویسید…"></textarea><div class="row" style="margin-top:10px"><label class="action" for="imageFile">انتخاب عکس از گالری</label><input id="imageFile" type="file" accept="image/*" hidden><button class="action answer-action" id="askBtn" type="button">دریافت پاسخ هوشمند</button><button class="action mic" id="micBtn" type="button" aria-label="ورودی صوتی" title="شروع گفتار به نوشتار"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a1 1 0 1 1 2 0 7 7 0 0 1-6 6.93V21h3a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2h3v-3.07A7 7 0 0 1 5 11a1 1 0 1 1 2 0 5 5 0 0 0 10 0z"/></svg></button><button class="action" id="voiceBtn" type="button" title="پخش پاسخ با صدای فارسی موجود در مرورگر">پاسخ با صدای من</button><button class="action" id="saveAudio" type="button" title="ذخירת پاسخ با ضبط میکروفن از صدای پخش‌شده">ذخیره پاسخ صوتی</button></div><div id="preview" class="preview" hidden><img id="thumb" alt="پیش‌نمایش عکس انتخاب‌شده"><button id="removeImage" class="action" type="button">حذف عکس</button></div><p id="status" class="status" aria-live="polite"></p></section>
-<section class="panel"><div class="row" style="justify-content:space-between"><h2 class="section-title" style="margin:0">نتایج</h2><div class="row"><button id="copyAnswer" class="action" type="button">کپی کردن پاسخ</button><button id="clear" class="action" type="button">سطل آشغال (پاک کردن سوال/پاسخ قبلی)</button></div></div><div id="result" class="results" aria-live="polite"></div></section>
-<h2 class="section-title">ابزارهای هوشمند</h2><section id="groups" class="level-grid"></section><h2 class="section-title">ابزارهای تکمیلی درخواستی</h2><section id="tools" class="tools"></section>
-<h2 class="section-title">بسته‌های اعتباری Class-AI</h2><section class="bottom"><article class="bottom-card"><h3>مزیت خرید بسته ها</h3><p>اگر مدتی از بسته خود استفاده نکنید، اعتبارتان نزد ما محفوظ میماند و هرگز منقضی و باطل نمیشود!</p></article><article class="bottom-card"><h3>لیست بسته های اعتباری</h3><div class="price-list" id="prices"></div></article><article class="bottom-card"><h3>مزایای تفصیلی خرید بسته‌های اعتباری</h3><p>دسترسی نامحدود به تدریس و حل تمرین تخصصی هوش مصنوعی در کلیه سطوح تحصیلی</p><p>اولویت در پردازش سریع و پاسخ‌دهی به مسائل پیچیده، فرمول‌ها و نمودارها</p><p>ذخیره سوابق یادگیری و بهره‌مندی از امکانات صوتی و تصویری بدون قطعی</p></article><article class="bottom-card"><h3>روش پرداخت آفلاین</h3><p>بدلیل تقلب و سوء استفاده در پرداختهای الکترونیکی ؛از پرداخت الکترونیکی معذوریم! از اینرو تنها روش خرید؛ آفلاین و ارسال رسید به ایمیل است !</p><p>جهت فعال‌سازی یا تمدید اعتبار، مبلغ بسته مورد نظر را به شماره کارت زیر واریز کرده و تصویر فیش واریزی را به همراه ایمیل خود به آدرس زیر ارسال نمایید تا حساب شما بلافاصله شارژ شود:</p></article><article class="bottom-card"><h3>شماره کارت</h3><p id="cardNo">6037991555549678</p><button class="copy" data-copy="6037991555549678">کپی کردن شماره کارت</button></article><article class="bottom-card"><h3>ایمیل پشتیبانی و ارسال فیش</h3><p id="emailAddr">Ai.Algorithms.Ballistics@gmail.com</p><button class="copy" data-copy="Ai.Algorithms.Ballistics@gmail.com">کپی کردن ایمیل</button></article></section><footer>اخطار مالکیت فکری! تمامی حقوق این پلتفرم متعلق به حسین لعلیان میباشد؛ لذا هرگونه کپی برداری پیگرد قانونی دارد!</footer></main>
+:root{--bg:#070d19;--card:rgba(15,23,42,.92);--border:rgba(255,255,255,.14);--text:#f8fafc;--muted:#94a3b8;--cyan:#38bdf8;--green:#22c55e;--yellow:#facc15;--pink:#ec4899;--violet:#a855f7;--shadow:0 12px 30px rgba(0,0,0,.45)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Tahoma,sans-serif;background:radial-gradient(circle at top,#0f172a 0%,#070d19 65%,#020617 100%);color:var(--text);line-height:1.7;min-height:100vh;padding:16px;overflow-x:hidden}
+.container{max-width:1150px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.banner{background:linear-gradient(90deg,#0ea5e9,#8b5cf6,#ec4899);color:#fff;padding:10px 14px;border-radius:14px;text-align:center;font-weight:700;font-size:.98rem;box-shadow:var(--shadow)}
+.header{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px 18px;text-align:center;box-shadow:var(--shadow);position:relative}
+.brand{font-size:2.4rem;font-weight:900;letter-spacing:1px;background:linear-gradient(90deg,#38bdf8,#818cf8,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitles{margin-top:10px;display:flex;flex-direction:column;gap:5px;font-size:1rem;color:#e2e8f0;font-weight:600}
+.manager-box{margin-top:16px;padding:12px;border-radius:14px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.2);font-size:.92rem}
+.manager-box .highlight{color:var(--yellow);font-weight:700}
+.benefit-card{background:linear-gradient(135deg,rgba(220,38,38,.2),rgba(234,88,12,.15));border:1px solid rgba(248,113,113,.4);border-radius:16px;padding:14px;text-align:center;font-size:1.02rem;color:#fecaca;font-weight:700}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+.section-title{font-size:1.25rem;font-weight:800;color:var(--cyan);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.question{width:100%;min-height:120px;background:rgba(2,6,23,.75);border:1px solid var(--border);border-radius:14px;padding:14px;color:#fff;font-size:1rem;resize:vertical;outline:none}
+.question:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(56,189,248,.25)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.action{background:rgba(255,255,255,.08);border:1px solid var(--border);color:#fff;padding:9px 15px;border-radius:12px;cursor:pointer;font-size:.9rem;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:.2s}
+.action:hover{background:rgba(255,255,255,.16);transform:translateY(-1px)}
+.answer-action{background:linear-gradient(90deg,#0284c7,#2563eb);border:none;box-shadow:0 4px 15px rgba(2,132,199,.4)}
+.answer-action:hover{background:linear-gradient(90deg,#0369a1,#1d4ed8)}
+.mic svg{width:18px;height:18px;fill:currentColor}
+.preview{margin-top:12px;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.03);padding:8px;border-radius:10px}
+.preview img{max-height:80px;border-radius:8px;border:1px solid var(--border)}
+.status{margin-top:10px;font-size:.88rem;color:var(--muted);min-height:22px}
+.results{background:rgba(2,6,23,.85);border:1px solid rgba(56,189,248,.3);border-radius:14px;padding:16px;min-height:120px;max-height:550px;overflow-y:auto;white-space:pre-wrap;line-height:1.8;color:#f1f5f9;font-size:1.02rem;margin-top:10px}
+.group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.group{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:14px}
+.group-title{font-size:.96rem;font-weight:700;margin-bottom:10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:6px}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.levels .action{font-size:.8rem;padding:6px 4px;border-radius:8px}
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:14px 0}
+.package{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
+.package h3{font-size:1rem;color:var(--cyan);margin-bottom:6px}
+.package .price{font-size:1.2rem;font-weight:800;color:var(--yellow);margin-bottom:10px}
+.package-desc{display:flex;flex-direction:column;gap:8px;margin-top:14px;font-size:.9rem;color:#cbd5e1}
+.offline-card{background:linear-gradient(135deg,rgba(30,41,59,.9),rgba(15,23,42,.9));border:1px solid rgba(56,189,248,.3);border-radius:16px;padding:16px;margin-top:14px}
+.card-number{font-family:monospace;font-size:1.35rem;letter-spacing:2px;color:var(--yellow);background:rgba(0,0,0,.35);padding:8px 12px;border-radius:8px;display:inline-block;margin:8px 0;direction:ltr}
+footer{text-align:center;padding:16px;color:var(--muted);font-size:.85rem}
+.c1{border-color:rgba(56,189,248,.3)}.c2{border-color:rgba(168,85,247,.3)}.c3{border-color:rgba(236,72,153,.3)}.c4{border-color:rgba(34,197,94,.3)}.c5{border-color:rgba(250,204,21,.3)}.c6{border-color:rgba(249,115,22,.3)}.c7{border-color:rgba(14,165,233,.3)}
+</style>
+</head>
+<body>
+<div class="container">
+<aside class="banner">این پلتفرم هم در شرایط عادی و هم در شرایط مجازی به پیشرفت علمی فرزندان ایران زمین کمک می‌کند</aside>
+<header class="header">
+<h1 class="brand">Class-AI</h1>
+<div class="subtitles">
+<div>پلتفرم انجام دهنده تکلیف و امتحان توی خونه مجازی توسط هوش مصنوعی</div>
+<div>پلتفرم کلاس درس مدرسه و دانشگاه و موسسه کنکوری مجازی توی خونه توسط هوش مصنوعی</div>
+<div>پلتفرم موسسه کنکور مجازی توسط هوش مصنوعی</div>
+<div>پلتفرم دانشگاه مجازی توسط هوش مصنوعی</div>
+<div>یادگیری و ارزیابی مجازی</div>
+<div>پلتفرم تکلیف کتبی مجازی توسط هوش مصنوعی</div>
+<div>پلتفرم تکلیف شفاهی مجازی توسط هوش مصنوعی</div>
+<div>پلتفرم امتحان کتبی مجازی توسط هوش مصنوعی</div>
+<div>پلتفرم امتحان شفاهی مجازی توسط هوش مصنوعی</div>
+</div>
+<div class="manager-box">
+<div>مدیریت: <span class="highlight">حسین لعلیان (رتبه ۳۲ کنکور دکتری)</span></div>
+<div>و همچنین مفتخر به تحصیل در ۶ دانشکده: شیلات، شیمی، زبان، مدیریت، مهندسی آی‌تی و مهندسی صنایع</div>
+<div style="font-size:.84rem;color:var(--muted);margin-top:4px">صحت موضوع را از وزارت علوم جویا شوید!</div>
+</div>
+</header>
+<section class="benefit-card">
+<strong>مزیت خرید بسته ها:</strong>اگر مدتی از بسته خود استفاده نکنید،اعتبارتان نزد ما محفوظ میماند و هرگز منقضی و باطل نمیشود!
+</section>
+<section class="panel">
+<h2 class="section-title">ورودی پرسش</h2>
+<textarea id="question" class="question" placeholder="سوال یا متن خود را اینجا بنویسید…"></textarea>
+<div class="row" style="margin-top:10px">
+<label class="action" for="imageFile">انتخاب عکس از گالری</label>
+<input id="imageFile" type="file" accept="image/*" hidden>
+<button class="action answer-action" id="askBtn" type="button">دریافت پاسخ هوشمند</button>
+<button class="action mic" id="micBtn" type="button" aria-label="ورودی صوتی" title="شروع گفتار به نوشتار"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a1 1 0 1 1 2 0 7 7 0 0 1-6 6.93V21h3a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2h3v-3.07A7 7 0 0 1 5 11a1 1 0 1 1 2 0 5 5 0 0 0 10 0z"/></svg></button>
+<button class="action" id="voiceBtn" type="button" title="پخش پاسخ با صدای فارسی موجود در مرورگر">پاسخ با صدای من</button>
+<button class="action" id="saveAudio" type="button" title="ذخירת پاسخ با ضبط میکروفن از صدای پخش‌شده">ذخیره پاسخ صوتی</button>
+</div>
+<div id="preview" class="preview" hidden>
+<img id="thumb" alt="پیش‌نمایش عکس انتخاب‌شده">
+<button id="removeImage" class="action" type="button">حذف عکس</button>
+</div>
+<p id="status" class="status" aria-live="polite"></p>
+</section>
+<section class="panel">
+<div class="row" style="justify-content:space-between">
+<h2 class="section-title" style="margin:0">نتایج</h2>
+<div class="row">
+<button id="copyAnswer" class="action" type="button">کپی کردن پاسخ</button>
+<button id="clear" class="action" type="button">سطل آشغال (پاک کردن سوال/پاسخ قبلی)</button>
+</div>
+</div>
+<div id="result" class="results" aria-live="polite"></div>
+</section>
+<section class="panel">
+<h2 class="section-title">ابزارهای هوشمند</h2>
+<div id="groups" class="group-grid"></div>
+</section>
+<section class="panel">
+<h2 class="section-title">ابزارهای تکمیلی درخواستی</h2>
+<div id="tools" class="tools"></div>
+</section>
+<section class="panel">
+<h2 class="section-title">بسته‌های اعتباری Class-AI</h2>
+<div class="benefit-card" style="margin-bottom:14px">
+<h3 style="font-size:1.1rem;margin-bottom:4px">مزیت خرید بسته ها</h3>
+<div>اگر مدتی از بسته خود استفاده نکنید، اعتبارتان نزد ما محفوظ میماند و هرگز منقضی و باطل نمیشود!</div>
+</div>
+<h3 style="font-size:1rem;color:#cbd5e1;margin-bottom:10px">لیست بسته های اعتباری</h3>
+<div id="packages" class="packages"></div>
+<div class="package-desc">
+<h3 style="font-size:1rem;color:var(--cyan)">مزایای تفصیلی خرید بسته‌های اعتباری</h3>
+<div>دسترسی نامحدود به تدریس و حل تمرین تخصصی هوش مصنوعی در کلیه سطوح تحصیلی</div>
+<div>اولویت در پردازش سریع و پاسخ‌دهی به مسائل پیچیده، فرمول‌ها و نمودارها</div>
+<div>ذخیره سوابق یادگیری و بهره‌مندی از امکانات صوتی و تصویری بدون قطعی</div>
+</div>
+<div class="offline-card">
+<h3 style="color:var(--yellow);margin-bottom:6px">روش پرداخت آفلاین</h3>
+<p style="font-size:.92rem;color:#cbd5e1">بدلیل تقلب و سوء استفاده در پرداختهای الکترونیکی ؛از پرداخت الکترونیکی معذوریم! از اینرو تنها روش خرید؛ آفلاین و ارسال رسید به ایمیل است !</p>
+<p style="font-size:.9rem;margin-top:8px">جهت فعال‌سازی یا تمدید اعتبار، مبلغ بسته مورد نظر را به شماره کارت زیر واریز کرده و تصویر فیش واریزی را به همراه ایمیل خود به آدرس زیر ارسال نمایید تا حساب شما بلافاصله شارژ شود:</p>
+<div style="margin-top:10px">
+<div><strong>شماره کارت</strong></div>
+<div class="card-number">6037991555549678</div>
+</div>
+<div style="margin-top:8px">
+<div><strong>ایمیل پشتیبانی و ارسال فیش</strong></div>
+<div style="color:var(--cyan);font-family:monospace;font-size:1.05rem;direction:ltr;display:inline-block">Ai.Algorithms.Ballistics@gmail.com</div>
+</div>
+</div>
+</section>
+<footer>Class-AI © تمامی حقوق محفوظ است. پلتفرم هوشمند آموزشی و ارزیابی.</footer>
+</div>
 <script>
-(()=>{'use strict';const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],levels=['ابتدایی','متوسطه اول','متوسطه دوم','تیزهوشان','المپیادی','کنکوری','لیسانس','فوق لیسانس','دکتری'];
-const groups=[['پاسخ سوال',1],['آنالیز سوال',2],['آنالیز تله درون سوال',3],['آنالیز پاسخ',4],['آنالیز سوال درون عکس',5],['آنالیز عکس',6],['چهار جوابی کردن',7],['آنالیز سوال چهار جوابی',8],['پاسخ به سوال چهار جوابی',9],['آنالیز پاسخ سوال چهار جوابی',10],['آنالیز تله درون سوال چهار جوابی',11],['آنالیز سوال امتحانی، کنکوری، تکلیف کلاسی پرسیده شده در خونه',12],['سوال دارای جدول-فرمول-نمودار (آنالیز)',13],['آنالیز تله سوالات دارای جدول-فرمول-نمودار',14]];
-const tools=['تدریس کامل دروس مقاطع مدرسه (اول ابتدایی تا دوازدهم) و دانشگاه (تمامی رشته‌ها و گرایش‌ها)','تدریس کنکوری دروس مقاطع مدرسه و دانشگاه','تحلیل و تشریح فرمول‌ها و اثبات‌ها - مقطع: مدرسه و دانشگاه','پاسخ به سوال','پاسخ به سوال چهارگزینه‌ای','تدریس و توضیح کامل','حل تمرین و مساله خط به خط','تکلیف خانگی با پاسخ تشریحی','طرح سوال امتحانی','سوال دارای جدول، فرمول یا نمودار','تحلیل و تشریح فرمول‌ها','تحلیل و رسم نمودار','بررسی جدول‌ها و داده‌ها','مشاوره تحصیلی و برنامه‌ریزی','ترجمه و نگارش متون تخصصی','تصحیح و خطایابی متن و پاسخ','جمع‌بندی و خلاصه درس','طراحی آزمون تستی و تشریحی','رفع اشکال آنلاین و پاسخ به سوالات'];
-const host=$('#groups');groups.forEach(([title,n])=>{const box=document.createElement('article');box.className='group c'+n;const h=document.createElement('h3');h.textContent=title;const row=document.createElement('div');row.className='buttons';levels.forEach(level=>{const b=document.createElement('button');b.className='task';b.type='button';b.textContent=(n===1?'پاسخ سوال':title)+' در سطح '+level;b.addEventListener('click',()=>ask(b.textContent));row.append(b)});box.append(h,row);host.append(box)});
-tools.forEach((t,i)=>{const b=document.createElement('button');b.className='task tool c'+(i%17+1);b.type='button';b.textContent=t;b.addEventListener('click',()=>ask(t));$('#tools').append(b)});['۵','۱۰','۲۰','۵۰','۱۰۰','۱۵۰','۲۰۰','۲۵۰'].forEach(x=>{const d=document.createElement('div');d.className='price';d.textContent=x+' میلیون تومان';$('#prices').append(d)});
-let lastAnswer='',imageData=null,recorder=null,chunks=[];function beep(){try{const ctx=beep.ctx||(beep.ctx=new(window.AudioContext||window.webkitAudioContext)());if(ctx.state==='suspended')ctx.resume();const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=740;g.gain.setValueAtTime(.045,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.075);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.08)}catch(e){}}
-document.addEventListener('pointerover',e=>{if(e.target.closest('button,.card,.panel,.group,.bottom-card'))beep()});document.addEventListener('pointerdown',e=>{if(e.target.closest('button,.card,.panel,.group,.bottom-card'))beep()});$('.benefit-card').addEventListener('pointerover',e=>e.currentTarget.classList.add('is-active'));$('.benefit-card').addEventListener('pointerdown',e=>e.currentTarget.classList.add('is-active'));$('.benefit-card').addEventListener('pointerout',e=>e.currentTarget.classList.remove('is-active'));
-function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function render(s){let t=safe(s);return t.replace(/```([\s\S]*?)```/g,'<pre><code>$1</code></pre>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/^### (.*)$/gm,'<h3>$1</h3>').replace(/^## (.*)$/gm,'<h2>$1</h2>').replace(/^# (.*)$/gm,'<h1>$1</h1>').replace(/^&gt; (.*)$/gm,'<blockquote>$1</blockquote>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>').replace(/\$\$([\s\S]*?)\$\$/g,'<code dir="ltr">$1</code>').replace(/\$([^$\n]+)\$/g,'<code dir="ltr">$1</code>').replace(/\n/g,'<br>')}
-function promptFor(action,q){return `نقش شما معلم و دستیار آموزشی دقیق و مسئولیت‌پذیر هستید. درخواست: ${action}. سطح: متناسب با دکمه انتخاب‌شده. به فارسی پاسخ روشن، مرحله‌به‌مرحله و آموزشی بدهید؛ فرمول‌ها را خوانا بنویسید و اگر اطلاعات ناکافی است شفاف بگویید.\n\nمتن پرسش:\n${q||'لطفاً تصویر پیوست را بررسی کنید.'}`}
-const apiConfig=window.CLASS_AI_API||{key:'sk-OIQJdLjVhgR9LHHbYvp4T3cD7rJw9UpgXtzEFGpAOr0ATYE0',endpoints:['https://api.gapgpt.app/v1','https://api.gapapi.com/v1'],models:['gpt-4o-mini','gpt-4o']};
-async function readError(res){const raw=await res.text();console.error('API request failed',res.status,res.statusText,raw);return 'در حال حاضر دریافت پاسخ ممکن نیست. لطفاً کمی بعد دوباره تلاش کنید.'}
-async function ask(action){const q=$('#question').value.trim();if(!q&&!imageData){$('#status').textContent='ابتدا پرسش بنویسید یا عکسی انتخاب کنید.';$('#question').focus();return}const btn=document.activeElement;$('#status').textContent='در حال دریافت پاسخ…';$('#result').classList.remove('error');if(btn?.tagName==='BUTTON')btn.disabled=true;const userContent=[{type:'text',text:promptFor(action,q)}];if(imageData)userContent.push({type:'image_url',image_url:{url:imageData}});const failures=[];try{for(const endpoint of apiConfig.endpoints){for(const model of apiConfig.models){try{const base=endpoint.replace(/\/$/,'');const res=await fetch(base+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiConfig.key},body:JSON.stringify({model,messages:[{role:'user',content:userContent}],temperature:.4,stream:false})});if(!res.ok)throw new Error(await readError(res));const data=await res.json();let answer=data.choices?.[0]?.message?.content;if(Array.isArray(answer))answer=answer.map(x=>x.text||'').join('\n');if(typeof answer!=='string'||!answer.trim())throw new Error('پاسخی دریافت نشد.');lastAnswer=answer;$('#result').innerHTML=render(answer);$('#status').textContent='پاسخ دریافت شد.';return}catch(err){console.error('AI request attempt failed',err);failures.push('درخواست ناموفق بود.')}}}throw new Error(failures.join('\n'))}catch(err){console.error('AI request failed',err);$('#result').innerHTML='<p class="error">در حال حاضر دریافت پاسخ ممکن نیست. لطفاً کمی بعد دوباره تلاش کنید.</p>';$('#result').classList.add('error');$('#status').textContent='درخواست ناموفق بود. لطفاً کمی بعد دوباره تلاش کنید.'}finally{if(btn?.tagName==='BUTTON')btn.disabled=false}}
-$('#askBtn').addEventListener('click',()=>ask('پاسخ به سوال'));$('#imageFile').onchange=e=>{const f=e.target.files[0];if(!f)return;if(!f.type.startsWith('image/')){alert('لطفاً فایل تصویری انتخاب کنید.');return}const r=new FileReader();r.onload=()=>{imageData=r.result;$('#thumb').src=imageData;$('#preview').hidden=false};r.readAsDataURL(f)};$('#removeImage').onclick=()=>{$('#imageFile').value='';imageData=null;$('#preview').hidden=true};$('#clear').onclick=()=>{$('#question').value='';$('#result').innerHTML='';$('#status').textContent='';lastAnswer='';$('#removeImage').click()};$('#copyAnswer').onclick=async()=>{try{await navigator.clipboard.writeText(lastAnswer||$('#result').innerText);$('#status').textContent='پاسخ کپی شد.'}catch(e){$('#status').textContent='کپی خودکار ممکن نیست؛ پاسخ را انتخاب و کپی کنید.'}};$$('[data-copy]').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);b.textContent='کپی شد!';setTimeout(()=>b.textContent=b.dataset.copy.includes('@')?'کپی کردن ایمیل':'کپی کردن شماره کارت',1300)}catch(e){$('#status').textContent='کپی خودکار در این مرورگر ممکن نیست.'}});
-$('#micBtn').onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$('#status').textContent='تشخیص گفتار در این مرورگر پشتیبانی نمی‌شود.';return}const r=new SR();r.lang='fa-IR';r.interimResults=false;r.onstart=()=>$('#status').textContent='گوش می‌دهم…';r.onresult=e=>{$('#question').value+=($('#question').value?' ':'')+e.results[0][0].transcript;$('#status').textContent='گفتار به متن تبدیل شد.'};r.onerror=e=>$('#status').textContent='خطای تشخیص گفتار: '+(e.error||'دسترسی میکروفن ممکن نیست.');r.start()};
-function speakAnswer(){if(!lastAnswer){$('#status').textContent='ابتدا پاسخ دریافت کنید.';return false}if(!('speechSynthesis'in window)){ $('#status').textContent='پخش گفتار در این مرورگر پشتیبانی نمی‌شود.';return false}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(lastAnswer);u.lang='fa-IR';u.onstart=()=>$('#status').textContent='پاسخ با صدای فارسی موجود در مرورگر پخش می‌شود؛ صدای شخصی‌سازی‌شده پشتیبانی نمی‌شود.';u.onerror=e=>$('#status').textContent='خطای پخش صوت: '+(e.error||'نامشخص');speechSynthesis.speak(u);return true}
-$('#voiceBtn').onclick=speakAnswer;$('#saveAudio').onclick=async()=>{if(!lastAnswer){$('#status').textContent='ابتدا پاسخ دریافت کنید.';return}if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){$('#status').textContent='ضبط صدا در این مرورگر پشتیبانی نمی‌شود؛ از پخش پاسخ صوتی استفاده کنید.';return}try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});recorder=new MediaRecorder(stream);chunks=[];recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{const blob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='class-ai-audio.webm';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);stream.getTracks().forEach(t=>t.stop())};recorder.start();const u=new SpeechSynthesisUtterance(lastAnswer);u.lang='fa-IR';u.onend=()=>{if(recorder?.state==='recording')recorder.stop()};u.onerror=()=>{if(recorder?.state==='recording')recorder.stop()};speechSynthesis.cancel();speechSynthesis.speak(u);$('#status').textContent='در حال پخش و ضبط پاسخ از میکروفن دستگاه؛ برای صدای بهتر از بلندگو استفاده کنید.'}catch(e){$('#status').textContent='ضبط انجام نشد: '+(e.message||'اجازه میکروفن لازم است.')}};
-})();</script></body></html>
+const toolGroups=[
+"پاسخ به سوال","طرح سوال تستی","طرح سوال تشریحی","طرح سوال جای خالی",
+"طرح سوال درست غلط","طرح سوال وصل کردنی","طرح سوال تطبیقی","طرح سوال تحلیلی",
+"طرح سوال مفهومی","طرح سوال مسئله ای","طرح سوال آزمایشی","طرح سوال شبیه ساز کنکور",
+"رفع اشکال تخصصی","خلاصه درس تخصصی"
+];
+const gradeLevels=[
+"ابتدایی","متوسطه اول","متوسطه دوم","کنکوری","کاردانی","کارشناسی","کارشناسی ارشد","دکتری","تیزهوشان"
+];
+const extraTools=[
+"تدریس صوتی خط به خط کتاب","حل المسائل گام به گام","تحلیل شکل و نمودار و جدول",
+"آزمون ساز هوشمند مبحثی","برنامه ریزی درسی فردی","تکنیک های تست زنی سریع",
+"تله های تستی و دام های آموزشی","فلش کارت ساز مرور سریع","کدگذاری و تصویرسازی ذهنی",
+"حل تمرین و تکلیف کتبی","شبیه ساز آزمون شفاهی","تصحیح اوراق و خطایابی",
+"مشاوره تحصیلی و کاهش استرس","روش مطالعه فعال (SQ3R)","اصطلاحات تخصصی و لغات کلیدی",
+"فرمول نامه و جعبه ابزار محاسبات","تحلیل تست های سال های گذشته","تطبیق بودجه بندی کنکور",
+"ارزیابی نقاط قوت و ضعف علمی"
+];
+const packageData=[
+{title:"بسته ۱۰ روزه",price:"۱۰۰,۰۰۰ تومان"},
+{title:"بسته ۳۰ روزه",price:"۲۸۰,۰۰۰ تومان"},
+{title:"بسته ۹۰ روزه",price:"۷۵۰,۰۰۰ تومان"},
+{title:"بسته ۱۸۰ روزه",price:"۱,۳۵۰,۰۰۰ تومان"},
+{title:"بسته ۳۶۵ روزه",price:"۲,۴۰۰,۰۰۰ تومان"}
+];
+
+const groupsEl=document.getElementById("groups");
+toolGroups.forEach((g,i)=>{
+  const card=document.createElement("div");
+  card.className=`group c${(i%7)+1}`;
+  const title=document.createElement("div");
+  title.className="group-title";
+  title.textContent=g;
+  card.appendChild(title);
+  const lvls=document.createElement("div");
+  lvls.className="levels";
+  gradeLevels.forEach(lvl=>{
+    const b=document.createElement("button");
+    b.type="button";
+    b.className="action";
+    b.textContent=lvl;
+    b.addEventListener("click",()=>ask(`${g} برای مقطع ${lvl}`));
+    lvls.appendChild(b);
+  });
+  card.appendChild(lvls);
+  groupsEl.appendChild(card);
+});
+
+const toolsEl=document.getElementById("tools");
+extraTools.forEach((tool,i)=>{
+  const b=document.createElement("button");
+  b.type="button";
+  b.className=`action c${(i%7)+1}`;
+  b.textContent=tool;
+  b.addEventListener("click",()=>ask(tool));
+  toolsEl.appendChild(b);
+});
+
+const pkgsEl=document.getElementById("packages");
+packageData.forEach(p=>{
+  const d=document.createElement("div");
+  d.className="package";
+  d.innerHTML=`<h3>${p.title}</h3><div class="price">${p.price}</div><button class="action" type="button" onclick="alert('لطفاً جهت خرید، مبلغ بسته را به شماره کارت اعلام شده واریز فرمایید.')">خرید آنلاین</button>`;
+  pkgsEl.appendChild(d);
+});
+
+let currentImageBase64="";
+const fileInput=document.getElementById("imageFile");
+const previewEl=document.getElementById("preview");
+const thumbEl=document.getElementById("thumb");
+fileInput.addEventListener("change",e=>{
+  const file=e.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    currentImageBase64=reader.result;
+    thumbEl.src=reader.result;
+    previewEl.hidden=false;
+  };
+  reader.readAsDataURL(file);
+});
+document.getElementById("removeImage").addEventListener("click",()=>{
+  currentImageBase64="";
+  fileInput.value="";
+  previewEl.hidden=true;
+});
+
+const statusEl=document.getElementById("status");
+const resultEl=document.getElementById("result");
+const questionEl=document.getElementById("question");
+
+document.getElementById("askBtn").addEventListener("click",()=>ask("پاسخ به سوال"));
+document.getElementById("copyAnswer").addEventListener("click",()=>{
+  if(!resultEl.textContent)return;
+  navigator.clipboard.writeText(resultEl.textContent).then(()=>{
+    statusEl.textContent="پاسخ با موفقیت کپی شد.";
+  });
+});
+document.getElementById("clear").addEventListener("click",()=>{
+  questionEl.value="";
+  resultEl.textContent="";
+  statusEl.textContent="";
+  currentImageBase64="";
+  fileInput.value="";
+  previewEl.hidden=true;
+});
+
+const SpeechRec=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SpeechRec){
+  const rec=new SpeechRec();
+  rec.lang="fa-IR";
+  rec.onresult=e=>{questionEl.value+=(questionEl.value?" ":"")+e.results[0][0].transcript;};
+  rec.onerror=()=>{statusEl.textContent="خطا در تشخیص صدا.";};
+  document.getElementById("micBtn").addEventListener("click",()=>{rec.start();statusEl.textContent="در حال شنیدن گفتار شما…";});
+}else{
+  document.getElementById("micBtn").addEventListener("click",()=>alert("مرورگر شما از ورودی صوتی پشتیبانی نمی‌کند."));
+}
+
+document.getElementById("voiceBtn").addEventListener("click",()=>{
+  if(!resultEl.textContent)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(resultEl.textContent);
+  u.lang="fa-IR";
+  window.speechSynthesis.speak(u);
+});
+
+let mediaRecorder,audioChunks=[];
+document.getElementById("saveAudio").addEventListener("click",async()=>{
+  if(!resultEl.textContent){statusEl.textContent="پاسخی برای ضبط وجود ندارد.";return;}
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    audioChunks=[];
+    mediaRecorder=new MediaRecorder(stream);
+    mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
+    mediaRecorder.onstop=()=>{
+      const blob=new Blob(audioChunks,{type:"audio/webm"});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");
+      a.href=url;
+      a.download="class-ai-answer.webm";
+      a.click();
+      statusEl.textContent="فایل صوتی ذخیره شد.";
+    };
+    mediaRecorder.start();
+    statusEl.textContent="در حال ضبط صدا… پس از اتمام پخش دکمه را مجدداً بزنید.";
+    const u=new SpeechSynthesisUtterance(resultEl.textContent);
+    u.lang="fa-IR";
+    u.onend=()=>{if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();};
+    window.speechSynthesis.speak(u);
+  }catch(err){
+    statusEl.textContent="دسترسی به میکروفن برقرار نشد.";
+  }
+});
+
+const apiConfig=Object.assign({
+  endpoints:[
+    "https://api.gapgpt.app/v1/chat/completions",
+    "https://api.gapapi.com/v1/chat/completions"
+  ],
+  models:["gpt-4o-mini","gpt-4o"],
+  key:"GAPGPTMASKTOKENa3bh3cok2lfX0X"
+},window.CLASS_AI_API||{});
+
+async function ask(actionTitle){
+  const text=questionEl.value.trim();
+  if(!text&&!currentImageBase64){
+    statusEl.textContent="ابتدا پرسش بنویسید یا عکسی انتخاب کنید.";
+    return;
+  }
+  statusEl.textContent="در حال پردازش و برقراری ارتباط با هوش مصنوعی…";
+  resultEl.textContent="در حال دریافت پاسخ هوشمند، لطفاً شکیبا باشید…";
+
+  const content=[];
+  if(text)content.push({type:"text",text:`[درخواست: ${actionTitle}]\n\n${text}`});
+  if(currentImageBase64){
+    content.push({
+      type:"image_url",
+      image_url:{url:currentImageBase64}
+    });
+  }
+
+  let finalResponse=null;
+  for(const ep of apiConfig.endpoints){
+    for(const model of apiConfig.models){
+      try{
+        const res=await fetch(ep,{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+            "Authorization":`Bearer ${apiConfig.key}`
+          },
+          body:JSON.stringify({
+            model:model,
+            messages:[
+              {role:"system",content:"شما دستیار فوق تخصصی آموزشی Class-AI هستید. به زبان فارسی رسمی و دقیق به سوالات، تمرین‌ها و امتحانات پاسخ دهید."},
+              {role:"user",content:content.length===1&&content[0].type==="text"?content[0].text:content}
+            ],
+            temperature:0.7
+          })
+        });
+        if(res.ok){
+          const data=await res.json();
+          if(data.choices&&data.choices[0]&&data.choices[0].message){
+            finalResponse=data.choices[0].message.content;
+            break;
+          }
+        }
+      }catch(err){
+        console.warn("Retrying with next endpoint/model...");
+      }
+    }
+    if(finalResponse)break;
+  }
+
+  if(finalResponse){
+    resultEl.textContent=finalResponse;
+    statusEl.textContent="پاسخ با موفقیت دریافت شد.";
+  }else{
+    resultEl.textContent="در حال حاضر دریافت پاسخ ممکن نیست. لطفاً کمی بعد دوباره تلاش کنید.";
+    statusEl.textContent="درخواست ناموفق بود. لطفاً کمی بعد دوباره تلاش کنید.";
+  }
+}
+</script>
+</body>
+</html>
