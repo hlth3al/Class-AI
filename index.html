@@ -81,7 +81,7 @@ footer{text-align:center;padding:16px;color:var(--muted);font-size:.85rem}
 <button class="action answer-action" id="askBtn" type="button">دریافت پاسخ هوشمند</button>
 <button class="action mic" id="micBtn" type="button" aria-label="ورودی صوتی" title="شروع گفتار به نوشتار"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a1 1 0 1 1 2 0 7 7 0 0 1-6 6.93V21h3a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2h3v-3.07A7 7 0 0 1 5 11a1 1 0 1 1 2 0 5 5 0 0 0 10 0z"/></svg></button>
 <button class="action" id="voiceBtn" type="button" title="پخش پاسخ با صدای فارسی موجود در مرورگر">پاسخ با صدای من</button>
-<button class="action" id="saveAudio" type="button" title="ذخیره پاسخ با ضبط میکروفن از صدای پخش‌شده">ذخیره پاسخ صوتی</button>
+<button class="action" id="saveAudio" type="button" title="ذخیره پاسخ با ضبط صدای پاسخ">ذخیره پاسخ صوتی</button>
 </div>
 <div id="preview" class="preview" hidden>
 <img id="thumb" alt="پیش‌نمایش عکس انتخاب‌شده">
@@ -172,7 +172,7 @@ toolGroups.forEach((g,i)=>{
   title.className="group-title";
   title.textContent=g;
   card.appendChild(title);
-  const lvls=document.createElement("div");
+  const lvls=document.createElement("levels");
   lvls.className="levels";
   gradeLevels.forEach(lvl=>{
     const b=document.createElement("button");
@@ -273,6 +273,7 @@ document.getElementById("saveAudio").addEventListener("click",async()=>{
     mediaRecorder=new MediaRecorder(stream);
     mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
     mediaRecorder.onstop=()=>{
+      stream.getTracks().forEach(track => track.stop());
       const blob=new Blob(audioChunks,{type:"audio/webm"});
       const url=URL.createObjectURL(blob);
       const a=document.createElement("a");
@@ -282,7 +283,7 @@ document.getElementById("saveAudio").addEventListener("click",async()=>{
       statusEl.textContent="فایل صوتی ذخیره شد.";
     };
     mediaRecorder.start();
-    statusEl.textContent="در حال ضبط صدا… پس از اتمام پخش دکمه را مجدداً بزنید.";
+    statusEl.textContent="در حال ضبط صدا…";
     const u=new SpeechSynthesisUtterance(resultEl.textContent);
     u.lang="fa-IR";
     u.onend=()=>{if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();};
@@ -292,14 +293,9 @@ document.getElementById("saveAudio").addEventListener("click",async()=>{
   }
 });
 
-const apiConfig=Object.assign({
-  endpoints:[
-    "https://api.gapgpt.app/v1/chat/completions",
-    "https://api.gapapi.com/v1/chat/completions"
-  ],
-  models:["gpt-4o-mini","gpt-4o"],
-  key:"GAPGPTMASKTOKENmfwswh13b7X2X"
-},window.CLASS_AI_API||{});
+// تنظیمات قطعی اتصال GapGPT
+const API_KEY = "GAPGPTMASKTOKENhyqyfd1sluX1X";
+const API_URL = "https://api.gapgpt.app/v1/chat/completions";
 
 async function ask(actionTitle){
   const text=questionEl.value.trim();
@@ -310,54 +306,49 @@ async function ask(actionTitle){
   statusEl.textContent="در حال پردازش و برقراری ارتباط با هوش مصنوعی…";
   resultEl.textContent="در حال دریافت پاسخ هوشمند، لطفاً شکیبا باشید…";
 
-  const content=[];
-  if(text)content.push({type:"text",text:`[درخواست: ${actionTitle}]\n\n${text}`});
+  let userContent;
   if(currentImageBase64){
-    content.push({
-      type:"image_url",
-      image_url:{url:currentImageBase64}
+    userContent = [
+      {type: "text", text: `[درخواست: ${actionTitle}]\n\n${text || "لطفاً این تصویر را تحلیل و حل کنید."}`},
+      {type: "image_url", image_url: {url: currentImageBase64}}
+    ];
+  } else {
+    userContent = `[درخواست: ${actionTitle}]\n\n${text}`;
+  }
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + API_KEY
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          {role: "system", content: "شما دستیار فوق تخصصی آموزشی Class-AI هستید. به زبان فارسی رسمی و دقیق به سوالات، تمرین‌ها و امتحانات پاسخ دهید."},
+          {role: "user", content: userContent}
+        ],
+        temperature: 0.7
+      })
     });
-  }
 
-  let finalResponse=null;
-  for(const ep of apiConfig.endpoints){
-    for(const model of apiConfig.models){
-      try{
-        const res=await fetch(ep,{
-          method:"POST",
-          headers:{
-            "Content-Type":"application/json",
-            "Authorization":`Bearer ${apiConfig.key}`
-          },
-          body:JSON.stringify({
-            model:model,
-            messages:[
-              {role:"system",content:"شما دستیار فوق تخصصی آموزشی Class-AI هستید. به زبان فارسی رسمی و دقیق به سوالات، تمرین‌ها و امتحانات پاسخ دهید."},
-              {role:"user",content:content.length===1&&content[0].type==="text"?content[0].text:content}
-            ],
-            temperature:0.7
-          })
-        });
-        if(res.ok){
-          const data=await res.json();
-          if(data.choices&&data.choices[0]&&data.choices[0].message){
-            finalResponse=data.choices[0].message.content;
-            break;
-          }
-        }
-      }catch(err){
-        console.warn("Retrying with next endpoint/model...");
-      }
+    if(!res.ok){
+      const err = await res.json().catch(()=>({}));
+      throw new Error(err.error?.message || ("کد خطا: " + res.status));
     }
-    if(finalResponse)break;
-  }
 
-  if(finalResponse){
-    resultEl.textContent=finalResponse;
-    statusEl.textContent="پاسخ با موفقیت دریافت شد.";
-  }else{
-    resultEl.textContent="در حال حاضر دریافت پاسخ ممکن نیست. لطفاً کمی بعد دوباره تلاش کنید.";
-    statusEl.textContent="درخواست ناموفق بود. لطفاً کمی بعد دوباره تلاش کنید.";
+    const data = await res.json();
+    if(data.choices && data.choices[0] && data.choices[0].message){
+      resultEl.textContent = data.choices[0].message.content;
+      statusEl.textContent = "پاسخ با موفقیت دریافت شد.";
+    } else {
+      throw new Error("پاسخی از سرور دریافت نشد.");
+    }
+  } catch(err) {
+    console.error(err);
+    resultEl.textContent = "خطا در دریافت پاسخ: " + err.message;
+    statusEl.textContent = "درخواست ناموفق بود. لطفاً اتصال اینترنت خود را بررسی کرده و مجدد تلاش کنید.";
   }
 }
 </script>
