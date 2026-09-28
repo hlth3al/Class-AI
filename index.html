@@ -81,7 +81,7 @@ footer{text-align:center;padding:16px;color:var(--muted);font-size:.85rem}
 <button class="action answer-action" id="askBtn" type="button">دریافت پاسخ هوشمند</button>
 <button class="action mic" id="micBtn" type="button" aria-label="ورودی صوتی" title="شروع گفتار به نوشتار"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a1 1 0 1 1 2 0 7 7 0 0 1-6 6.93V21h3a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2h3v-3.07A7 7 0 0 1 5 11a1 1 0 1 1 2 0 5 5 0 0 0 10 0z"/></svg></button>
 <button class="action" id="voiceBtn" type="button" title="پخش پاسخ با صدای فارسی موجود در مرورگر">پاسخ با صدای من</button>
-<button class="action" id="saveAudio" type="button" title="ذخירת پاسخ با ضبط میکروفن از صدای پخش‌شده">ذخیره پاسخ صوتی</button>
+<button class="action" id="saveAudio" type="button" title="ذخیره پاسخ با ضبط میکروفن از صدای پخش‌شده">ذخیره پاسخ صوتی</button>
 </div>
 <div id="preview" class="preview" hidden>
 <img id="thumb" alt="پیش‌نمایش عکس انتخاب‌شده">
@@ -298,7 +298,7 @@ const apiConfig=Object.assign({
     "https://api.gapapi.com/v1/chat/completions"
   ],
   models:["gpt-4o-mini","gpt-4o"],
-  key:"GAPGPTMASKTOKENa3bh3cok2lfX0X"
+  key:"GAPGPTMASKTOKENmfwswh13b7X2X"
 },window.CLASS_AI_API||{});
 
 async function ask(actionTitle){
