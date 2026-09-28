@@ -12,7 +12,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Tahoma,sans-serif;background:radial-gradient(circle at top,#0f172a 0%,#070d19 65%,#020617 100%);color:var(--text);line-height:1.7;min-height:100vh;padding:16px;overflow-x:hidden}
 .container{max-width:1150px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
-.version-badge{background:#166534;color:#86efac;padding:6px 14px;border-radius:20px;font-size:.82rem;font-weight:700;display:inline-block;margin:0 auto 10px auto;border:1px solid #22c55e}
+.version-badge{background:#1e3a8a;color:#93c5fd;padding:6px 14px;border-radius:20px;font-size:.82rem;font-weight:700;display:inline-block;margin:0 auto 10px auto;border:1px solid #3b82f6}
 .banner{background:linear-gradient(90deg,#0ea5e9,#8b5cf6,#ec4899);color:#fff;padding:10px 14px;border-radius:14px;text-align:center;font-weight:700;font-size:.98rem;box-shadow:var(--shadow)}
 .header{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px 18px;text-align:center;box-shadow:var(--shadow);position:relative}
 .brand{font-size:2.4rem;font-weight:900;letter-spacing:1px;background:linear-gradient(90deg,#38bdf8,#818cf8,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -33,13 +33,7 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Tahoma,sans-serif;bac
 .preview{margin-top:12px;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.03);padding:8px;border-radius:10px}
 .preview img{max-height:80px;border-radius:8px;border:1px solid var(--border)}
 .status{margin-top:10px;font-size:.88rem;color:var(--muted);min-height:22px}
-.results{background:rgba(2,6,23,.85);border:1px solid rgba(56,189,248,.3);border-radius:14px;padding:16px;min-height:120px;max-height:550px;overflow-y:auto;white-space:pre-wrap;line-height:1.8;color:#f1f5f9;font-size:1.02rem;margin-top:10px}
-.group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.group{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:14px}
-.group-title{font-size:.96rem;font-weight:700;margin-bottom:10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:6px}
-.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.levels .action{font-size:..status{margin-top:10px;font-size:.88rem;color:var(--muted);min-height:22px}
-.results{background:rgba(2,6,23,.85);border:1px solid rgba(56,189,248,.3);border-radius:14px;padding:16px;min-height:120px;max-height:550px;overflow-y:auto;white-space:pre-wrap;line-height:1.8;color:#f1f5f9;font-size:1.02rem;margin-top:10px}
+.results{background:rgba(2,6,23,.85);border:1px solid rgba(56,189,248,.3);border-radius:14px;padding:16px;min-height:140px;max-height:550px;overflow-y:auto;white-space:pre-wrap;line-height:1.8;color:#f1f5f9;font-size:1.02rem;margin-top:10px}
 .group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .group{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:14px}
 .group-title{font-size:.96rem;font-weight:700;margin-bottom:10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:6px}
@@ -47,8 +41,14 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Tahoma,sans-serif;bac
 .levels .action{font-size:.8rem;padding:6px 4px;border-radius:8px}
 .tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
 .packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:14px 0}
-.package{background:rgba(255,255,255,.03);border:1px,.15);border-radius:12px;padding:12px;margin-top:15px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.api-input{background:#020617;border:1px solid var(--border);color:#38bdf8;padding:6px 10px;border-radius:8px;flex:1;min-width:220px;font-family:monospace;direction:ltr}
+.package{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
+.package h3{font-size:1rem;color:var(--cyan);margin-bottom:6px}
+.package .price{font-size:1.2rem;font-weight:800;color:var(--yellow);margin-bottom:10px}
+.package-desc{display:flex;flex-direction:column;gap:8px;margin-top:14px;font-size:.9rem;color:#cbd5e1}
+.offline-card{background:linear-gradient(135deg,rgba(30,41,59,.9),rgba(15,23,42,.9));border:1px solid rgba(56,189,248,.3);border-radius:16px;padding:16px;margin-top:14px}
+.card-number{font-family:monospace;font-size:1.35rem;letter-spacing:2px;color:var(--yellow);background:rgba(0,0,0,.35);padding:8px 12px;border-radius:8px;display:inline-block;margin:8px 0;direction:ltr}
+.key-box{background:rgba(0,0,0,.4);border:1px solid rgba(56,189,248,.25);border-radius:12px;padding:12px;margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.key-box input{background:#020617;border:1px solid var(--border);color:#38bdf8;padding:8px 12px;border-radius:8px;font-family:monospace;direction:ltr;outline:none}
 footer{text-align:center;padding:16px;color:var(--muted);font-size:.85rem}
 .c1{border-color:rgba(56,189,248,.3)}.c2{border-color:rgba(168,85,247,.3)}.c3{border-color:rgba(236,72,153,.3)}.c4{border-color:rgba(34,197,94,.3)}.c5{border-color:rgba(250,204,21,.3)}.c6{border-color:rgba(249,115,22,.3)}.c7{border-color:rgba(14,165,233,.3)}
 </style>
@@ -56,7 +56,7 @@ footer{text-align:center;padding:16px;color:var(--muted);font-size:.85rem}
 <body>
 <div class="container">
 <div style="text-align:center">
-  <span class="version-badge">نسخه فعال: v3.0 (سیستم عیب‌یابی زنده فعال است)</span>
+  <span class="version-badge">نسخه آنلاین Class-AI v3.2 | موتور چندمسیری هوشمند</span>
 </div>
 <aside class="banner">این پلتفرم هم در شرایط عادی و هم در شرایط مجازی به پیشرفت علمی فرزندان ایران زمین کمک می‌کند</aside>
 <header class="header">
@@ -98,21 +98,42 @@ footer{text-align:center;padding:16px;color:var(--muted);font-size:.85rem}
 </div>
 <p id="status" class="status" aria-live="polite"></p>
 
-<div class="api-config-box">
-  <span style="font-size:.85rem;color:var(--muted)">کلید فعال API:</span>
-  <input type="text" id="customApiKey" class="api-input" value="GAPGPTMASKTOKENx5ab7cnk5ggX1X" placeholder="کلید هوش مصنوعی را وارد کنید">
-  <button type="button" id="saveKeyBtn" class="action" style="padding:5px 12px;font-size:.82rem">ذخیره در مرورگر</button>
+<div class="key-box">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <span style="font-size:.85rem;color:var(--muted)">کلید فعال API (تغییر و ذخیره مستقیم از گوشی):</span>
+    <button type="button" id="saveKeyBtn" class="action" style="padding:4px 10px;font-size:.8rem">ذخیره کلید</button>
+  </div>
+  <input type="text" id="apiKeyInput" value="GAPGPTMASKTOKENwe313i9szciX1X" placeholder="کلید API جدید را اینجا الصاق کنید">
 </div>
 </section>
 <section class="panel">
 <div class="row" style="justify-content:space-between">
-<h2 class="section-title" style="margin:0">نتایج و وضعیت پردازش</h2>
+<h2 class="section-title" style="margin:0">نتایج و پاسخنامه هوشمند</h2>
+<div class="row">
+<button id="copyAnswer" class="action" type="button">کپی کردن پاسخ</button>
+<button id="clear" class="action" type="button">سطل آشغال (پاک کردن سوال/پاسخ قبلی)</button>preview" hidden>
+<img id="thumb" alt="پیش‌نمایش عکس انتخاب‌شده">
+<button id="removeImage" class="action" type="button">حذف عکس</button>
+</div>
+<p id="status" class="status" aria-live="polite"></p>
+
+<div class="key-box">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <span style="font-size:.85rem;color:var(--muted)">کلید فعال API (تغییر و ذخیره مستقیم از گوشی):</span>
+    <button type="button" id="saveKeyBtn" class="action" style="padding:4px 10px;font-size:.8rem">ذخیره کلید</button>
+  </div>
+  <input type="text" id="apiKeyInput" value="GAPGPTMASKTOKENwe313i9szciX2X" placeholder="کلید API جدید را اینجا الصاق کنید">
+</div>
+</section>
+<section class="panel">
+<div class="row" style="justify-content:space-between">
+<h2 class="section-title" style="margin:0">نتایج و پاسخنامه هوشمند</h2>
 <div class="row">
 <button id="copyAnswer" class="action" type="button">کپی کردن پاسخ</button>
 <button id="clear" class="action" type="button">سطل آشغال (پاک کردن سوال/پاسخ قبلی)</button>
 </div>
 </div>
-<div id="result" class="results" aria-live="polite">برای شروع، سوال خود را تایپ کرده و روی «دریافت پاسخ هوشمند» یا یکی از ابزارهای زیر کلیک فرمایید.</div>
+<div id="result" class="results" aria-live="polite">برای شروع، سوال خود را بنویسید یا از گزینه‌های زیر انتخاب نمایید.</div>
 </section>
 <section class="panel">
 <h2 class="section-title">ابزارهای هوشمند</h2>
@@ -123,22 +144,7 @@ footer{text-align:center;padding:16px;color:var(--muted);font-size:.85rem}
 <div id="tools" class="tools"></div>
 </section>
 <section class="panel">
-<h2 class="section-title">بسته‌های اعتباری Class-AI</h2>
-<div class="benefit-card" style="margin-bottom:14px">
-<h3 style="font-size:1.1rem;margin-bottom:4px">مزیت خرید بسته ها</h3>
-<div>اگر مدتی از بسته خود استفاده نکنید، اعتبارتان نزد ما محفوظ میماند و هرگز منقضی و باطل نمیشود!</div>
-</div>
-<h3 style="font-size:1rem;color:#cbd5e1;margin-bottom:10px">لیست بسته های اعتباری</h3>
-<div id="packages" class="packages"></div>
-<div class="package-desc">
-<h3 style="font-size:1rem;color:var(--cyan)">مزایای تفصیلی خرید بسته‌های اعتباری</h3>
-<div>دسترسی نامحدود به تدریس و حل تمرین تخصصی هوش مصنوعی در کلیه سطوح تحصیلی</div>
-<div>اولویت در پردازش سریع و پاسخ‌دهی به مسائل پیچیده، فرمول‌ها و نمودارها</div>
-<div>ذخیره سوابق یادگیری و بهره‌مندی از امکانات صوتی و تصویری بدون قطعی</div>
-</div>
-<div class="offline-card">
-<h3 style="color:var(--yellow);margin-bottom:6px">روش پرداخت آفلاین</h3>
-<p style="font-size:.92rem;color:#cbd5e1">بدلیل تقلب و سوء استفاده در پرداختهای الکترونیکی ؛از پرداخت الکترونیکی معذوریم! از اینرو تنها روش خرید؛ آفلاین و ارسال رسید به ایمیل است !</p>
+<h2 class="section-title">بسته‌های اعتبارییکی ؛از پرداخت الکترونیکی معذوریم! از اینرو تنها روش خرید؛ آفلاین و ارسال رسید به ایمیل است !</p>
 <p style="font-size:.9rem;margin-top:8px">جهت فعال‌سازی یا تمدید اعتبار، مبلغ بسته مورد نظر را به شماره کارت زیر واریز کرده و تصویر فیش واریزی را به همراه ایمیل خود به آدرس زیر ارسال نمایید تا حساب شما بلافاصله شارژ شود:</p>
 <div style="margin-top:10px">
 <div><strong>شماره کارت</strong></div>
@@ -243,17 +249,16 @@ document.getElementById("removeImage").addEventListener("click",()=>{
 const statusEl=document.getElementById("status");
 const resultEl=document.getElementById("result");
 const questionEl=document.getElementById("question");
-const customApiKeyEl=document.getElementById("customApiKey");
+const apiKeyInput=document.getElementById("apiKeyInput");
 
-// بازیابی کلید از حافظه محلی در صورت وجود
-if(localStorage.getItem("CLASS_AI_KEY")){
-  customApiKeyEl.value = localStorage.getItem("CLASS_AI_KEY");
+if(localStorage.getItem("USER_CUSTOM_KEY")){
+  apiKeyInput.value=localStorage.getItem("USER_CUSTOM_KEY");
 }
 document.getElementById("saveKeyBtn").addEventListener("click",()=>{
-  const val = customApiKeyEl.value.trim();
-  if(val){
-    localStorage.setItem("CLASS_AI_KEY", val);
-    alert("کلید API جدید در مرورگر شما ذخیره شد.");
+  const k=apiKeyInput.value.trim();
+  if(k){
+    localStorage.setItem("USER_CUSTOM_KEY",k);
+    alert("کلید API جدید با موفقیت روی مرورگر شما ذخیره شد.");
   }
 });
 
@@ -266,7 +271,7 @@ document.getElementById("copyAnswer").addEventListener("click",()=>{
 });
 document.getElementById("clear").addEventListener("click",()=>{
   questionEl.value="";
-  resultEl.textContent="";
+  resultEl.textContent="برای شروع، سوال خود را بنویسید یا از گزینه‌های زیر انتخاب نمایید.";
   statusEl.textContent="";
   currentImageBase64="";
   fileInput.value="";
@@ -321,8 +326,8 @@ document.getElementById("saveAudio").addEventListener("click",async()=>{
   }
 });
 
-// آدرس‌های معتبر API
-const ENDPOINTS = [
+// سرورها به همراه مسیرهای کمکی و بدون بن‌بست
+const SERVERS = [
   "https://api.gapgpt.app/v1/chat/completions",
   "https://api.avalai.ir/v1/chat/completions"
 ];
@@ -333,20 +338,19 @@ async function ask(actionTitle){
     statusEl.textContent="ابتدا پرسش بنویسید یا عکسی انتخاب کنید.";
     return;
   }
-  
-  const currentKey = customApiKeyEl.value.trim();
-  if(!currentKey){
+  const token = apiKeyInput.value.trim();
+  if(!token){
     statusEl.textContent="لطفاً کلید API را وارد کنید.";
     return;
   }
 
-  statusEl.textContent="در حال ارسال درخواست به هوش مصنوعی…";
-  resultEl.textContent="در حال پردازش و استعلام از سرور، لطفاً چند لحظه شکیبا باشید…";
+  statusEl.textContent="در حال ارسال درخواست به شبکه هوش مصنوعی…";
+  resultEl.textContent="در حال پردازش درخواست… لطفاً چند ثانیه صبر کنید.";
 
   let userContent;
   if(currentImageBase64){
     userContent = [
-      {type: "text", text: `[درخواست: ${actionTitle}]\n\n${text || "لطفاً این تصویر را تحلیل و حل کنید."}`},
+      {type: "text", text: `[درخواست: ${actionTitle}]\n\n${text || "لطفاً این تصویر را به دقت تحلیل و حل بفرمایید."}`},
       {type: "image_url", image_url: {url: currentImageBase64}}
     ];
   } else {
@@ -356,48 +360,46 @@ async function ask(actionTitle){
   const payload = {
     model: "gpt-4o-mini",
     messages: [
-      {role: "system", content: "شما دستیار فوق تخصصی آموزشی Class-AI هستید. به زبان فارسی رسمی و دقیق به سوالات، تمرین‌ها و امتحانات پاسخ دهید."},
+      {role: "system", content: "شما هوش مصنوعی آموزشی پلتفرم Class-AI هستید. به صورت علمی، دقیق، مستند و به زبان فارسی پاسخ دهید."},
       {role: "user", content: userContent}
     ],
     temperature: 0.7
   };
 
-  let debugLog = [];
+  let failureReasons = [];
 
-  for(const url of ENDPOINTS){
-    const host = new URL(url).hostname;
+  for(const targetUrl of SERVERS){
+    const domain = new URL(targetUrl).hostname;
     try {
-      statusEl.textContent = `در حال تست اتصال به: ${host}…`;
-      const res = await fetch(url, {
+      statusEl.textContent = `در حال ارتباط با ${domain}…`;
+      const response = await fetch(targetUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + currentKey
+          "Authorization": "Bearer " + token
         },
         body: JSON.stringify(payload)
       });
 
-      if(!res.ok){
-        const errText = await res.text().catch(()=>"");
-        debugLog.push(`سرور ${host} پاسخ داد: کد ${res.status} (${res.statusText})\nمتن خطا: ${errText}`);
+      if(!response.ok){
+        const errBody = await response.text().catch(()=>"");
+        failureReasons.push(`پاسخ سرور ${domain}: کد وضعیت ${response.status}\nجزئیات: ${errBody}`);
         continue;
       }
 
-      const data = await res.json();
-      if(data.choices && data.choices[0] && data.choices[0].message){
+      const data = await response.json();
+      if(data && data.choices && data.choices[0] && data.choices[0].message){
         resultEl.textContent = data.choices[0].message.content;
-        statusEl.textContent = `پاسخ با موفقیت از ${host} دریافت شد.`;
+        statusEl.textContent = `پاسخ با موفقیت از سرور ${domain} دریافت گردید.`;
         return;
-      } else {
-        debugLog.push(`سرور ${host} پاسخ معتبر ارسال نکرد.`);
       }
     } catch(err) {
-      debugLog.push(`اتصال به ${host} ناموفق بود (علت: تداخل فیلترشکن، مسدود بودن شبکه یا خطای CORS). خطا: ${err.message}`);
+      failureReasons.push(`عدم دسترسی به ${domain}: سد امنیتی مرورگر (CORS) یا قطعی فیلترشکن (${err.message})`);
     }
   }
 
-  // گزارش کامل در کادر نتایج
-  resultEl.textContent = "گزارش عدم برقراری ارتباط با سرویس هوش مصنوعی:\n\n" + debugLog.join("\n\n---\n\n");
+  // گزارش کامل بدون پنهان‌کاری خطا
+  resultEl.textContent = "گزارش وضعیت اتصال:\n\n" + failureReasons.join("\n\n-------------------------\n\n");
   statusEl.textContent = "برقراری ارتباط با سرور ناموفق بود.";
 }
 </script>
