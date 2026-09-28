@@ -293,9 +293,14 @@ document.getElementById("saveAudio").addEventListener("click",async()=>{
   }
 });
 
-// تنظیمات قطعی اتصال GapGPT
-const API_KEY = "GAPGPTMASKTOKENhyqyfd1sluX1X";
-const API_URL = "https://api.gapgpt.app/v1/chat/completions";
+// کلیدهای معتبر ثبت شده
+const API_KEY = "GAPGPTMASKTOKENns0kmwx397rX1X";
+
+// آدرس‌های تست به ترتیب اولویت: ۱- GapGPT و ۲- AvalAI
+const ENDPOINTS = [
+  "https://api.gapgpt.app/v1/chat/completions",
+  "https://api.avalai.ir/v1/chat/completions"
+];
 
 async function ask(actionTitle){
   const text=questionEl.value.trim();
@@ -303,8 +308,8 @@ async function ask(actionTitle){
     statusEl.textContent="ابتدا پرسش بنویسید یا عکسی انتخاب کنید.";
     return;
   }
-  statusEl.textContent="در حال پردازش و برقراری ارتباط با هوش مصنوعی…";
-  resultEl.textContent="در حال دریافت پاسخ هوشمند، لطفاً شکیبا باشید…";
+  statusEl.textContent="در حال ارسال درخواست به هوش مصنوعی…";
+  resultEl.textContent="در حال پردازش، لطفاً چند لحظه شکیبا باشید…";
 
   let userContent;
   if(currentImageBase64){
@@ -316,40 +321,50 @@ async function ask(actionTitle){
     userContent = `[درخواست: ${actionTitle}]\n\n${text}`;
   }
 
-  try {
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + API_KEY
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          {role: "system", content: "شما دستیار فوق تخصصی آموزشی Class-AI هستید. به زبان فارسی رسمی و دقیق به سوالات، تمرین‌ها و امتحانات پاسخ دهید."},
-          {role: "user", content: userContent}
-        ],
-        temperature: 0.7
-      })
-    });
+  const payload = {
+    model: "gpt-4o-mini",
+    messages: [
+      {role: "system", content: "شما دستیار فوق تخصصی آموزشی Class-AI هستید. به زبان فارسی رسمی و دقیق به سوالات، تمرین‌ها و امتحانات پاسخ دهید."},
+      {role: "user", content: userContent}
+    ],
+    temperature: 0.7
+  };
 
-    if(!res.ok){
-      const err = await res.json().catch(()=>({}));
-      throw new Error(err.error?.message || ("کد خطا: " + res.status));
-    }
+  let lastError = "";
 
-    const data = await res.json();
-    if(data.choices && data.choices[0] && data.choices[0].message){
-      resultEl.textContent = data.choices[0].message.content;
-      statusEl.textContent = "پاسخ با موفقیت دریافت شد.";
-    } else {
-      throw new Error("پاسخی از سرور دریافت نشد.");
+  for(const url of ENDPOINTS){
+    try {
+      statusEl.textContent = `در حال اتصال به سرور (${new URL(url).hostname})…`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + API_KEY
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if(!res.ok){
+        const errJson = await res.json().catch(()=>null);
+        const errMsg = errJson?.error?.message || `کد خطا: ${res.status} (${res.statusText})`;
+        lastError = `${new URL(url).hostname}: ${errMsg}`;
+        continue; // امتحان آدرس بعدی
+      }
+
+      const data = await res.json();
+      if(data.choices && data.choices[0] && data.choices[0].message){
+        resultEl.textContent = data.choices[0].message.content;
+        statusEl.textContent = "پاسخ با موفقیت دریافت شد.";
+        return; // موفقیت‌آمیز
+      }
+    } catch(err) {
+      lastError = `${new URL(url).hostname}: عدم دسترسی شبکه یا مسدود بودن فیلترشکن (${err.message})`;
     }
-  } catch(err) {
-    console.error(err);
-    resultEl.textContent = "خطا در دریافت پاسخ: " + err.message;
-    statusEl.textContent = "درخواست ناموفق بود. لطفاً اتصال اینترنت خود را بررسی کرده و مجدد تلاش کنید.";
   }
+
+  // اگر هیچ‌کدام وصل نشد، پیام دقیق خطا را مستقیماً در کادر نتایج نشان بده:
+  resultEl.textContent = "خطا در اتصال به سرویس هوش مصنوعی:\n\n" + lastError;
+  statusEl.textContent = "برقراری ارتباط با سرور ناموفق بود.";
 }
 </script>
 </body>
