@@ -3,12 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Class-AI | پلتفرم هوشمند آموزشی و آزمون</title>
 <style>
 :root{--bg:#070d19;--card:rgba(15,23,42,.92);--border:rgba(255,255,255,.14);--text:#f8fafc;--muted:#94a3b8;--cyan:#38bdf8;--green:#22c55e;--yellow:#facc15;--pink:#ec4899;--violet:#a855f7;--shadow:0 12px 30px rgba(0,0,0,.45)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Tahoma,sans-serif;background:radial-gradient(circle at top,#0f172a 0%,#070d19 65%,#020617 100%);color:var(--text);line-height:1.7;min-height:100vh;padding:16px;overflow-x:hidden}
 .container{max-width:1150px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.version-badge{background:#166534;color:#86efac;padding:6px 14px;border-radius:20px;font-size:.82rem;font-weight:700;display:inline-block;margin:0 auto 10px auto;border:1px solid #22c55e}
 .banner{background:linear-gradient(90deg,#0ea5e9,#8b5cf6,#ec4899);color:#fff;padding:10px 14px;border-radius:14px;text-align:center;font-weight:700;font-size:.98rem;box-shadow:var(--shadow)}
 .header{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px 18px;text-align:center;box-shadow:var(--shadow);position:relative}
 .brand{font-size:2.4rem;font-weight:900;letter-spacing:1px;background:linear-gradient(90deg,#38bdf8,#818cf8,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -34,21 +38,26 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Tahoma,sans-serif;bac
 .group{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:14px}
 .group-title{font-size:.96rem;font-weight:700;margin-bottom:10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:6px}
 .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.levels .action{font-size:..status{margin-top:10px;font-size:.88rem;color:var(--muted);min-height:22px}
+.results{background:rgba(2,6,23,.85);border:1px solid rgba(56,189,248,.3);border-radius:14px;padding:16px;min-height:120px;max-height:550px;overflow-y:auto;white-space:pre-wrap;line-height:1.8;color:#f1f5f9;font-size:1.02rem;margin-top:10px}
+.group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.group{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:14px}
+.group-title{font-size:.96rem;font-weight:700;margin-bottom:10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:6px}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .levels .action{font-size:.8rem;padding:6px 4px;border-radius:8px}
 .tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
 .packages{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:14px 0}
-.package{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
-.package h3{font-size:1rem;color:var(--cyan);margin-bottom:6px}
-.package .price{font-size:1.2rem;font-weight:800;color:var(--yellow);margin-bottom:10px}
-.package-desc{display:flex;flex-direction:column;gap:8px;margin-top:14px;font-size:.9rem;color:#cbd5e1}
-.offline-card{background:linear-gradient(135deg,rgba(30,41,59,.9),rgba(15,23,42,.9));border:1px solid rgba(56,189,248,.3);border-radius:16px;padding:16px;margin-top:14px}
-.card-number{font-family:monospace;font-size:1.35rem;letter-spacing:2px;color:var(--yellow);background:rgba(0,0,0,.35);padding:8px 12px;border-radius:8px;display:inline-block;margin:8px 0;direction:ltr}
+.package{background:rgba(255,255,255,.03);border:1px,.15);border-radius:12px;padding:12px;margin-top:15px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.api-input{background:#020617;border:1px solid var(--border);color:#38bdf8;padding:6px 10px;border-radius:8px;flex:1;min-width:220px;font-family:monospace;direction:ltr}
 footer{text-align:center;padding:16px;color:var(--muted);font-size:.85rem}
 .c1{border-color:rgba(56,189,248,.3)}.c2{border-color:rgba(168,85,247,.3)}.c3{border-color:rgba(236,72,153,.3)}.c4{border-color:rgba(34,197,94,.3)}.c5{border-color:rgba(250,204,21,.3)}.c6{border-color:rgba(249,115,22,.3)}.c7{border-color:rgba(14,165,233,.3)}
 </style>
 </head>
 <body>
 <div class="container">
+<div style="text-align:center">
+  <span class="version-badge">نسخه فعال: v3.0 (سیستم عیب‌یابی زنده فعال است)</span>
+</div>
 <aside class="banner">این پلتفرم هم در شرایط عادی و هم در شرایط مجازی به پیشرفت علمی فرزندان ایران زمین کمک می‌کند</aside>
 <header class="header">
 <h1 class="brand">Class-AI</h1>
@@ -88,16 +97,22 @@ footer{text-align:center;padding:16px;color:var(--muted);font-size:.85rem}
 <button id="removeImage" class="action" type="button">حذف عکس</button>
 </div>
 <p id="status" class="status" aria-live="polite"></p>
+
+<div class="api-config-box">
+  <span style="font-size:.85rem;color:var(--muted)">کلید فعال API:</span>
+  <input type="text" id="customApiKey" class="api-input" value="GAPGPTMASKTOKENx5ab7cnk5ggX1X" placeholder="کلید هوش مصنوعی را وارد کنید">
+  <button type="button" id="saveKeyBtn" class="action" style="padding:5px 12px;font-size:.82rem">ذخیره در مرورگر</button>
+</div>
 </section>
 <section class="panel">
 <div class="row" style="justify-content:space-between">
-<h2 class="section-title" style="margin:0">نتایج</h2>
+<h2 class="section-title" style="margin:0">نتایج و وضعیت پردازش</h2>
 <div class="row">
 <button id="copyAnswer" class="action" type="button">کپی کردن پاسخ</button>
 <button id="clear" class="action" type="button">سطل آشغال (پاک کردن سوال/پاسخ قبلی)</button>
 </div>
 </div>
-<div id="result" class="results" aria-live="polite"></div>
+<div id="result" class="results" aria-live="polite">برای شروع، سوال خود را تایپ کرده و روی «دریافت پاسخ هوشمند» یا یکی از ابزارهای زیر کلیک فرمایید.</div>
 </section>
 <section class="panel">
 <h2 class="section-title">ابزارهای هوشمند</h2>
@@ -172,7 +187,7 @@ toolGroups.forEach((g,i)=>{
   title.className="group-title";
   title.textContent=g;
   card.appendChild(title);
-  const lvls=document.createElement("levels");
+  const lvls=document.createElement("div");
   lvls.className="levels";
   gradeLevels.forEach(lvl=>{
     const b=document.createElement("button");
@@ -228,6 +243,19 @@ document.getElementById("removeImage").addEventListener("click",()=>{
 const statusEl=document.getElementById("status");
 const resultEl=document.getElementById("result");
 const questionEl=document.getElementById("question");
+const customApiKeyEl=document.getElementById("customApiKey");
+
+// بازیابی کلید از حافظه محلی در صورت وجود
+if(localStorage.getItem("CLASS_AI_KEY")){
+  customApiKeyEl.value = localStorage.getItem("CLASS_AI_KEY");
+}
+document.getElementById("saveKeyBtn").addEventListener("click",()=>{
+  const val = customApiKeyEl.value.trim();
+  if(val){
+    localStorage.setItem("CLASS_AI_KEY", val);
+    alert("کلید API جدید در مرورگر شما ذخیره شد.");
+  }
+});
 
 document.getElementById("askBtn").addEventListener("click",()=>ask("پاسخ به سوال"));
 document.getElementById("copyAnswer").addEventListener("click",()=>{
@@ -293,10 +321,7 @@ document.getElementById("saveAudio").addEventListener("click",async()=>{
   }
 });
 
-// کلیدهای معتبر ثبت شده
-const API_KEY = "GAPGPTMASKTOKENns0kmwx397rX1X";
-
-// آدرس‌های تست به ترتیب اولویت: ۱- GapGPT و ۲- AvalAI
+// آدرس‌های معتبر API
 const ENDPOINTS = [
   "https://api.gapgpt.app/v1/chat/completions",
   "https://api.avalai.ir/v1/chat/completions"
@@ -308,8 +333,15 @@ async function ask(actionTitle){
     statusEl.textContent="ابتدا پرسش بنویسید یا عکسی انتخاب کنید.";
     return;
   }
+  
+  const currentKey = customApiKeyEl.value.trim();
+  if(!currentKey){
+    statusEl.textContent="لطفاً کلید API را وارد کنید.";
+    return;
+  }
+
   statusEl.textContent="در حال ارسال درخواست به هوش مصنوعی…";
-  resultEl.textContent="در حال پردازش، لطفاً چند لحظه شکیبا باشید…";
+  resultEl.textContent="در حال پردازش و استعلام از سرور، لطفاً چند لحظه شکیبا باشید…";
 
   let userContent;
   if(currentImageBase64){
@@ -330,40 +362,42 @@ async function ask(actionTitle){
     temperature: 0.7
   };
 
-  let lastError = "";
+  let debugLog = [];
 
   for(const url of ENDPOINTS){
+    const host = new URL(url).hostname;
     try {
-      statusEl.textContent = `در حال اتصال به سرور (${new URL(url).hostname})…`;
+      statusEl.textContent = `در حال تست اتصال به: ${host}…`;
       const res = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + API_KEY
+          "Authorization": "Bearer " + currentKey
         },
         body: JSON.stringify(payload)
       });
 
       if(!res.ok){
-        const errJson = await res.json().catch(()=>null);
-        const errMsg = errJson?.error?.message || `کد خطا: ${res.status} (${res.statusText})`;
-        lastError = `${new URL(url).hostname}: ${errMsg}`;
-        continue; // امتحان آدرس بعدی
+        const errText = await res.text().catch(()=>"");
+        debugLog.push(`سرور ${host} پاسخ داد: کد ${res.status} (${res.statusText})\nمتن خطا: ${errText}`);
+        continue;
       }
 
       const data = await res.json();
       if(data.choices && data.choices[0] && data.choices[0].message){
         resultEl.textContent = data.choices[0].message.content;
-        statusEl.textContent = "پاسخ با موفقیت دریافت شد.";
-        return; // موفقیت‌آمیز
+        statusEl.textContent = `پاسخ با موفقیت از ${host} دریافت شد.`;
+        return;
+      } else {
+        debugLog.push(`سرور ${host} پاسخ معتبر ارسال نکرد.`);
       }
     } catch(err) {
-      lastError = `${new URL(url).hostname}: عدم دسترسی شبکه یا مسدود بودن فیلترشکن (${err.message})`;
+      debugLog.push(`اتصال به ${host} ناموفق بود (علت: تداخل فیلترشکن، مسدود بودن شبکه یا خطای CORS). خطا: ${err.message}`);
     }
   }
 
-  // اگر هیچ‌کدام وصل نشد، پیام دقیق خطا را مستقیماً در کادر نتایج نشان بده:
-  resultEl.textContent = "خطا در اتصال به سرویس هوش مصنوعی:\n\n" + lastError;
+  // گزارش کامل در کادر نتایج
+  resultEl.textContent = "گزارش عدم برقراری ارتباط با سرویس هوش مصنوعی:\n\n" + debugLog.join("\n\n---\n\n");
   statusEl.textContent = "برقراری ارتباط با سرور ناموفق بود.";
 }
 </script>
